@@ -141,3 +141,4 @@ E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\Microsoft.
 E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\System.Web.Cors.dll
+E:\Zini Tecnologies Projects\FreeLogoCreator\backend\obj\Debug\net8.0\backend.sourcelink.json

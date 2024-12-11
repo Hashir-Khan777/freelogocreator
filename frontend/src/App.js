@@ -3,6 +3,7 @@ import AppRouter from "./Router";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "./store/reducers/toast.reducer";
 import { useEffect } from "react";
+import { GeneratePostModal } from "./modals";
 
 const App = () => {
   const { type, message } = useSelector((store) => store.ToastReducer);
@@ -31,6 +32,7 @@ const App = () => {
   return (
     <ChakraProvider>
       <AppRouter />
+      <GeneratePostModal />
     </ChakraProvider>
   );
 };
