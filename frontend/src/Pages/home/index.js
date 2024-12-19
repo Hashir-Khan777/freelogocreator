@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <Box>
-      <SimpleGrid columns={{ base: 2, md: 2, lg: 3, xl: 4 }} spacing={5}>
+      <SimpleGrid columns={{ base: 4, md: 4, lg: 5, xl: 6 }} spacing={5}>
         {graphics?.map((graphic) => (
           <Box
             onClick={() => {

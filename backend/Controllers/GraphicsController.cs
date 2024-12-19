@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
@@ -70,6 +71,42 @@ namespace backend.Controllers
             {
                 return NotFound(new { message = "Graphic not found" });
             }
+        }
+
+        [HttpGet("postall")]
+        public async Task<IActionResult> PostAll()
+        {
+            string svgDirectory = @"E:\Zini Tecnologies Projects\FreeLogoCreator\backend\svgs";
+
+            if (string.IsNullOrEmpty(svgDirectory) || !Directory.Exists(svgDirectory))
+            {
+                return BadRequest("Invalid directory path.");
+            }
+
+            var svgFiles = Directory.GetFiles(svgDirectory, "*.svg");
+
+            var graphicsList = new List<Graphics>();
+            foreach (var file in svgFiles)
+            {
+                string svgContent = await System.IO.File.ReadAllTextAsync(file);
+                string title = Path.GetFileNameWithoutExtension(file);
+                string description = $"Description for {title}";
+
+                graphicsList.Add(new Graphics
+                {
+                    graphic = svgContent,
+                    title = title,
+                    description = description,
+                    created_at = DateTime.UtcNow,
+                    updated_at = DateTime.UtcNow
+                });
+            }
+
+            db.Graphics.AddRange(graphicsList);
+
+            db.SaveChanges();
+
+            return Ok($"{graphicsList.Count} SVG files have been added to the database.");
         }
     }
 }

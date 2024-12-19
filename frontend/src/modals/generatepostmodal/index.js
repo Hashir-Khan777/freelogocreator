@@ -13,6 +13,7 @@ import { toggleGeneratePostModal } from "../../store/reducers/modals.reducer";
 import { useCallback, useRef } from "react";
 import { toPng } from "html-to-image";
 import { showToast } from "../../store/reducers/toast.reducer";
+import { Link } from "react-router-dom";
 
 const GeneratePostModal = () => {
   const { isGeneratePostModalOpen, generatePostModalData } = useSelector(
@@ -69,6 +70,23 @@ const GeneratePostModal = () => {
             onClick={saveImage}
           >
             Save
+          </Button>
+          <Button
+            to="/edit"
+            onClick={() => {
+              localStorage.setItem("svg", generatePostModalData?.logo);
+              onclose();
+            }}
+            as={Link}
+            width={{ base: "100%", md: "32.33333%" }}
+            mt="10px"
+            float="right"
+            variant="solid"
+            colorScheme="blue"
+            backgroundColor="blue"
+            borderRadius={0}
+          >
+            Customize
           </Button>
         </ModalBody>
       </ModalContent>
