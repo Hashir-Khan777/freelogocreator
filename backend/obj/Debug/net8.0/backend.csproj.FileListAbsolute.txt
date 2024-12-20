@@ -142,3 +142,9 @@ E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\Microsoft.
 E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\System.Web.Cors.dll
 E:\Zini Tecnologies Projects\FreeLogoCreator\backend\obj\Debug\net8.0\backend.sourcelink.json
+E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\build\web.config
+E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\build\appsettings.Development.json
+E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\build\appsettings.json
+E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\build\appsettings.production.json
+E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\build\backend.deps.json
+E:\Zini Tecnologies Projects\FreeLogoCreator\backend\bin\Debug\net8.0\build\backend.runtimeconfig.json
