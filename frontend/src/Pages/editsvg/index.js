@@ -1,6 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric";
-import { Box, Button, Flex, Input, Select } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Select,
+} from "@chakra-ui/react";
 
 const fontSizes = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72,
@@ -16,6 +26,7 @@ const SVGCanvasEditor = () => {
 
   const canvasRef = useRef(null);
   const svgString = localStorage.getItem("svg");
+  const gridLinesRef = useRef([]);
 
   const drawGrid = (canvas, gridSize) => {
     const width = canvas.width;
@@ -27,7 +38,9 @@ const SVGCanvasEditor = () => {
         selectable: false,
         evented: false,
       });
+      gridLinesRef.current.push(line);
       canvas.add(line);
+      canvas.sendToBack(line);
     }
 
     for (let i = 0; i <= height; i += gridSize) {
@@ -36,7 +49,9 @@ const SVGCanvasEditor = () => {
         selectable: false,
         evented: false,
       });
+      gridLinesRef.current.push(line);
       canvas.add(line);
+      canvas.sendToBack(line);
     }
   };
 
@@ -110,6 +125,26 @@ const SVGCanvasEditor = () => {
       });
       canvas.renderAll();
     }
+  };
+
+  const saveImage = (type) => {
+    if (canvasRef.current) {
+      gridLinesRef.current.forEach((line) => (line.visible = false));
+      canvas.discardActiveObject();
+      canvas.renderAll();
+
+      const dataURL = canvasRef.current.toDataURL({
+        format: type,
+        quality: 1,
+      });
+
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = `logo.${type}`;
+      link.click();
+    }
+    const gridSize = 20;
+    drawGrid(canvas, gridSize);
   };
 
   useEffect(() => {
@@ -199,6 +234,24 @@ const SVGCanvasEditor = () => {
           </Select>
         </Flex>
         <Box as="canvas" ref={canvasRef} style={{ border: "1px solid #ccc" }} />
+        <Menu>
+          <MenuButton
+            as={Button}
+            width={{ base: "100%", md: "32.33333%" }}
+            mt="10px"
+            float="right"
+            variant="solid"
+            colorScheme="blue"
+            backgroundColor="blue"
+            borderRadius={0}
+          >
+            Save
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={() => saveImage("png")}>Save As Png</MenuItem>
+            <MenuItem onClick={() => saveImage("jpeg")}>Save As Jpeg</MenuItem>
+          </MenuList>
+        </Menu>
       </Box>
     </Flex>
   );

@@ -76,7 +76,7 @@ namespace backend.Controllers
         [HttpGet("postall")]
         public async Task<IActionResult> PostAll()
         {
-            string svgDirectory = @"E:\Zini Tecnologies Projects\FreeLogoCreator\backend\svgs";
+            string svgDirectory = @"D:\Zini Technology Projects\freelogocreator\backend\svgs";
 
             if (string.IsNullOrEmpty(svgDirectory) || !Directory.Exists(svgDirectory))
             {
