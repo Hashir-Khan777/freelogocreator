@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import {
+  Filter,
   ForgetPassword,
   Home,
   Login,
@@ -21,6 +22,7 @@ const AppRouter = () => {
       />
       <Route caseSensitive path="/resetpassword" element={<ResetPassword />} />
       <Route caseSensitive path="/edit" element={<SVGCanvasEditor />} />
+      <Route caseSensitive path="/filter/:category" element={<Filter />} />
     </Routes>
   );
 };

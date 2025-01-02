@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllGraphics } from "../actions/graphics.action";
+import { getAllGraphics, searchGraphics } from "../actions/graphics.action";
 
 const initialState = {
   loading: false,
   graphics: null,
+  filteredGraphics: null,
 };
 
 export default createSlice({
@@ -18,6 +19,17 @@ export default createSlice({
       state.loading = false;
     });
     builder.addCase(getAllGraphics.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(searchGraphics.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(searchGraphics.fulfilled, (state, { payload }) => {
+      state.graphics = payload;
+      state.loading = false;
+    });
+    builder.addCase(searchGraphics.rejected, (state) => {
       state.loading = false;
     });
   },

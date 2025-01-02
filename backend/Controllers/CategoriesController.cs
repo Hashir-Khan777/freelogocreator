@@ -46,6 +46,21 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("graphics/{id}")]
+        public IActionResult GetGraphicsByCategoryId(int id)
+        {
+            List<Graphics> graphics = db.Graphics.Where(x => x.category_id == id).ToList();
+
+            if (graphics != null)
+            {
+                return Ok(new { data = graphics });
+            }
+            else
+            {
+                return NotFound(new { message = "Category not found" });
+            }
+        }
+
         [HttpPut]
         public IActionResult Update([FromBody] Categories category)
         {

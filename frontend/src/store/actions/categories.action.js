@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { showToast } from "../reducers/toast.reducer";
 
-export const getAllGraphics = createAsyncThunk(
-  "graphics/get",
+export const getAllCategories = createAsyncThunk(
+  "categories/get",
   async (obj, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/graphics`
+        `${process.env.REACT_APP_BASE_API_URL}/categories`
       );
       return data.data;
     } catch (err) {
@@ -26,12 +26,12 @@ export const getAllGraphics = createAsyncThunk(
   }
 );
 
-export const searchGraphics = createAsyncThunk(
-  "graphics/search",
+export const getGraphicsByCategoryById = createAsyncThunk(
+  "categories/get/graphics/id",
   async (obj, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_BASE_API_URL}/graphics/search/${obj.query}`
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_BASE_API_URL}/categories/graphics/${obj.id}`
       );
       return data.data;
     } catch (err) {

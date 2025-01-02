@@ -72,6 +72,21 @@ namespace backend.Controllers
             }
         }
 
+        [HttpPost("search/{query}")]
+        public IActionResult Search(string query)
+        {
+            List<Graphics>? graphics = db.Graphics.Where(g => g.title.ToLower().Contains(query.ToLower()) || g.description.ToLower().Contains(query.ToLower())).ToList();
+
+            if (graphics != null)
+            {
+                return Ok(new { data = graphics });
+            }
+            else
+            {
+                return NotFound(new { message = "Graphics not found" });
+            }
+        }
+
         [HttpGet("postall")]
         public async Task<IActionResult> PostAll()
         {
@@ -88,8 +103,10 @@ namespace backend.Controllers
             var graphicsList = new List<Graphics>();
             foreach (var file in svgFiles)
             {
+                int cat_id = rnd.Next(1, 11);
+                Categories? category = db.Categories.FirstOrDefault(c => c.Id == cat_id);
                 string svgContent = await System.IO.File.ReadAllTextAsync(file);
-                string title = Path.GetFileNameWithoutExtension(file);
+                string title = $"{category?.Name} Path.GetFileNameWithoutExtension(file)";
                 string description = $"Description for {title}";
 
                 graphicsList.Add(new Graphics
@@ -97,7 +114,7 @@ namespace backend.Controllers
                     graphic = svgContent,
                     title = title,
                     description = description,
-                    category_id = rnd.Next(1, 10),
+                    category_id = cat_id,
                     created_at = DateTime.UtcNow,
                     updated_at = DateTime.UtcNow
                 });
