@@ -1,9 +1,10 @@
-import { ChakraProvider, useToast } from "@chakra-ui/react";
+import { ChakraProvider, Flex, useToast } from "@chakra-ui/react";
 import AppRouter from "./Router";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "./store/reducers/toast.reducer";
 import { useEffect } from "react";
 import { GeneratePostModal } from "./modals";
+import { Footer, Header } from "./components";
 
 const App = () => {
   const { type, message } = useSelector((store) => store.ToastReducer);
@@ -31,7 +32,11 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <AppRouter />
+      <Flex flexDirection="column" height="100vh">
+        <Header />
+        <AppRouter />
+        <Footer />
+      </Flex>
       <GeneratePostModal />
     </ChakraProvider>
   );

@@ -10,6 +10,10 @@
 
         public string description { get; set; } = string.Empty;
 
+        public int category_id { get; set; }
+
+        public Categories? category { get; set; }
+
         public DateTime created_at { get; set; }
 
         public DateTime updated_at { get; set; }

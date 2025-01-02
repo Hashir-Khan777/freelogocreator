@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, Container, SimpleGrid } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGraphics } from "../../store/actions/graphics.action";
@@ -14,7 +14,7 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <Box>
+    <Container flex={1} maxWidth="1216px" my="20px">
       <SimpleGrid columns={{ base: 4, md: 4, lg: 5, xl: 6 }} spacing={5}>
         {graphics?.map((graphic) => (
           <Box
@@ -31,7 +31,7 @@ const Home = () => {
           />
         ))}
       </SimpleGrid>
-    </Box>
+    </Container>
   );
 };
 

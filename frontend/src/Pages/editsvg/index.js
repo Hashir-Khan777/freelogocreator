@@ -3,6 +3,7 @@ import { fabric } from "fabric";
 import {
   Box,
   Button,
+  Container,
   Flex,
   Input,
   Menu,
@@ -21,7 +22,7 @@ const fonts = ["Arial", "Times New Roman", "Courier New", "Verdana", "Georgia"];
 const SVGCanvasEditor = () => {
   const [canvas, setCanvas] = useState(null);
   const [selectedObject, setSelectedObject] = useState(null);
-  const [selectedFontSize, setSelectedFontSize] = useState(12);
+  const [selectedFontSize, setSelectedFontSize] = useState(20);
   const [fontFamily, setFontFamily] = useState("Arial");
 
   const canvasRef = useRef(null);
@@ -29,10 +30,10 @@ const SVGCanvasEditor = () => {
   const gridLinesRef = useRef([]);
 
   const drawGrid = (canvas, gridSize) => {
-    const width = canvas.width;
-    const height = canvas.height;
+    const width = canvas.width - 8;
+    const height = canvas.height - 18;
 
-    for (let i = 0; i <= width; i += gridSize) {
+    for (let i = 0; i < width; i += gridSize) {
       const line = new fabric.Line([i, 0, i, height], {
         stroke: "#ccc",
         selectable: false,
@@ -43,7 +44,7 @@ const SVGCanvasEditor = () => {
       canvas.sendToBack(line);
     }
 
-    for (let i = 0; i <= height; i += gridSize) {
+    for (let i = 0; i < height; i += gridSize) {
       const line = new fabric.Line([0, i, width, i], {
         stroke: "#ccc",
         selectable: false,
@@ -104,6 +105,10 @@ const SVGCanvasEditor = () => {
         const activeSelection = new fabric.ActiveSelection(objects, {
           canvas: canvas,
         });
+
+        activeSelection.center();
+        activeSelection.setCoords();
+
         canvas.setActiveObject(activeSelection);
         canvas.renderAll();
       }
@@ -112,8 +117,19 @@ const SVGCanvasEditor = () => {
 
   const addText = () => {
     if (canvas) {
-      const text = new fabric.Textbox("Text", { fontSize: selectedFontSize });
+      const text = new fabric.Textbox("Text", {
+        fontSize: selectedFontSize,
+        fontFamily: fontFamily,
+        textAlign: "center",
+      });
       canvas.add(text);
+
+      text.center();
+      text.setCoords();
+
+      canvas.setActiveObject(text);
+
+      canvas.renderAll();
     }
   };
 
@@ -163,9 +179,19 @@ const SVGCanvasEditor = () => {
       const gridSize = 20;
       drawGrid(initCanvas, gridSize);
 
-      fabric.loadSVGFromString(svgString, (objects) => {
+      fabric.loadSVGFromString(svgString, (objects, options) => {
         if (objects && objects.length > 0) {
-          objects.forEach((obj) => initCanvas.add(obj));
+          const group = new fabric.Group(objects, options);
+          initCanvas.add(group);
+          group.center();
+          group.setCoords();
+          initCanvas.renderAll();
+
+          initCanvas.remove(group);
+          group._objects.forEach((obj) => {
+            initCanvas.add(obj);
+          });
+          initCanvas.renderAll();
         } else {
           console.error("SVG loading failed or returned no objects.");
         }
@@ -196,64 +222,76 @@ const SVGCanvasEditor = () => {
   }, []);
 
   return (
-    <Flex justifyContent="center" alignItems="center" height="100vh">
-      <Box>
-        <Flex
-          mb="10px"
-          justifyContent="space-between"
-          alignItems="center"
-          gap="10px"
-        >
-          <Input width="200px" type="color" onChange={changeColor} />
-          <Button
-            onClick={addText}
-            width="200px"
-            variant="solid"
-            colorScheme="blue"
-            backgroundColor="blue"
+    <Container flex={1} maxWidth="1216px" my="20px">
+      <Flex justifyContent="center" alignItems="center" height="100vh">
+        <Box>
+          <Flex
+            mb="10px"
+            justifyContent="space-between"
+            alignItems="center"
+            gap="10px"
           >
-            Add Text
-          </Button>
-          <Select
-            width="200px"
-            value={selectedFontSize}
-            onChange={changeFontSize}
-          >
-            {fontSizes.map((size) => (
-              <Box as="option" value={size}>
-                {size}
-              </Box>
-            ))}
-          </Select>
-          <Select width="200px" value={fontFamily} onChange={handleFontChange}>
-            {fonts.map((font) => (
-              <Box as="option" value={font}>
-                {font}
-              </Box>
-            ))}
-          </Select>
-        </Flex>
-        <Box as="canvas" ref={canvasRef} style={{ border: "1px solid #ccc" }} />
-        <Menu>
-          <MenuButton
-            as={Button}
-            width={{ base: "100%", md: "32.33333%" }}
-            mt="10px"
-            float="right"
-            variant="solid"
-            colorScheme="blue"
-            backgroundColor="blue"
-            borderRadius={0}
-          >
-            Save
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={() => saveImage("png")}>Save As Png</MenuItem>
-            <MenuItem onClick={() => saveImage("jpeg")}>Save As Jpeg</MenuItem>
-          </MenuList>
-        </Menu>
-      </Box>
-    </Flex>
+            <Input width="200px" type="color" onChange={changeColor} />
+            <Button
+              onClick={addText}
+              width="200px"
+              variant="solid"
+              colorScheme="blue"
+              backgroundColor="blue"
+            >
+              Add Text
+            </Button>
+            <Select
+              width="200px"
+              value={selectedFontSize}
+              onChange={changeFontSize}
+            >
+              {fontSizes.map((size) => (
+                <Box as="option" value={size}>
+                  {size}
+                </Box>
+              ))}
+            </Select>
+            <Select
+              width="200px"
+              value={fontFamily}
+              onChange={handleFontChange}
+            >
+              {fonts.map((font) => (
+                <Box as="option" value={font}>
+                  {font}
+                </Box>
+              ))}
+            </Select>
+          </Flex>
+          <Box
+            as="canvas"
+            ref={canvasRef}
+            // style={{ border: "1px solid #ccc" }}
+          />
+          <Menu>
+            <MenuButton
+              as={Button}
+              width={{ base: "100%", md: "32.33333%" }}
+              mt="10px"
+              float="right"
+              variant="solid"
+              colorScheme="blue"
+              backgroundColor="blue"
+              borderRadius={0}
+            >
+              Save
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={() => saveImage("png")}>Save As Png</MenuItem>
+              <MenuItem onClick={() => saveImage("jpeg")}>
+                Save As Jpeg
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </Box>
+      </Flex>
+    </Container>
   );
 };
 

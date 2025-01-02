@@ -1,6 +1,5 @@
 ﻿using backend.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
@@ -84,6 +83,7 @@ namespace backend.Controllers
             }
 
             var svgFiles = Directory.GetFiles(svgDirectory, "*.svg");
+            Random rnd = new Random();
 
             var graphicsList = new List<Graphics>();
             foreach (var file in svgFiles)
@@ -97,6 +97,7 @@ namespace backend.Controllers
                     graphic = svgContent,
                     title = title,
                     description = description,
+                    category_id = rnd.Next(1, 10),
                     created_at = DateTime.UtcNow,
                     updated_at = DateTime.UtcNow
                 });
