@@ -28,6 +28,8 @@ const SVGCanvasEditor = () => {
   const canvasRef = useRef(null);
   const svgString = localStorage.getItem("svg");
   const gridLinesRef = useRef([]);
+  const undoStack = useRef([]);
+  const redoStack = useRef([]);
 
   const drawGrid = (canvas, gridSize) => {
     const width = canvas.width - 8;
@@ -91,6 +93,16 @@ const SVGCanvasEditor = () => {
       }
     }
 
+    if ((event.ctrlKey || event.metaKey) && event.key === "z") {
+      event.preventDefault();
+      undo(canvas);
+    }
+
+    if ((event.ctrlKey || event.metaKey) && event.key === "y") {
+      event.preventDefault();
+      redo(canvas);
+    }
+
     if (event.key === "Enter") {
       canvas.discardActiveObject();
       canvas.renderAll();
@@ -144,12 +156,12 @@ const SVGCanvasEditor = () => {
   };
 
   const saveImage = (type) => {
-    if (canvasRef.current) {
+    if (canvas) {
       gridLinesRef.current.forEach((line) => (line.visible = false));
       canvas.discardActiveObject();
       canvas.renderAll();
 
-      const dataURL = canvasRef.current.toDataURL({
+      const dataURL = canvas.toDataURL({
         format: type,
         quality: 1,
       });
@@ -163,14 +175,108 @@ const SVGCanvasEditor = () => {
     drawGrid(canvas, gridSize);
   };
 
-  useEffect(() => {
+  const saveState = (canvas) => {
+    const selectedObjects = canvas
+      .getObjects()
+      .filter((obj) => obj.selectable != false && obj.evented != false);
+    const jsonData = selectedObjects.map((obj) => obj.toJSON());
+    undoStack.current.push(jsonData);
+  };
+
+  const undo = (canvas) => {
+    if (undoStack.current.length > 0) {
+      const previousState = undoStack.current.slice(
+        undoStack.current.length - 2,
+        undoStack.current.length - 1
+      )[0];
+      redoStack.current.push(
+        canvas
+          .getObjects()
+          .filter((obj) => obj.selectable != false && obj.evented != false)
+          .map((obj) => obj.toJSON())
+      );
+      canvas.clear();
+
+      const gridSize = 20;
+      drawGrid(canvas, gridSize);
+
+      if (previousState) {
+        fabric.util.enlivenObjects(previousState, (objects) => {
+          const group = new fabric.Group(objects);
+          canvas.add(group);
+          group.center();
+          group.setCoords();
+          canvas.renderAll();
+
+          canvas.remove(group);
+          group._objects.forEach((obj) => {
+            canvas.add(obj);
+          });
+          canvas.renderAll();
+        });
+      }
+    }
+  };
+
+  const redo = (canvas) => {
+    if (redoStack.current.length > 0) {
+      const nextState = redoStack.current.pop();
+      undoStack.current.push(
+        canvas
+          .getObjects()
+          .filter((obj) => obj.selectable != false && obj.evented != false)
+          .map((obj) => obj.toJSON())
+      );
+      canvas.clear();
+
+      const gridSize = 20;
+      drawGrid(canvas, gridSize);
+
+      if (nextState) {
+        fabric.util.enlivenObjects(nextState, (objects) => {
+          const group = new fabric.Group(objects);
+          canvas.add(group);
+          group.center();
+          group.setCoords();
+          canvas.renderAll();
+
+          canvas.remove(group);
+          group._objects.forEach((obj) => {
+            canvas.add(obj);
+          });
+          canvas.renderAll();
+        });
+      }
+    }
+  };
+
+  const bringToFront = () => {
+    if (selectedObject) {
+      selectedObject.map((obj) => {
+        canvas.bringToFront(obj);
+      });
+    }
+  };
+
+  const sendToBack = () => {
+    if (selectedObject) {
+      selectedObject.map((obj) => {
+        canvas.sendToBack(obj);
+        canvas.renderAll();
+      });
+    }
+  };
+
+  const canvasInitialization = () => {
+    if (canvas) {
+      canvas.dispose();
+    }
     if (canvasRef.current) {
       const initCanvas = new fabric.Canvas(canvasRef.current, {
         width: 850,
         height: 600,
         preserveObjectStacking: true,
       });
-      setCanvas(() => initCanvas);
 
       initCanvas.renderAll();
 
@@ -192,10 +298,14 @@ const SVGCanvasEditor = () => {
             initCanvas.add(obj);
           });
           initCanvas.renderAll();
-        } else {
-          console.error("SVG loading failed or returned no objects.");
         }
       });
+
+      saveState(initCanvas);
+
+      initCanvas.on("object:added", () => saveState(initCanvas));
+      initCanvas.on("object:modified", () => saveState(initCanvas));
+      initCanvas.on("object:removed", () => saveState(initCanvas));
 
       initCanvas.on("selection:created", (event) => {
         if (event.selected.length > 0) {
@@ -211,14 +321,12 @@ const SVGCanvasEditor = () => {
 
       document.addEventListener("keydown", (e) => handleKeyDown(e, initCanvas));
 
-      return () => {
-        document.removeEventListener("keydown", (e) =>
-          handleKeyDown(e, initCanvas)
-        );
-
-        initCanvas.dispose();
-      };
+      setCanvas(() => initCanvas);
     }
+  };
+
+  useEffect(() => {
+    canvasInitialization();
   }, []);
 
   return (
@@ -237,7 +345,6 @@ const SVGCanvasEditor = () => {
               width="200px"
               variant="solid"
               colorScheme="blue"
-              backgroundColor="blue"
             >
               Add Text
             </Button>
@@ -263,32 +370,59 @@ const SVGCanvasEditor = () => {
                 </Box>
               ))}
             </Select>
-          </Flex>
-          <Box
-            as="canvas"
-            ref={canvasRef}
-            // style={{ border: "1px solid #ccc" }}
-          />
-          <Menu>
-            <MenuButton
-              as={Button}
-              width={{ base: "100%", md: "32.33333%" }}
-              mt="10px"
-              float="right"
+            <Button
+              onClick={canvasInitialization}
+              width="200px"
               variant="solid"
               colorScheme="blue"
-              backgroundColor="blue"
-              borderRadius={0}
             >
-              Save
-            </MenuButton>
-            <MenuList>
-              <MenuItem onClick={() => saveImage("png")}>Save As Png</MenuItem>
-              <MenuItem onClick={() => saveImage("jpeg")}>
-                Save As Jpeg
-              </MenuItem>
-            </MenuList>
-          </Menu>
+              Reset
+            </Button>
+          </Flex>
+          <Flex>
+            <Box>
+              <Box as="canvas" ref={canvasRef} position="relative" />
+            </Box>
+            <Flex flexDirection="column" justifyContent="space-between">
+              <Flex flexDirection="column" gap={3}>
+                <Button
+                  onClick={sendToBack}
+                  width="200px"
+                  variant="solid"
+                  colorScheme="blue"
+                >
+                  Send To Back
+                </Button>
+                <Button
+                  onClick={bringToFront}
+                  width="200px"
+                  variant="solid"
+                  colorScheme="blue"
+                >
+                  Bring To Front
+                </Button>
+              </Flex>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  mt="10px"
+                  float="right"
+                  variant="solid"
+                  colorScheme="blue"
+                >
+                  Save
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={() => saveImage("png")}>
+                    Save As Png
+                  </MenuItem>
+                  <MenuItem onClick={() => saveImage("jpeg")}>
+                    Save As Jpeg
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
+          </Flex>
         </Box>
       </Flex>
     </Container>

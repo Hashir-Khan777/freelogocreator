@@ -108,7 +108,6 @@ const GeneratePostModal = () => {
               float="right"
               variant="solid"
               colorScheme="blue"
-              backgroundColor="blue"
               borderRadius={0}
             >
               Save
@@ -132,7 +131,6 @@ const GeneratePostModal = () => {
             float="right"
             variant="solid"
             colorScheme="blue"
-            backgroundColor="blue"
             borderRadius={0}
           >
             Customize

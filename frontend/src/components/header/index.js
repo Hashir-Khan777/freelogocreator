@@ -69,7 +69,6 @@ const Header = () => {
           <InputRightAddon cursor="pointer" p={0}>
             <Button
               colorScheme="blue"
-              backgroundColor="blue"
               variant="solid"
               color="white"
               borderRadius={0}
