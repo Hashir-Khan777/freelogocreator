@@ -13,6 +13,9 @@ import {
   Select,
 } from "@chakra-ui/react";
 
+const canvasHeight = 600;
+const canvasWidth = 850;
+
 const fontSizes = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72,
 ];
@@ -24,6 +27,7 @@ const SVGCanvasEditor = () => {
   const [selectedObject, setSelectedObject] = useState(null);
   const [selectedFontSize, setSelectedFontSize] = useState(20);
   const [fontFamily, setFontFamily] = useState("Arial");
+  const [colors, setColors] = useState([]);
 
   const canvasRef = useRef(null);
   const svgString = localStorage.getItem("svg");
@@ -58,13 +62,26 @@ const SVGCanvasEditor = () => {
     }
   };
 
-  const changeColor = (e) => {
-    if (selectedObject) {
-      selectedObject.map((obj) => {
+  const changeColor = (e, index) => {
+    // if (selectedObject) {
+    //   selectedObject.map((obj) => {
+    //     obj.set("fill", e.target.value);
+    //   });
+    //   canvas.renderAll();
+    // } else {
+    const colorClone = [...colors];
+    const objects = canvas
+      .getObjects()
+      ?.filter((x) => x.selectable !== false && x.evented !== false);
+    objects
+      ?.filter((x) => x?.fill === colors[index] || x?.xtroke === colors[index])
+      .map((obj) => {
         obj.set("fill", e.target.value);
       });
-      canvas.renderAll();
-    }
+    colorClone[index] = e.target.value;
+    setColors(colorClone);
+    canvas.renderAll();
+    // }
   };
 
   const changeFontSize = (e) => {
@@ -129,15 +146,23 @@ const SVGCanvasEditor = () => {
 
   const addText = () => {
     if (canvas) {
+      const filteredObjects = canvas
+        .getObjects()
+        ?.filter((x) => x.selectable !== false && x.evented !== false);
+
+      const topXPos = filteredObjects?.reduce(
+        (max, obj) => (Math.abs(obj.top) > Math.abs(max.top) ? obj : max),
+        filteredObjects[0]
+      );
+
       const text = new fabric.Textbox("Text", {
         fontSize: selectedFontSize,
         fontFamily: fontFamily,
         textAlign: "center",
+        top: canvasHeight / 2 + Math.abs(topXPos?.top) + 20,
+        left: canvasWidth / 2,
       });
       canvas.add(text);
-
-      text.center();
-      text.setCoords();
 
       canvas.setActiveObject(text);
 
@@ -255,6 +280,10 @@ const SVGCanvasEditor = () => {
       selectedObject.map((obj) => {
         canvas.bringToFront(obj);
       });
+      gridLinesRef.current.map((line) => {
+        canvas.sendToBack(line);
+        canvas.renderAll();
+      });
     }
   };
 
@@ -262,6 +291,10 @@ const SVGCanvasEditor = () => {
     if (selectedObject) {
       selectedObject.map((obj) => {
         canvas.sendToBack(obj);
+        canvas.renderAll();
+      });
+      gridLinesRef.current.map((line) => {
+        canvas.sendToBack(line);
         canvas.renderAll();
       });
     }
@@ -273,8 +306,8 @@ const SVGCanvasEditor = () => {
     }
     if (canvasRef.current) {
       const initCanvas = new fabric.Canvas(canvasRef.current, {
-        width: 850,
-        height: 600,
+        width: canvasWidth,
+        height: canvasHeight,
         preserveObjectStacking: true,
       });
 
@@ -284,6 +317,8 @@ const SVGCanvasEditor = () => {
 
       const gridSize = 20;
       drawGrid(initCanvas, gridSize);
+
+      const svgColors = [];
 
       fabric.loadSVGFromString(svgString, (objects, options) => {
         if (objects && objects.length > 0) {
@@ -296,7 +331,14 @@ const SVGCanvasEditor = () => {
           initCanvas.remove(group);
           group._objects.forEach((obj) => {
             initCanvas.add(obj);
+            if (obj?.fill && !svgColors.includes(obj?.fill)) {
+              svgColors.push(obj?.fill);
+            }
+            if (obj?.stroke && !svgColors.includes(obj?.stroke)) {
+              svgColors.push(obj?.stroke);
+            }
           });
+          setColors(svgColors);
           initCanvas.renderAll();
         }
       });
@@ -339,7 +381,15 @@ const SVGCanvasEditor = () => {
             alignItems="center"
             gap="10px"
           >
-            <Input width="200px" type="color" onChange={changeColor} />
+            {colors?.map((color, index) => (
+              <Input
+                key={index}
+                width="80px"
+                value={color}
+                type="color"
+                onChange={(e) => changeColor(e, index)}
+              />
+            ))}
             <Button
               onClick={addText}
               width="200px"
