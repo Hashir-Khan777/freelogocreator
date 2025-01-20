@@ -1,0 +1,8 @@
+.dash-codevmap {
+  path {
+    @apply fill-primary-300;
+  }
+  .svg-map__location[aria-checked="true"] {
+    @apply fill-primary-500;
+  }
+}
