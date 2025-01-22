@@ -17,6 +17,10 @@ namespace backend.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] Graphics graphics)
         {
+            graphics.Id = db.Graphics.Max(x => x.Id) + 1;
+            graphics.created_at = DateTime.UtcNow;
+            graphics.updated_at = DateTime.UtcNow;
+
             db.Graphics.Add(graphics);
             db.SaveChanges();
 

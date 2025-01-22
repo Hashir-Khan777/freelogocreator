@@ -9,6 +9,8 @@ import cart from "./api/shop/cartSlice.js";
 import authentication from "./reducers/auth.js";
 import course from "./reducers/course.js";
 import topic from "./reducers/topic.js";
+import logos from "./reducers/logos.js";
+import categories from "./reducers/categories.js";
 
 const rootReducer = {
   layout,
@@ -22,5 +24,7 @@ const rootReducer = {
   cart,
   course,
   topic,
+  logos,
+  categories
 };
 export default rootReducer;

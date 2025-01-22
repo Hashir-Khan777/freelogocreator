@@ -19,8 +19,6 @@ import { useSelector } from "react-redux";
 import Button from "components/ui/Button";
 import Modal from "components/ui/Modal";
 import Textinput from "components/ui/Textinput";
-import Fileinput from "components/ui/Fileinput";
-import Select from "react-select";
 
 const actions = [
   {
@@ -33,15 +31,12 @@ const actions = [
   },
 ];
 
-const Logos = () => {
+const Categories = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
   const [form, setForm] = useState({
-    title: "",
-    description: "",
-    graphic: "",
-    category_id: "",
+    name: "",
   });
 
   const COLUMNS = [
@@ -53,8 +48,8 @@ const Logos = () => {
       },
     },
     {
-      Header: "Logo",
-      accessor: "graphic",
+      Header: "Name",
+      accessor: "name",
       Cell: (row) => {
         return (
           <div>
@@ -68,29 +63,6 @@ const Logos = () => {
             </span>
           </div>
         );
-      },
-    },
-    {
-      Header: "Category",
-      accessor: "category_id",
-      Cell: (row) => {
-        return (
-          <span>{categories.find((x) => x.id === row?.cell?.value)?.name}</span>
-        );
-      },
-    },
-    {
-      Header: "Title",
-      accessor: "title",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
-      },
-    },
-    {
-      Header: "Description",
-      accessor: "description",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
       },
     },
     {
@@ -120,7 +92,7 @@ const Logos = () => {
                             }
                           : () => {
                               dispatch(
-                                Logo.deleteGraphics({
+                                Category.deleteCategories({
                                   id: row.cell.row.values?.id,
                                 })
                               );
@@ -151,18 +123,11 @@ const Logos = () => {
     },
   ];
 
-  const { graphics } = useSelector((x) => x.logos);
+  const columns = useMemo(() => COLUMNS, []);
+
   const { categories } = useSelector((x) => x.categories);
 
-  const columns = useMemo(() => COLUMNS, [categories]);
   const dispatch = useDispatch();
-
-  const styles = {
-    option: (provided, state) => ({
-      ...provided,
-      fontSize: "14px",
-    }),
-  };
 
   const tableInstance = useTable(
     {
@@ -197,17 +162,16 @@ const Logos = () => {
   const { globalFilter, pageIndex } = state;
 
   useEffect(() => {
-    dispatch(Logo.getGraphics());
     dispatch(Category.getCategories());
   }, [dispatch]);
 
   useEffect(() => {
-    setData(graphics);
-  }, [graphics]);
+    setData(categories);
+  }, [categories]);
 
   return (
     <div>
-      <HomeBredCurbs title="Logos" />
+      <HomeBredCurbs title="Categories" />
       <Card noborder>
         <div className="md:flex justify-between items-center mb-6">
           <div>
@@ -347,59 +311,21 @@ const Logos = () => {
         </div>
       </Card>
       <Modal
-        title={`${edit ? "Update" : "Add"} Logo`}
+        title={`${edit ? "Update" : "Add"} Category`}
         centered
         activeModal={show}
         onClose={() => setShow(false)}
       >
         <Card>
           <div className="space-y-4">
-            <Fileinput
-              name="basic"
-              onChange={(e) => {
-                const reader = new FileReader();
-
-                reader.onload = function (f) {
-                  setForm({ ...form, graphic: f.target.result });
-                };
-
-                reader.readAsText(e.target.files[0]);
-              }}
-            />
             <Textinput
-              label="Title"
-              value={form.title}
-              defaultValue={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
+              label="Category Name"
+              value={form.name}
+              defaultValue={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
               id="h_Fullname2"
               type="text"
-              placeholder="Enter Title"
-            />
-            <label htmlFor=" hh" className="form-label ">
-              Category
-            </label>
-            <Select
-              className="react-select"
-              classNamePrefix="select"
-              value={{
-                value: categories.find((x) => x.id === form.category_id)?.id,
-                label: categories.find((x) => x.id === form.category_id)?.name,
-              }}
-              options={categories.map((x) => ({ label: x.name, value: x.id }))}
-              styles={styles}
-              onChange={(e) => setForm({ ...form, category_id: e.value })}
-              id="hh"
-            />
-            <Textinput
-              label="Description"
-              value={form.description}
-              defaultValue={form.description}
-              onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
-              }
-              id="h_Fullname2"
-              type="text"
-              placeholder="Enter Description"
+              placeholder="Enter Name"
             />
             <div className="flex justify-end">
               <Button
@@ -407,18 +333,15 @@ const Logos = () => {
                 className="btn-dark"
                 onClick={() => {
                   if (edit) {
-                    dispatch(Logo.editGraphics(form));
+                    dispatch(Category.editCategories(form));
                     setShow(false);
                     setEdit(false);
                   } else {
-                    dispatch(Logo.addGraphics(form));
+                    dispatch(Category.addCategories(form));
                     setShow(false);
                   }
                   setForm({
-                    title: "",
-                    description: "",
-                    graphic: "",
-                    category_id: "",
+                    name: "",
                   });
                 }}
               />
@@ -430,4 +353,4 @@ const Logos = () => {
   );
 };
 
-export default Logos;
+export default Categories;
