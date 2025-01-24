@@ -14,7 +14,7 @@ import {
 } from "react-table";
 import GlobalFilter from "../table/react-tables/GlobalFilter";
 import { useDispatch } from "react-redux";
-import { Category, Logo } from "store/actions";
+import { Auth, Category, Logo, User } from "store/actions";
 import { useSelector } from "react-redux";
 import Button from "components/ui/Button";
 import Modal from "components/ui/Modal";
@@ -34,15 +34,15 @@ const actions = [
   },
 ];
 
-const Logos = () => {
+const Users = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
   const [form, setForm] = useState({
-    title: "",
-    description: "",
-    graphic: "",
-    category_id: "",
+    name: "",
+    email: "",
+    password: "",
+    role: "",
   });
 
   const COLUMNS = [
@@ -54,42 +54,22 @@ const Logos = () => {
       },
     },
     {
-      Header: "Logo",
-      accessor: "graphic",
-      Cell: (row) => {
-        return (
-          <div>
-            <span className="inline-flex items-center">
-              <span className="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none">
-                <div
-                  dangerouslySetInnerHTML={{ __html: row?.cell?.value }}
-                  className="object-cover w-full h-full rounded-full"
-                />
-              </span>
-            </span>
-          </div>
-        );
-      },
-    },
-    {
-      Header: "Category",
-      accessor: "category_id",
-      Cell: (row) => {
-        return (
-          <span>{categories.find((x) => x.id === row?.cell?.value)?.name}</span>
-        );
-      },
-    },
-    {
-      Header: "Title",
-      accessor: "title",
+      Header: "Email",
+      accessor: "email",
       Cell: (row) => {
         return <span>{row?.cell?.value}</span>;
       },
     },
     {
-      Header: "Description",
-      accessor: "description",
+      Header: "Name",
+      accessor: "name",
+      Cell: (row) => {
+        return <span>{row?.cell?.value}</span>;
+      },
+    },
+    {
+      Header: "Role",
+      accessor: "role",
       Cell: (row) => {
         return <span>{row?.cell?.value}</span>;
       },
@@ -121,7 +101,7 @@ const Logos = () => {
                             }
                           : () => {
                               dispatch(
-                                Logo.deleteGraphics({
+                                User.deleteUser({
                                   id: row.cell.row.values?.id,
                                 })
                               );
@@ -152,10 +132,9 @@ const Logos = () => {
     },
   ];
 
-  const { loading, graphics } = useSelector((x) => x.logos);
-  const { categories } = useSelector((x) => x.categories);
+  const { loading, users } = useSelector((x) => x.users);
 
-  const columns = useMemo(() => COLUMNS, [categories]);
+  const columns = useMemo(() => COLUMNS, []);
   const dispatch = useDispatch();
 
   const styles = {
@@ -198,13 +177,12 @@ const Logos = () => {
   const { globalFilter, pageIndex } = state;
 
   useEffect(() => {
-    dispatch(Logo.getGraphics());
-    dispatch(Category.getCategories());
+    dispatch(User.getUsers());
   }, [dispatch]);
 
   useEffect(() => {
-    setData(graphics);
-  }, [graphics]);
+    setData(users);
+  }, [users]);
 
   return (
     <div>
@@ -212,7 +190,7 @@ const Logos = () => {
         <Loading />
       ) : (
         <>
-          <HomeBredCurbs title="Logos" />
+          <HomeBredCurbs title="Users" />
           <Card noborder>
             <div className="md:flex justify-between items-center mb-6">
               <div>
@@ -358,64 +336,59 @@ const Logos = () => {
             </div>
           </Card>
           <Modal
-            title={`${edit ? "Update" : "Add"} Logo`}
+            title={`${edit ? "Update" : "Add"} User`}
             centered
             activeModal={show}
             onClose={() => setShow(false)}
           >
             <Card>
               <div className="space-y-4">
-                <Fileinput
-                  name="basic"
-                  onChange={(e) => {
-                    const reader = new FileReader();
-
-                    reader.onload = function (f) {
-                      setForm({ ...form, graphic: f.target.result });
-                    };
-
-                    reader.readAsText(e.target.files[0]);
-                  }}
-                />
                 <Textinput
-                  label="Title"
-                  value={form.title}
-                  defaultValue={form.title}
-                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                  label="Name"
+                  value={form.name}
+                  defaultValue={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
                   id="h_Fullname2"
                   type="text"
-                  placeholder="Enter Title"
+                  placeholder="Enter Name"
+                />
+                <Textinput
+                  label="Email"
+                  value={form.email}
+                  defaultValue={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  id="h_Fullname2"
+                  type="text"
+                  placeholder="Enter Email"
+                />
+                <Textinput
+                  label="password"
+                  value={form.password}
+                  defaultValue={form.password}
+                  onChange={(e) =>
+                    setForm({ ...form, password: e.target.value })
+                  }
+                  id="h_Fullname2"
+                  type="password"
+                  placeholder="Enter Password"
                 />
                 <label htmlFor=" hh" className="form-label ">
-                  Category
+                  Role
                 </label>
                 <Select
                   className="react-select"
                   classNamePrefix="select"
                   value={{
-                    value: categories.find((x) => x.id === form.category_id)
-                      ?.id,
-                    label: categories.find((x) => x.id === form.category_id)
-                      ?.name,
+                    value: form.role,
+                    label: form.role,
                   }}
-                  options={categories.map((x) => ({
-                    label: x.name,
-                    value: x.id,
-                  }))}
+                  options={[
+                    { label: "user", value: "user" },
+                    { label: "Admin", value: "admin" },
+                  ]}
                   styles={styles}
-                  onChange={(e) => setForm({ ...form, category_id: e.value })}
+                  onChange={(e) => setForm({ ...form, role: e.value })}
                   id="hh"
-                />
-                <Textinput
-                  label="Description"
-                  value={form.description}
-                  defaultValue={form.description}
-                  onChange={(e) =>
-                    setForm({ ...form, description: e.target.value })
-                  }
-                  id="h_Fullname2"
-                  type="text"
-                  placeholder="Enter Description"
                 />
                 <div className="flex justify-end">
                   <Button
@@ -423,18 +396,18 @@ const Logos = () => {
                     className="btn-dark"
                     onClick={() => {
                       if (edit) {
-                        dispatch(Logo.editGraphics(form));
+                        dispatch(User.editUser(form));
                         setShow(false);
                         setEdit(false);
                       } else {
-                        dispatch(Logo.addGraphics(form));
+                        dispatch(Auth.registerUser(form));
                         setShow(false);
                       }
                       setForm({
-                        title: "",
-                        description: "",
-                        graphic: "",
-                        category_id: "",
+                        name: "",
+                        email: "",
+                        password: "",
+                        role: "",
                       });
                     }}
                   />
@@ -448,4 +421,4 @@ const Logos = () => {
   );
 };
 
-export default Logos;
+export default Users;

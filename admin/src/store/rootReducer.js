@@ -11,6 +11,7 @@ import course from "./reducers/course.js";
 import topic from "./reducers/topic.js";
 import logos from "./reducers/logos.js";
 import categories from "./reducers/categories.js";
+import users from "./reducers/user.js";
 
 const rootReducer = {
   layout,
@@ -25,6 +26,7 @@ const rootReducer = {
   course,
   topic,
   logos,
-  categories
+  categories,
+  users,
 };
 export default rootReducer;

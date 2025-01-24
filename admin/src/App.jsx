@@ -10,6 +10,7 @@ const ProjectPage = lazy(() => import("./pages/dashboard/project"));
 const BankingPage = lazy(() => import("./pages/dashboard/banking"));
 const LogosPage = lazy(() => import("./pages/logos"));
 const CategoriesPage = lazy(() => import("./pages/categories"));
+const UsersPage = lazy(() => import("./pages/users"));
 
 const Login = lazy(() => import("./pages/auth/login"));
 const ResetPass = lazy(() => import("./pages/auth/reset-password"));
@@ -139,6 +140,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="logos" element={<LogosPage />} />
           <Route path="categories" element={<CategoriesPage />} />
+          <Route path="users" element={<UsersPage />} />
           <Route path="ecommerce" element={<Ecommerce />} />
           <Route path="crm" element={<CrmPage />} />
           <Route path="project" element={<ProjectPage />} />

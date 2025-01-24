@@ -102,5 +102,39 @@ namespace backend.Controllers
 
             return NotFound(new { message = "Please register yourself" });
         }
+
+        [HttpGet("users")]
+        public IActionResult GetUser()
+        {
+            List<User> all_users = db.Users.ToList();
+
+            return Ok(new { data = all_users });
+        }
+
+        [HttpPut("users")]
+        public IActionResult UpdateUser([FromBody] User user)
+        {
+            db.Users.Update(user);
+            db.SaveChanges();
+
+            return Ok(new { message = "User updated successfully", data = user });
+        }
+
+        [HttpDelete("users/{id}")]
+        public IActionResult Delete(int id)
+        {
+            User? user = db.Users.FirstOrDefault(x => x.Id == id);
+
+            if (user != null)
+            {
+                db.Users.Remove(user);
+                db.SaveChanges();
+                return Ok(new { message = "User deleted successfully", data = user });
+            }
+            else
+            {
+                return NotFound(new { message = "User not found" });
+            }
+        }
     }
 }

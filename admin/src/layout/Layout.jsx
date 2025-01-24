@@ -24,21 +24,22 @@ const Layout = () => {
   const [collapsed] = useSidebar();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.authentication);
+  const { data } = useSelector((state) => state.authentication);
+
+  useEffect(() => {
+    if (localStorage.getItem("_user")) {
+      navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   // useEffect(() => {
-  //   if (localStorage.getItem("_user")) {
-  //     dispatch(verifyUser());
-  //   } else {
+  //   if (!data?.email) {
   //     navigate("/");
   //   }
-  // }, [dispatch]);
+  // }, [data, navigate]);
 
-  // useEffect(() => {
-  //   if (!user?.verified) {
-  //     navigate("/");
-  //   }
-  // }, [user, navigate]);
   const switchHeaderClass = () => {
     if (menuType === "horizontal" || menuHidden) {
       return "ltr:ml-0 rtl:mr-0";

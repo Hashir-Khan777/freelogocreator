@@ -73,6 +73,12 @@ const LoginForm = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (localStorage.getItem("_user")) {
+      navigate("/dashboard");
+    }
+  }, []);
+
   const [checked, setChecked] = useState(false);
 
   return (

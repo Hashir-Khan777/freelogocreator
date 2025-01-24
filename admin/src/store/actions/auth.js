@@ -32,28 +32,11 @@ const registerUser = createAsyncThunk(
   async (registerForm, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/register`,
+        `${process.env.REACT_APP_API_URL}/auth/signup`,
         registerForm
       );
-      localStorage.setItem("_token", data.token);
-      // dispatch(
-      //   showToast({
-      //     type: "success",
-      //     message: "Code has been sent to your email",
-      //   })
-      // );
-      //   dispatch(toggleRegisterModal(false));
-      //   dispatch(toggleVerifyEmailModal({ open: true }));
       return data;
     } catch (err) {
-      //   dispatch(
-      //     showToast({
-      //       type: "error",
-      //       message: err.response.data.message
-      //         ? err.response.data.message
-      //         : err.message,
-      //     })
-      //   );
       return rejectWithValue(
         err.response.data.message ? err.response.data.message : err.message
       );

@@ -3,5 +3,6 @@ import * as Course from "./course.js";
 import * as Topic from "./topic.js";
 import * as Logo from "./logos.js";
 import * as Category from "./categories.js";
+import * as User from "./user.js";
 
-export { Auth, Course, Topic, Logo, Category };
+export { Auth, Course, Topic, Logo, Category, User };
