@@ -10,6 +10,9 @@ namespace backend
         public DbSet<User> Users { get; set; }
         public DbSet<Graphics> Graphics { get; set; }
         public DbSet<Categories> Categories { get; set; }
+        public DbSet<Packages> Packages { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<Queries> Queries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
