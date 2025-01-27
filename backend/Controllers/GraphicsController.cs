@@ -37,7 +37,7 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Graphics> all_graphics = db.Graphics.ToList();
+            List<Graphics> all_graphics = db.Graphics.OrderByDescending(x => x.created_at).ToList();
 
             return Ok(new { data = all_graphics });
         }
