@@ -17,7 +17,14 @@ namespace backend.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] Categories category)
         {
-            category.Id = db.Categories.Max(x => x.Id) + 1;
+            if (db.Categories.Count() > 0)
+            {
+                category.Id = db.Categories.Max(x => x.Id) + 1;
+            }
+            else
+            {
+                category.Id = 1;
+            }
             category.created_at = DateTime.UtcNow;
             category.updated_at = DateTime.UtcNow;
 

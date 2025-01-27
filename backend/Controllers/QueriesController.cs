@@ -17,7 +17,14 @@ namespace backend.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] Queries query)
         {
-            query.Id = db.Queries.Max(x => x.Id) + 1;
+            if (db.Queries.Count() > 0)
+            {
+                query.Id = db.Queries.Max(x => x.Id) + 1;
+            }
+            else
+            {
+                query.Id = 1;
+            }
             query.created_at = DateTime.UtcNow;
             query.updated_at = DateTime.UtcNow;
 

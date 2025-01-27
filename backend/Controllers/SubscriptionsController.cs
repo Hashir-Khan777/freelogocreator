@@ -17,7 +17,14 @@ namespace backend.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] Subscription subscription)
         {
-            subscription.Id = db.Subscriptions.Max(x => x.Id) + 1;
+            if (db.Subscriptions.Count() > 0)
+            {
+                subscription.Id = db.Subscriptions.Max(x => x.Id) + 1;
+            }
+            else
+            {
+                subscription.Id = 1;
+            }
             subscription.created_at = DateTime.UtcNow;
             subscription.updated_at = DateTime.UtcNow;
 

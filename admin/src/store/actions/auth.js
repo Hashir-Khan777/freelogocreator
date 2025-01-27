@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const loginUser = createAsyncThunk(
   "auth/login",
@@ -9,16 +10,12 @@ const loginUser = createAsyncThunk(
         `${process.env.REACT_APP_API_URL}/auth/login`,
         loginForm
       );
-      localStorage.setItem("_user", data.token);
+      localStorage.setItem("_user", data.data.id);
+      toast.success("Login successful");
       return data;
     } catch (err) {
-      dispatch(
-        showToast({
-          type: "error",
-          message: err.response.data.message
-            ? err.response.data.message
-            : err.message,
-        })
+      toast.error(
+        err.response.data.message ? err.response.data.message : err.message
       );
       return rejectWithValue(
         err.response.data.message ? err.response.data.message : err.message
@@ -35,8 +32,12 @@ const registerUser = createAsyncThunk(
         `${process.env.REACT_APP_API_URL}/auth/signup`,
         registerForm
       );
+      toast.success("User added successfully");
       return data;
     } catch (err) {
+      toast.error(
+        err.response.data.message ? err.response.data.message : err.message
+      );
       return rejectWithValue(
         err.response.data.message ? err.response.data.message : err.message
       );

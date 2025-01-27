@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const getGraphics = createAsyncThunk(
-  "graphics/get",
+const getPackages = createAsyncThunk(
+  "packages/get",
   async (obj, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/graphics`
+        `${process.env.REACT_APP_API_URL}/packages`
       );
       return data;
     } catch (err) {
@@ -18,15 +18,15 @@ const getGraphics = createAsyncThunk(
   }
 );
 
-const addGraphics = createAsyncThunk(
-  "graphics/add",
+const addPackages = createAsyncThunk(
+  "packages/add",
   async (obj, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/graphics`,
+        `${process.env.REACT_APP_API_URL}/packages`,
         obj
       );
-      toast.success("Logo added successfully");
+      toast.success("Package added successfully");
       return data;
     } catch (err) {
       toast.error(
@@ -39,15 +39,15 @@ const addGraphics = createAsyncThunk(
   }
 );
 
-const editGraphics = createAsyncThunk(
-  "graphics/edit",
+const editPackages = createAsyncThunk(
+  "packages/edit",
   async (obj, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.put(
-        `${process.env.REACT_APP_API_URL}/graphics`,
+        `${process.env.REACT_APP_API_URL}/packages`,
         obj
       );
-      toast.success("Logo updated successfully");
+      toast.success("Package updated successfully");
       return data;
     } catch (err) {
       toast.error(
@@ -60,14 +60,14 @@ const editGraphics = createAsyncThunk(
   }
 );
 
-const deleteGraphics = createAsyncThunk(
-  "graphics/delete",
+const deletePackages = createAsyncThunk(
+  "packages/delete",
   async (obj, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.delete(
-        `${process.env.REACT_APP_API_URL}/graphics/${obj.id}`
+        `${process.env.REACT_APP_API_URL}/packages/${obj.id}`
       );
-      toast.success("Logo deleted successfully");
+      toast.success("Package deleted successfully");
       return data;
     } catch (err) {
       toast.error(
@@ -80,4 +80,4 @@ const deleteGraphics = createAsyncThunk(
   }
 );
 
-export { getGraphics, addGraphics, editGraphics, deleteGraphics };
+export { getPackages, addPackages, editPackages, deletePackages };

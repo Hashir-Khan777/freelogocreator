@@ -17,7 +17,14 @@ namespace backend.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] Packages package)
         {
-            package.Id = db.Packages.Max(x => x.Id) + 1;
+            if (db.Packages.Count() > 0)
+            {
+                package.Id = db.Packages.Max(x => x.Id) + 1;
+            }
+            else
+            {
+                package.Id = 1;
+            }
             package.created_at = DateTime.UtcNow;
             package.updated_at = DateTime.UtcNow;
 

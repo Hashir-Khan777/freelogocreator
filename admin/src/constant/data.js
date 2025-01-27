@@ -23,6 +23,30 @@ export const menuItems = [
     icon: "heroicons-outline:view-boards",
     link: "users",
   },
+  {
+    title: "Packages",
+    isHide: false,
+    icon: "heroicons-outline:document-duplicate",
+    link: "packages",
+  },
+  {
+    title: "Subscriptions",
+    isHide: false,
+    icon: "heroicons-outline:calendar",
+    link: "subscriptions",
+  },
+  {
+    title: "Queries",
+    isHide: false,
+    icon: "heroicons-outline:question-mark-circle",
+    link: "queries",
+  },
+  {
+    title: "Logs",
+    isHide: false,
+    icon: "heroicons-outline:document",
+    link: "logs",
+  },
 ];
 
 export const topMenu = [

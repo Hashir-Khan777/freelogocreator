@@ -111,6 +111,21 @@ namespace backend.Controllers
             return Ok(new { data = all_users });
         }
 
+        [HttpGet("users/{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            User? user = db.Users.FirstOrDefault(x => x.Id == id);
+
+            if (user != null)
+            {
+                return Ok(new { data = user });
+            }
+            else
+            {
+                return NotFound(new { message = "User not found" });
+            }
+        }
+
         [HttpPut("users")]
         public IActionResult UpdateUser([FromBody] User user)
         {

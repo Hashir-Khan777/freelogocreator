@@ -10,6 +10,8 @@
 
         public string password { get; set; } = string.Empty;
 
+        public string image { get; set; } = string.Empty;
+
         public string role { get; set; } = string.Empty;
 
         public DateTime created_at { get; set; }

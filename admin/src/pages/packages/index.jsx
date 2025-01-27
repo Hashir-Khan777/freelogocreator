@@ -14,7 +14,7 @@ import {
 } from "react-table";
 import GlobalFilter from "../table/react-tables/GlobalFilter";
 import { useDispatch } from "react-redux";
-import { Auth, Category, Logo, User } from "store/actions";
+import { Category, Logo, Package } from "store/actions";
 import { useSelector } from "react-redux";
 import Button from "components/ui/Button";
 import Modal from "components/ui/Modal";
@@ -34,28 +34,20 @@ const actions = [
   },
 ];
 
-const Users = () => {
+const Packages = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
   const [form, setForm] = useState({
     name: "",
-    email: "",
-    password: "",
-    role: "",
+    logolimit: "",
+    amount: "",
   });
 
   const COLUMNS = [
     {
       Header: "Id",
       accessor: "id",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
-      },
-    },
-    {
-      Header: "Email",
-      accessor: "email",
       Cell: (row) => {
         return <span>{row?.cell?.value}</span>;
       },
@@ -68,8 +60,15 @@ const Users = () => {
       },
     },
     {
-      Header: "Role",
-      accessor: "role",
+      Header: "Logolimit",
+      accessor: "logolimit",
+      Cell: (row) => {
+        return <span>{row?.cell?.value}</span>;
+      },
+    },
+    {
+      Header: "amount",
+      accessor: "amount",
       Cell: (row) => {
         return <span>{row?.cell?.value}</span>;
       },
@@ -101,7 +100,7 @@ const Users = () => {
                             }
                           : () => {
                               dispatch(
-                                User.deleteUser({
+                                Package.deletePackages({
                                   id: row.cell.row.values?.id,
                                 })
                               );
@@ -132,7 +131,7 @@ const Users = () => {
     },
   ];
 
-  const { loading, users } = useSelector((x) => x.users);
+  const { loading, packages } = useSelector((x) => x.packages);
 
   const columns = useMemo(() => COLUMNS, []);
   const dispatch = useDispatch();
@@ -177,12 +176,12 @@ const Users = () => {
   const { globalFilter, pageIndex } = state;
 
   useEffect(() => {
-    dispatch(User.getUsers());
+    dispatch(Package.getPackages());
   }, [dispatch]);
 
   useEffect(() => {
-    setData(users.filter((x) => x.role !== "admin"));
-  }, [users]);
+    setData(packages);
+  }, [packages]);
 
   return (
     <div>
@@ -190,7 +189,7 @@ const Users = () => {
         <Loading />
       ) : (
         <>
-          <HomeBredCurbs title="Users" />
+          <HomeBredCurbs title="Packages" />
           <Card noborder>
             <div className="md:flex justify-between items-center mb-6">
               <div>
@@ -336,7 +335,7 @@ const Users = () => {
             </div>
           </Card>
           <Modal
-            title={`${edit ? "Update" : "Add"} User`}
+            title={`${edit ? "Update" : "Add"} Logo`}
             centered
             activeModal={show}
             onClose={() => setShow(false)}
@@ -353,42 +352,24 @@ const Users = () => {
                   placeholder="Enter Name"
                 />
                 <Textinput
-                  label="Email"
-                  value={form.email}
-                  defaultValue={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  id="h_Fullname2"
-                  type="text"
-                  placeholder="Enter Email"
-                />
-                <Textinput
-                  label="password"
-                  value={form.password}
-                  defaultValue={form.password}
+                  label="Logo Limit"
+                  value={form.logolimit}
+                  defaultValue={form.logolimit}
                   onChange={(e) =>
-                    setForm({ ...form, password: e.target.value })
+                    setForm({ ...form, logolimit: e.target.value })
                   }
                   id="h_Fullname2"
-                  type="password"
-                  placeholder="Enter Password"
+                  type="text"
+                  placeholder="Enter Logo Limit"
                 />
-                <label htmlFor=" hh" className="form-label ">
-                  Role
-                </label>
-                <Select
-                  className="react-select"
-                  classNamePrefix="select"
-                  value={{
-                    value: form.role,
-                    label: form.role,
-                  }}
-                  options={[
-                    { label: "user", value: "user" },
-                    { label: "Admin", value: "admin" },
-                  ]}
-                  styles={styles}
-                  onChange={(e) => setForm({ ...form, role: e.value })}
-                  id="hh"
+                <Textinput
+                  label="Amount"
+                  value={form.amount}
+                  defaultValue={form.amount}
+                  onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                  id="h_Fullname2"
+                  type="text"
+                  placeholder="Enter Amount"
                 />
                 <div className="flex justify-end">
                   <Button
@@ -396,18 +377,17 @@ const Users = () => {
                     className="btn-dark"
                     onClick={() => {
                       if (edit) {
-                        dispatch(User.editUser(form));
+                        dispatch(Package.editPackages(form));
                         setShow(false);
                         setEdit(false);
                       } else {
-                        dispatch(Auth.registerUser(form));
+                        dispatch(Package.addPackages(form));
                         setShow(false);
                       }
                       setForm({
                         name: "",
-                        email: "",
-                        password: "",
-                        role: "",
+                        logolimit: "",
+                        amount: "",
                       });
                     }}
                   />
@@ -421,4 +401,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Packages;

@@ -26,7 +26,7 @@ export default createSlice({
     });
     builder.addCase(Logo.addGraphics.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.graphics.push(payload.data);
+      state.graphics.unshift(payload.data);
     });
     builder.addCase(Logo.addGraphics.rejected, (state) => {
       state.loading = false;

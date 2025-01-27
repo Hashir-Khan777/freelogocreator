@@ -12,6 +12,10 @@ import topic from "./reducers/topic.js";
 import logos from "./reducers/logos.js";
 import categories from "./reducers/categories.js";
 import users from "./reducers/user.js";
+import packages from "./reducers/packages.js";
+import subscriptions from "./reducers/subscriptions.js";
+import queries from "./reducers/queries.js";
+import logs from "./reducers/logs.js";
 
 const rootReducer = {
   layout,
@@ -28,5 +32,9 @@ const rootReducer = {
   logos,
   categories,
   users,
+  packages,
+  subscriptions,
+  queries,
+  logs,
 };
 export default rootReducer;

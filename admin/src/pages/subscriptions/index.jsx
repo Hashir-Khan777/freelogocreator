@@ -14,7 +14,7 @@ import {
 } from "react-table";
 import GlobalFilter from "../table/react-tables/GlobalFilter";
 import { useDispatch } from "react-redux";
-import { Auth, Category, Logo, User } from "store/actions";
+import { Category, Logo, Package, Subscription, User } from "store/actions";
 import { useSelector } from "react-redux";
 import Button from "components/ui/Button";
 import Modal from "components/ui/Modal";
@@ -34,15 +34,14 @@ const actions = [
   },
 ];
 
-const Users = () => {
+const Subscriptions = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
   const [form, setForm] = useState({
     name: "",
-    email: "",
-    password: "",
-    role: "",
+    logolimit: "",
+    amount: "",
   });
 
   const COLUMNS = [
@@ -54,87 +53,30 @@ const Users = () => {
       },
     },
     {
-      Header: "Email",
-      accessor: "email",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
-      },
-    },
-    {
-      Header: "Name",
-      accessor: "name",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
-      },
-    },
-    {
-      Header: "Role",
-      accessor: "role",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
-      },
-    },
-    {
-      Header: "action",
-      accessor: "action",
+      Header: "Package",
+      accessor: "package_id",
       Cell: (row) => {
         return (
-          <div>
-            <Dropdown
-              classMenuItems="right-0 w-[140px] top-[-110%] "
-              label={
-                <span className="text-xl text-center block w-full">
-                  <Icon icon="heroicons-outline:dots-vertical" />
-                </span>
-              }
-            >
-              <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                {actions.map((item, i) => (
-                  <Menu.Item key={i}>
-                    <div
-                      onClick={
-                        item.name === "edit"
-                          ? () => {
-                              setForm(row.cell.row.values);
-                              setShow(true);
-                              setEdit(true);
-                            }
-                          : () => {
-                              dispatch(
-                                User.deleteUser({
-                                  id: row.cell.row.values?.id,
-                                })
-                              );
-                            }
-                      }
-                      className={`
-                    
-                      ${
-                        item.name === "delete"
-                          ? "bg-danger-500 text-danger-500 bg-opacity-30   hover:bg-opacity-100 hover:text-white"
-                          : "hover:bg-slate-900 hover:text-white dark:hover:bg-slate-600 dark:hover:bg-opacity-50"
-                      }
-                       w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm  last:mb-0 cursor-pointer 
-                       first:rounded-t last:rounded-b flex  space-x-2 items-center rtl:space-x-reverse `}
-                    >
-                      <span className="text-base">
-                        <Icon icon={item.icon} />
-                      </span>
-                      <span>{item.name}</span>
-                    </div>
-                  </Menu.Item>
-                ))}
-              </div>
-            </Dropdown>
-          </div>
+          <span>{packages.find((x) => x.id === row?.cell?.value)?.name}</span>
+        );
+      },
+    },
+    {
+      Header: "User",
+      accessor: "user_id",
+      Cell: (row) => {
+        return (
+          <span>{users.find((x) => x.id === row?.cell?.value)?.name}</span>
         );
       },
     },
   ];
 
-  const { loading, users } = useSelector((x) => x.users);
+  const { loading, subscriptions } = useSelector((x) => x.subscriptions);
+  const { packages } = useSelector((x) => x.packages);
+  const { users } = useSelector((x) => x.users);
 
-  const columns = useMemo(() => COLUMNS, []);
+  const columns = useMemo(() => COLUMNS, [packages, users]);
   const dispatch = useDispatch();
 
   const styles = {
@@ -177,12 +119,14 @@ const Users = () => {
   const { globalFilter, pageIndex } = state;
 
   useEffect(() => {
+    dispatch(Subscription.getSubscriptions());
+    dispatch(Package.getPackages());
     dispatch(User.getUsers());
   }, [dispatch]);
 
   useEffect(() => {
-    setData(users.filter((x) => x.role !== "admin"));
-  }, [users]);
+    setData(subscriptions);
+  }, [subscriptions]);
 
   return (
     <div>
@@ -190,16 +134,16 @@ const Users = () => {
         <Loading />
       ) : (
         <>
-          <HomeBredCurbs title="Users" />
+          <HomeBredCurbs title="Subscriptions" />
           <Card noborder>
             <div className="md:flex justify-between items-center mb-6">
               <div>
-                <Button
+                {/* <Button
                   icon="heroicons-outline:plus"
                   text="Add"
                   className="btn-dark w-full block"
                   onClick={() => setShow(true)}
-                />
+                /> */}
               </div>
               <div>
                 <GlobalFilter
@@ -336,7 +280,7 @@ const Users = () => {
             </div>
           </Card>
           <Modal
-            title={`${edit ? "Update" : "Add"} User`}
+            title={`${edit ? "Update" : "Add"} Logo`}
             centered
             activeModal={show}
             onClose={() => setShow(false)}
@@ -353,42 +297,24 @@ const Users = () => {
                   placeholder="Enter Name"
                 />
                 <Textinput
-                  label="Email"
-                  value={form.email}
-                  defaultValue={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  id="h_Fullname2"
-                  type="text"
-                  placeholder="Enter Email"
-                />
-                <Textinput
-                  label="password"
-                  value={form.password}
-                  defaultValue={form.password}
+                  label="Logo Limit"
+                  value={form.logolimit}
+                  defaultValue={form.logolimit}
                   onChange={(e) =>
-                    setForm({ ...form, password: e.target.value })
+                    setForm({ ...form, logolimit: e.target.value })
                   }
                   id="h_Fullname2"
-                  type="password"
-                  placeholder="Enter Password"
+                  type="text"
+                  placeholder="Enter Logo Limit"
                 />
-                <label htmlFor=" hh" className="form-label ">
-                  Role
-                </label>
-                <Select
-                  className="react-select"
-                  classNamePrefix="select"
-                  value={{
-                    value: form.role,
-                    label: form.role,
-                  }}
-                  options={[
-                    { label: "user", value: "user" },
-                    { label: "Admin", value: "admin" },
-                  ]}
-                  styles={styles}
-                  onChange={(e) => setForm({ ...form, role: e.value })}
-                  id="hh"
+                <Textinput
+                  label="Amount"
+                  value={form.amount}
+                  defaultValue={form.amount}
+                  onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                  id="h_Fullname2"
+                  type="text"
+                  placeholder="Enter Amount"
                 />
                 <div className="flex justify-end">
                   <Button
@@ -396,18 +322,17 @@ const Users = () => {
                     className="btn-dark"
                     onClick={() => {
                       if (edit) {
-                        dispatch(User.editUser(form));
+                        dispatch(Package.editPackages(form));
                         setShow(false);
                         setEdit(false);
                       } else {
-                        dispatch(Auth.registerUser(form));
+                        dispatch(Package.addPackages(form));
                         setShow(false);
                       }
                       setForm({
                         name: "",
-                        email: "",
-                        password: "",
-                        role: "",
+                        logolimit: "",
+                        amount: "",
                       });
                     }}
                   />
@@ -421,4 +346,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Subscriptions;

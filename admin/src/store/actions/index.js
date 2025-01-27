@@ -4,5 +4,20 @@ import * as Topic from "./topic.js";
 import * as Logo from "./logos.js";
 import * as Category from "./categories.js";
 import * as User from "./user.js";
+import * as Package from "./packages.js";
+import * as Subscription from "./subscriptions.js";
+import * as Query from "./queries.js";
+import * as Log from "./logs.js";
 
-export { Auth, Course, Topic, Logo, Category, User };
+export {
+  Auth,
+  Course,
+  Topic,
+  Logo,
+  Category,
+  User,
+  Package,
+  Subscription,
+  Query,
+  Log,
+};
