@@ -20,6 +20,7 @@ import Button from "components/ui/Button";
 import Modal from "components/ui/Modal";
 import Textinput from "components/ui/Textinput";
 import Loading from "components/Loading";
+import Icons from "components/ui/Icon";
 
 const actions = [
   {
@@ -36,9 +37,22 @@ const Categories = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [deleteShow, setDeleteShow] = useState(false);
+  const [deleteData, setDeleteData] = useState(null);
   const [form, setForm] = useState({
     name: "",
   });
+
+  const isEmpty = (value) => {
+    return (
+      value === undefined ||
+      value === null ||
+      (typeof value === "object" &&
+        (Object.keys(value).length === 0 ||
+          Object.keys(value).every((key) => isEmpty(value[key])))) ||
+      (typeof value === "string" && value.trim().length === 0)
+    );
+  };
 
   const COLUMNS = [
     {
@@ -52,18 +66,7 @@ const Categories = () => {
       Header: "Name",
       accessor: "name",
       Cell: (row) => {
-        return (
-          <div>
-            <span className="inline-flex items-center">
-              <span className="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none">
-                <div
-                  dangerouslySetInnerHTML={{ __html: row?.cell?.value }}
-                  className="object-cover w-full h-full rounded-full"
-                />
-              </span>
-            </span>
-          </div>
-        );
+        return <div>{row?.cell?.value}</div>;
       },
     },
     {
@@ -92,11 +95,8 @@ const Categories = () => {
                               setEdit(true);
                             }
                           : () => {
-                              dispatch(
-                                Category.deleteCategories({
-                                  id: row.cell.row.values?.id,
-                                })
-                              );
+                              setDeleteShow(true);
+                              setDeleteData(row.cell.row.values?.id);
                             }
                       }
                       className={`
@@ -325,7 +325,13 @@ const Categories = () => {
             title={`${edit ? "Update" : "Add"} Category`}
             centered
             activeModal={show}
-            onClose={() => setShow(false)}
+            onClose={() => {
+              setShow(false);
+              setEdit(false);
+              setForm({
+                name: "",
+              });
+            }}
           >
             <Card>
               <div className="space-y-4">
@@ -343,13 +349,15 @@ const Categories = () => {
                     text="Submit"
                     className="btn-dark"
                     onClick={() => {
-                      if (edit) {
-                        dispatch(Category.editCategories(form));
-                        setShow(false);
-                        setEdit(false);
-                      } else {
-                        dispatch(Category.addCategories(form));
-                        setShow(false);
+                      if (!isEmpty(form)) {
+                        if (edit) {
+                          dispatch(Category.editCategories(form));
+                          setShow(false);
+                          setEdit(false);
+                        } else {
+                          dispatch(Category.addCategories(form));
+                          setShow(false);
+                        }
                       }
                       setForm({
                         name: "",
@@ -359,6 +367,42 @@ const Categories = () => {
                 </div>
               </div>
             </Card>
+          </Modal>
+          <Modal
+            title=""
+            centered
+            activeModal={deleteShow}
+            onClose={() => {
+              setDeleteShow(false);
+            }}
+          >
+            <Icons
+              className="mx-auto text-red-600"
+              width="100px"
+              icon="heroicons-outline:x-circle"
+            />
+            <p className="mb-6 mt-2 text-center text-xl text-black-500">
+              Do you really want to delete this?
+            </p>
+            <div className="flex justify-between space-x-3 rtl:space-x-reverse">
+              <Button
+                className="flex-1 btn-secondary"
+                text="Cancel"
+                onClick={() => setDeleteShow(false)}
+              />
+              <Button
+                className="flex-1 btn-danger"
+                text="Delete"
+                onClick={() => {
+                  dispatch(
+                    Category.deleteCategories({
+                      id: deleteData,
+                    })
+                  );
+                  setDeleteShow(false);
+                }}
+              />
+            </div>
           </Modal>
         </>
       )}

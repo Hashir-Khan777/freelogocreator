@@ -11,6 +11,17 @@ export default createSlice({
   name: "users",
   initialState,
   extraReducers: (builder) => {
+    builder.addCase(Auth.registerUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(Auth.registerUser.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.users.unshift(payload.data);
+    });
+    builder.addCase(Auth.registerUser.rejected, (state) => {
+      state.loading = false;
+    });
+
     builder.addCase(User.getUsers.pending, (state) => {
       state.loading = true;
     });
@@ -59,7 +70,7 @@ export default createSlice({
     });
     builder.addCase(User.deleteUser.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.graphics = state.users.filter((x) => x.id != payload.data.id);
+      state.users = state.users.filter((x) => x.id != payload.data.id);
     });
     builder.addCase(User.deleteUser.rejected, (state) => {
       state.loading = false;

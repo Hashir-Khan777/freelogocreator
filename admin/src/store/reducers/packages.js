@@ -26,7 +26,7 @@ export default createSlice({
     });
     builder.addCase(Package.addPackages.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.packages.push(payload.data);
+      state.packages.unshift(payload.data);
     });
     builder.addCase(Package.addPackages.rejected, (state) => {
       state.loading = false;
@@ -39,6 +39,8 @@ export default createSlice({
       state.loading = false;
       const obj = state.packages.find((x) => x.id === payload.data.id);
       obj.name = payload.data.name;
+      obj.amount = payload.data.amount;
+      obj.logolimit = payload.data.logolimit;
     });
     builder.addCase(Package.editPackages.rejected, (state) => {
       state.loading = false;

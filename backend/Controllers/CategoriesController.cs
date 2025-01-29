@@ -37,7 +37,7 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Categories> all_categories = db.Categories.ToList();
+            List<Categories> all_categories = db.Categories.OrderByDescending(x => x.Id).ToList();
 
             return Ok(new { data = all_categories });
         }
@@ -75,6 +75,8 @@ namespace backend.Controllers
         [HttpPut]
         public IActionResult Update([FromBody] Categories category)
         {
+            category.created_at = DateTime.UtcNow;
+            category.updated_at = DateTime.UtcNow;
             db.Categories.Update(category);
             db.SaveChanges();
 

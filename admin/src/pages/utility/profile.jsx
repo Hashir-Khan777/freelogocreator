@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { User } from "store/actions";
 import { useSelector } from "react-redux";
 import Button from "components/ui/Button";
+import UserAvatar from "assets/images/all-img/user.png";
 
 const profile = () => {
   const [form, setForm] = useState({
@@ -51,6 +52,11 @@ const profile = () => {
     <div>
       <Card title="Edit Profile">
         <div className="space-y-3">
+          <img
+            src={user?.image || form?.image || UserAvatar}
+            alt=""
+            className="block w-[100px] h-[100px] mx-auto object-cover rounded-full"
+          />
           <Fileinput
             name="basic"
             selectedFile={form.image}

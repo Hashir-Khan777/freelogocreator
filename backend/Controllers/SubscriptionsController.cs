@@ -37,7 +37,7 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Subscription> all_subscriptions = db.Subscriptions.ToList();
+            List<Subscription> all_subscriptions = db.Subscriptions.OrderByDescending(x => x.Id).ToList();
 
             return Ok(new { data = all_subscriptions });
         }
@@ -60,6 +60,8 @@ namespace backend.Controllers
         [HttpPut]
         public IActionResult Update([FromBody] Subscription subscription)
         {
+            subscription.created_at = DateTime.UtcNow;
+            subscription.updated_at = DateTime.UtcNow;
             db.Subscriptions.Update(subscription);
             db.SaveChanges();
 

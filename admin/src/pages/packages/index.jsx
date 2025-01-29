@@ -22,6 +22,7 @@ import Textinput from "components/ui/Textinput";
 import Fileinput from "components/ui/Fileinput";
 import Select from "react-select";
 import Loading from "components/Loading";
+import Icons from "components/ui/Icon";
 
 const actions = [
   {
@@ -38,11 +39,24 @@ const Packages = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [deleteShow, setDeleteShow] = useState(false);
+  const [deleteData, setDeleteData] = useState(null);
   const [form, setForm] = useState({
     name: "",
     logolimit: "",
     amount: "",
   });
+
+  const isEmpty = (value) => {
+    return (
+      value === undefined ||
+      value === null ||
+      (typeof value === "object" &&
+        (Object.keys(value).length === 0 ||
+          Object.keys(value).every((key) => isEmpty(value[key])))) ||
+      (typeof value === "string" && value.trim().length === 0)
+    );
+  };
 
   const COLUMNS = [
     {
@@ -99,11 +113,8 @@ const Packages = () => {
                               setEdit(true);
                             }
                           : () => {
-                              dispatch(
-                                Package.deletePackages({
-                                  id: row.cell.row.values?.id,
-                                })
-                              );
+                              setDeleteShow(true);
+                              setDeleteData(row.cell.row.values?.id);
                             }
                       }
                       className={`
@@ -338,7 +349,15 @@ const Packages = () => {
             title={`${edit ? "Update" : "Add"} Logo`}
             centered
             activeModal={show}
-            onClose={() => setShow(false)}
+            onClose={() => {
+              setShow(false);
+              setEdit(false);
+              setForm({
+                name: "",
+                logolimit: "",
+                amount: "",
+              });
+            }}
           >
             <Card>
               <div className="space-y-4">
@@ -376,13 +395,15 @@ const Packages = () => {
                     text="Submit"
                     className="btn-dark"
                     onClick={() => {
-                      if (edit) {
-                        dispatch(Package.editPackages(form));
-                        setShow(false);
-                        setEdit(false);
-                      } else {
-                        dispatch(Package.addPackages(form));
-                        setShow(false);
+                      if (!isEmpty(form)) {
+                        if (edit) {
+                          dispatch(Package.editPackages(form));
+                          setShow(false);
+                          setEdit(false);
+                        } else {
+                          dispatch(Package.addPackages(form));
+                          setShow(false);
+                        }
                       }
                       setForm({
                         name: "",
@@ -394,6 +415,42 @@ const Packages = () => {
                 </div>
               </div>
             </Card>
+          </Modal>
+          <Modal
+            title=""
+            centered
+            activeModal={deleteShow}
+            onClose={() => {
+              setDeleteShow(false);
+            }}
+          >
+            <Icons
+              className="mx-auto text-red-600"
+              width="100px"
+              icon="heroicons-outline:x-circle"
+            />
+            <p className="mb-6 mt-2 text-center text-xl text-black-500">
+              Do you really want to delete this?
+            </p>
+            <div className="flex justify-between space-x-3 rtl:space-x-reverse">
+              <Button
+                className="flex-1 btn-secondary"
+                text="Cancel"
+                onClick={() => setDeleteShow(false)}
+              />
+              <Button
+                className="flex-1 btn-danger"
+                text="Delete"
+                onClick={() => {
+                  dispatch(
+                    Package.deletePackages({
+                      id: deleteData,
+                    })
+                  );
+                  setDeleteShow(false);
+                }}
+              />
+            </div>
           </Modal>
         </>
       )}

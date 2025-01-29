@@ -37,7 +37,7 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Graphics> all_graphics = db.Graphics.OrderByDescending(x => x.created_at).ToList();
+            List<Graphics> all_graphics = db.Graphics.OrderByDescending(x => x.Id).ToList();
 
             return Ok(new { data = all_graphics });
         }
@@ -60,6 +60,8 @@ namespace backend.Controllers
         [HttpPut]
         public IActionResult Update([FromBody] Graphics graphics)
         {
+            graphics.created_at = DateTime.UtcNow;
+            graphics.updated_at = DateTime.UtcNow;
             db.Graphics.Update(graphics);
             db.SaveChanges();
 

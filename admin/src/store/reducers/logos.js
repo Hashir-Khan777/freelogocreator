@@ -38,7 +38,10 @@ export default createSlice({
     builder.addCase(Logo.editGraphics.fulfilled, (state, { payload }) => {
       state.loading = false;
       const obj = state.graphics.find((x) => x.id === payload.data.id);
-      obj.name = payload.data.name;
+      obj.title = payload.data.title;
+      obj.description = payload.data.description;
+      obj.category_id = payload.data.category_id;
+      obj.graphic = payload.data.graphic;
     });
     builder.addCase(Logo.editGraphics.rejected, (state) => {
       state.loading = false;

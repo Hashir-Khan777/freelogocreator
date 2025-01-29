@@ -17,7 +17,7 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Logs> all_logs = db.Logs.ToList();
+            List<Logs> all_logs = db.Logs.OrderByDescending(x => x.Id).ToList();
 
             return Ok(new { data = all_logs });
         }

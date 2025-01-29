@@ -26,7 +26,7 @@ export default createSlice({
     });
     builder.addCase(Category.addCategories.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.categories.push(payload.data);
+      state.categories.unshift(payload.data);
     });
     builder.addCase(Category.addCategories.rejected, (state) => {
       state.loading = false;

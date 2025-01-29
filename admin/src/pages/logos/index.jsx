@@ -22,6 +22,7 @@ import Textinput from "components/ui/Textinput";
 import Fileinput from "components/ui/Fileinput";
 import Select from "react-select";
 import Loading from "components/Loading";
+import Icons from "components/ui/Icon";
 
 const actions = [
   {
@@ -37,6 +38,8 @@ const actions = [
 const Logos = () => {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
+  const [deleteShow, setDeleteShow] = useState(false);
+  const [deleteData, setDeleteData] = useState(null);
   const [edit, setEdit] = useState(false);
   const [form, setForm] = useState({
     title: "",
@@ -44,6 +47,17 @@ const Logos = () => {
     graphic: "",
     category_id: "",
   });
+
+  const isEmpty = (value) => {
+    return (
+      value === undefined ||
+      value === null ||
+      (typeof value === "object" &&
+        (Object.keys(value).length === 0 ||
+          Object.keys(value).every((key) => isEmpty(value[key])))) ||
+      (typeof value === "string" && value.trim().length === 0)
+    );
+  };
 
   const COLUMNS = [
     {
@@ -120,11 +134,8 @@ const Logos = () => {
                               setEdit(true);
                             }
                           : () => {
-                              dispatch(
-                                Logo.deleteGraphics({
-                                  id: row.cell.row.values?.id,
-                                })
-                              );
+                              setDeleteShow(true);
+                              setDeleteData(row.cell.row.values?.id);
                             }
                       }
                       className={`
@@ -195,11 +206,12 @@ const Logos = () => {
     prepareRow,
   } = tableInstance;
 
-  const { globalFilter, pageIndex } = state;
+  const { globalFilter, pageIndex, pageSize } = state;
 
   useEffect(() => {
     dispatch(Logo.getGraphics());
     dispatch(Category.getCategories());
+    setPageSize(50);
   }, [dispatch]);
 
   useEffect(() => {
@@ -289,25 +301,17 @@ const Logos = () => {
             </div>
             <div className="md:flex md:space-y-0 space-y-5 justify-between mt-6 items-center">
               <div className=" flex items-center space-x-3 rtl:space-x-reverse">
-                <span className=" flex space-x-2  rtl:space-x-reverse items-center">
-                  <span className=" text-sm font-medium text-slate-600 dark:text-slate-300">
-                    Go
-                  </span>
-                  <span>
-                    <input
-                      type="number"
-                      className=" form-control py-2"
-                      defaultValue={pageIndex + 1}
-                      onChange={(e) => {
-                        const pageNumber = e.target.value
-                          ? Number(e.target.value) - 1
-                          : 0;
-                        gotoPage(pageNumber);
-                      }}
-                      style={{ width: "50px" }}
-                    />
-                  </span>
-                </span>
+                <select
+                  className="form-control py-2 w-max"
+                  value={pageSize}
+                  onChange={(e) => setPageSize(Number(e.target.value))}
+                >
+                  {[10, 25, 50].map((pageSize) => (
+                    <option key={pageSize} value={pageSize}>
+                      Show {pageSize}
+                    </option>
+                  ))}
+                </select>
                 <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
                   Page{" "}
                   <span>
@@ -321,10 +325,21 @@ const Logos = () => {
                     className={` ${
                       !canPreviousPage ? "opacity-50 cursor-not-allowed" : ""
                     }`}
+                    onClick={() => gotoPage(0)}
+                    disabled={!canPreviousPage}
+                  >
+                    <Icon icon="heroicons:chevron-double-left-solid" />
+                  </button>
+                </li>
+                <li className="text-sm leading-4 text-slate-900 dark:text-white rtl:rotate-180">
+                  <button
+                    className={` ${
+                      !canPreviousPage ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                     onClick={() => previousPage()}
                     disabled={!canPreviousPage}
                   >
-                    <Icon icon="heroicons-outline:chevron-left" />
+                    Prev
                   </button>
                 </li>
                 {pageOptions.map((page, pageIdx) => (
@@ -343,7 +358,7 @@ const Logos = () => {
                     </button>
                   </li>
                 ))}
-                <li className="text-xl leading-4 text-slate-900 dark:text-white rtl:rotate-180">
+                <li className="text-sm leading-4 text-slate-900 dark:text-white rtl:rotate-180">
                   <button
                     className={` ${
                       !canNextPage ? "opacity-50 cursor-not-allowed" : ""
@@ -351,7 +366,18 @@ const Logos = () => {
                     onClick={() => nextPage()}
                     disabled={!canNextPage}
                   >
-                    <Icon icon="heroicons-outline:chevron-right" />
+                    Next
+                  </button>
+                </li>
+                <li className="text-xl leading-4 text-slate-900 dark:text-white rtl:rotate-180">
+                  <button
+                    onClick={() => gotoPage(pageCount - 1)}
+                    disabled={!canNextPage}
+                    className={` ${
+                      !canNextPage ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    <Icon icon="heroicons:chevron-double-right-solid" />
                   </button>
                 </li>
               </ul>
@@ -361,9 +387,22 @@ const Logos = () => {
             title={`${edit ? "Update" : "Add"} Logo`}
             centered
             activeModal={show}
-            onClose={() => setShow(false)}
+            onClose={() => {
+              setShow(false);
+              setEdit(false);
+              setForm({
+                title: "",
+                description: "",
+                graphic: "",
+                category_id: "",
+              });
+            }}
           >
             <Card>
+              <div
+                dangerouslySetInnerHTML={{ __html: form.graphic }}
+                className="block mx-auto w-[100px] mb-2 object-cover rounded-full"
+              />
               <div className="space-y-4">
                 <Fileinput
                   name="basic"
@@ -422,13 +461,15 @@ const Logos = () => {
                     text="Submit"
                     className="btn-dark"
                     onClick={() => {
-                      if (edit) {
-                        dispatch(Logo.editGraphics(form));
-                        setShow(false);
-                        setEdit(false);
-                      } else {
-                        dispatch(Logo.addGraphics(form));
-                        setShow(false);
+                      if (!isEmpty(form)) {
+                        if (edit) {
+                          dispatch(Logo.editGraphics(form));
+                          setShow(false);
+                          setEdit(false);
+                        } else {
+                          dispatch(Logo.addGraphics(form));
+                          setShow(false);
+                        }
                       }
                       setForm({
                         title: "",
@@ -441,6 +482,42 @@ const Logos = () => {
                 </div>
               </div>
             </Card>
+          </Modal>
+          <Modal
+            title=""
+            centered
+            activeModal={deleteShow}
+            onClose={() => {
+              setDeleteShow(false);
+            }}
+          >
+            <Icons
+              className="mx-auto text-red-600"
+              width="100px"
+              icon="heroicons-outline:x-circle"
+            />
+            <p className="mb-6 mt-2 text-center text-xl text-black-500">
+              Do you really want to delete this?
+            </p>
+            <div className="flex justify-between space-x-3 rtl:space-x-reverse">
+              <Button
+                className="flex-1 btn-secondary"
+                text="Cancel"
+                onClick={() => setDeleteShow(false)}
+              />
+              <Button
+                className="flex-1 btn-danger"
+                text="Delete"
+                onClick={() => {
+                  dispatch(
+                    Logo.deleteGraphics({
+                      id: deleteData,
+                    })
+                  );
+                  setDeleteShow(false);
+                }}
+              />
+            </div>
           </Modal>
         </>
       )}

@@ -37,7 +37,7 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Packages> all_package = db.Packages.ToList();
+            List<Packages> all_package = db.Packages.OrderByDescending(x => x.Id).ToList();
 
             return Ok(new { data = all_package });
         }
@@ -60,6 +60,8 @@ namespace backend.Controllers
         [HttpPut]
         public IActionResult Update([FromBody] Packages package)
         {
+            package.created_at = DateTime.UtcNow;
+            package.updated_at = DateTime.UtcNow;
             db.Packages.Update(package);
             db.SaveChanges();
 

@@ -37,7 +37,7 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<Queries> all_queries = db.Queries.ToList();
+            List<Queries> all_queries = db.Queries.OrderByDescending(x => x.Id).ToList();
 
             return Ok(new { data = all_queries });
         }
@@ -60,6 +60,8 @@ namespace backend.Controllers
         [HttpPut]
         public IActionResult Update([FromBody] Queries query)
         {
+            query.created_at = DateTime.UtcNow;
+            query.updated_at = DateTime.UtcNow;
             db.Queries.Update(query);
             db.SaveChanges();
 

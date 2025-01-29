@@ -34,6 +34,9 @@ namespace backend.Controllers
             user.password = hashedPassword;
             user.role = "user";
 
+            user.created_at = DateTime.UtcNow;
+            user.updated_at = DateTime.UtcNow;
+
             db.Users.Add(user);
             db.SaveChanges();
 
@@ -106,7 +109,7 @@ namespace backend.Controllers
         [HttpGet("users")]
         public IActionResult GetUser()
         {
-            List<User> all_users = db.Users.ToList();
+            List<User> all_users = db.Users.OrderByDescending(x => x.Id).ToList();
 
             return Ok(new { data = all_users });
         }
@@ -129,10 +132,28 @@ namespace backend.Controllers
         [HttpPut("users")]
         public IActionResult UpdateUser([FromBody] User user)
         {
-            db.Users.Update(user);
-            db.SaveChanges();
+            try
+            {
+                var prevuser = db.Users.FirstOrDefault(x => x.Id == user.Id);
+                prevuser.name = user.name;
+                prevuser.email = user.email;
+                prevuser.image = user.image;
+                prevuser.role = user.role;
+                prevuser.updated_at = DateTime.UtcNow;
+                if (user.password is not null)
+                {
+                    string hashedPassword = passwordHasher.HashPassword(null, user.password);
 
-            return Ok(new { message = "User updated successfully", data = user });
+                    prevuser.password = hashedPassword;
+                }
+                db.Users.Update(prevuser);
+                db.SaveChanges();
+
+                return Ok(new { message = "User updated successfully", data = prevuser });
+            }
+            catch (Exception ex) { 
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("users/{id}")]
