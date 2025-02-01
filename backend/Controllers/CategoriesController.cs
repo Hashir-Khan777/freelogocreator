@@ -28,7 +28,7 @@ namespace backend.Controllers
             category.created_at = DateTime.UtcNow;
             category.updated_at = DateTime.UtcNow;
 
-            db.Categories.Add(new Categories { Name = category.Name, created_at = category.created_at, updated_at = category.updated_at });
+            db.Categories.Add(new Categories { Id = category.Id, Name = category.Name, created_at = category.created_at, updated_at = category.updated_at });
             db.SaveChanges();
 
             return Ok(new { message = "Category added successfully", data = category });
