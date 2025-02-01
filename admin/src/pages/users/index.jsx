@@ -364,7 +364,7 @@ const Users = () => {
             <Card>
               <div className="space-y-4">
                 <Textinput
-                  label="Name"
+                  label="Name *"
                   value={form.name}
                   defaultValue={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -373,7 +373,7 @@ const Users = () => {
                   placeholder="Enter Name"
                 />
                 <Textinput
-                  label="Email"
+                  label="Email *"
                   value={form.email}
                   defaultValue={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -382,7 +382,7 @@ const Users = () => {
                   placeholder="Enter Email"
                 />
                 <Textinput
-                  label="password"
+                  label="password *"
                   value={form.password}
                   defaultValue={form.password}
                   onChange={(e) =>
@@ -393,7 +393,7 @@ const Users = () => {
                   placeholder="Enter Password"
                 />
                 <label htmlFor=" hh" className="form-label ">
-                  Role
+                  Role *
                 </label>
                 <Select
                   className="react-select"

@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 const getGraphics = createAsyncThunk(
   "graphics/get",
   async (obj, { rejectWithValue, dispatch }) => {
+    console.log(obj, "obj");
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/graphics`
+        `${process.env.REACT_APP_API_URL}/graphics/all/${obj.page}`
       );
       return data;
     } catch (err) {

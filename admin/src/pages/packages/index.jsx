@@ -362,7 +362,7 @@ const Packages = () => {
             <Card>
               <div className="space-y-4">
                 <Textinput
-                  label="Name"
+                  label="Name *"
                   value={form.name}
                   defaultValue={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -371,7 +371,7 @@ const Packages = () => {
                   placeholder="Enter Name"
                 />
                 <Textinput
-                  label="Logo Limit"
+                  label="Logo Limit *"
                   value={form.logolimit}
                   defaultValue={form.logolimit}
                   onChange={(e) =>
@@ -382,7 +382,7 @@ const Packages = () => {
                   placeholder="Enter Logo Limit"
                 />
                 <Textinput
-                  label="Amount"
+                  label="Amount *"
                   value={form.amount}
                   defaultValue={form.amount}
                   onChange={(e) => setForm({ ...form, amount: e.target.value })}

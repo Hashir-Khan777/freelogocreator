@@ -229,16 +229,6 @@
   },
   {
     "ContainingType": "backend.Controllers.GraphicsController",
-    "Method": "Get",
-    "RelativePath": "api/graphics",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "backend.Controllers.GraphicsController",
     "Method": "Update",
     "RelativePath": "api/graphics",
     "HttpMethod": "PUT",
@@ -279,6 +269,22 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.GraphicsController",
+    "Method": "Get",
+    "RelativePath": "api/graphics/all/{page}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "page",
         "Type": "System.Int32",
         "IsRequired": true
       }

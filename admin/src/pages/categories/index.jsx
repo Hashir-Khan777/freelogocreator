@@ -336,7 +336,7 @@ const Categories = () => {
             <Card>
               <div className="space-y-4">
                 <Textinput
-                  label="Category Name"
+                  label="Category Name *"
                   value={form.name}
                   defaultValue={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}

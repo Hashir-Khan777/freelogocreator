@@ -34,10 +34,10 @@ namespace backend.Controllers
             return Ok(new { message = "Graphic added successfully", data = graphics });
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("all/{page}")]
+        public IActionResult Get(int page)
         {
-            List<Graphics> all_graphics = db.Graphics.OrderByDescending(x => x.Id).ToList();
+            List<Graphics> all_graphics = db.Graphics.OrderByDescending(x => x.Id).Take(10 * page).ToList();
 
             return Ok(new { data = all_graphics });
         }
