@@ -5,6 +5,10 @@ import ForgetPassword from "./forgetpassword";
 import ResetPassword from "./resetpassword";
 import SVGCanvasEditor from "./editsvg";
 import Filter from "./filter";
+import About from "./about";
+import Contact from "./contact";
+import Website from "./website";
+import Logo from "./logo";
 
 export {
   Login,
@@ -14,4 +18,8 @@ export {
   ResetPassword,
   SVGCanvasEditor,
   Filter,
+  About,
+  Contact,
+  Website,
+  Logo,
 };

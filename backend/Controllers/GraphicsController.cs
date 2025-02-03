@@ -37,7 +37,7 @@ namespace backend.Controllers
         [HttpGet("all/{page}")]
         public IActionResult Get(int page)
         {
-            List<Graphics> all_graphics = db.Graphics.OrderByDescending(x => x.Id).Take(10 * page).ToList();
+            List<Graphics> all_graphics = db.Graphics.OrderByDescending(x => x.Id).Take(30 * page).ToList();
 
             return Ok(new { data = all_graphics });
         }

@@ -7,7 +7,7 @@ export const getAllGraphics = createAsyncThunk(
   async (obj, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/graphics`
+        `${process.env.REACT_APP_BASE_API_URL}/graphics/all/${obj.page}`
       );
       return data.data;
     } catch (err) {

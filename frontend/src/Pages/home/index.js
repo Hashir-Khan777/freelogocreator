@@ -4,34 +4,1237 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllGraphics } from "../../store/actions/graphics.action";
 import { toggleGeneratePostModal } from "../../store/reducers/modals.reducer";
 
+let page = 1;
 const Home = () => {
   const dispatch = useDispatch();
 
   const { graphics } = useSelector((x) => x.GraphicsReducer);
 
   useEffect(() => {
-    dispatch(getAllGraphics());
+    dispatch(getAllGraphics({ page }));
   }, [dispatch]);
 
   return (
-    <Container flex={1} maxWidth="1216px" my="20px">
-      <SimpleGrid columns={{ base: 4, md: 4, lg: 5, xl: 6 }} spacing={5}>
-        {graphics?.map((graphic) => (
-          <Box
-            onClick={() => {
-              dispatch(
-                toggleGeneratePostModal({
-                  open: true,
-                  data: { logo: graphic.graphic },
-                })
-              );
-            }}
-            key={graphic.id}
-            dangerouslySetInnerHTML={{ __html: graphic.graphic }}
-          />
-        ))}
-      </SimpleGrid>
-    </Container>
+    <main className="main">
+      <section className="section-box">
+        <div className="banner-hero hero-1">
+          <div className="banner-inner">
+            <div className="row">
+              <div className="col-lg-8">
+                <div className="block-banner">
+                  <span className="text-small-primary text-small-primary--disk text-uppercase wow animate__animated animate__fadeInUp">
+                    Best Logo Maker Site
+                  </span>
+                  <h1 className="heading-banner wow animate__animated animate__fadeInUp">
+                    Fast &amp; Powerful Logo Maker for Business Logo Design
+                  </h1>
+                  <div
+                    className="banner-description mt-30 wow animate__animated animate__fadeInUp"
+                    data-wow-delay=".1s"
+                  >
+                    1M+ happy customers have got their company logo designs from
+                    our AI logo creator. Now it’s your turn!{" "}
+                  </div>
+                  <div
+                    className="form-find mt-60 wow animate__animated animate__fadeInUp"
+                    data-wow-delay=".2s"
+                  >
+                    <form>
+                      <input
+                        type="text"
+                        className="form-input input-keysearch mr-10"
+                        placeholder="Logo Maker's Site"
+                      />
+                      <button className="btn btn-default btn-find">
+                        Find now
+                      </button>
+                    </form>
+                  </div>
+                  <div
+                    className="list-tags-banner mt-60 wow animate__animated animate__fadeInUp"
+                    data-wow-delay=".3s"
+                  >
+                    <strong>Popular Searches:</strong>
+                    <a href="#">Tech</a>, <a href="#">Social Icons</a>,{" "}
+                    <a href="#">Web</a>, <a href="#">Engineer</a>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="banner-imgs">
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/banner/banner.png"
+                    className="img-responsive shape-1"
+                  />
+                  <span className="union-icon">
+                    <img
+                      alt="logomaker"
+                      src="/assets/imgs/banner/union.svg"
+                      className="img-responsive shape-3"
+                    />
+                  </span>
+                  <span className="congratulation-icon">
+                    <img
+                      alt="logomaker"
+                      src="/assets/imgs/banner/congratulation.svg"
+                      className="img-responsive shape-2"
+                    />
+                  </span>
+                  <span className="docs-icon">
+                    <img
+                      alt="logomaker"
+                      src="/assets/imgs/banner/docs.svg"
+                      className="img-responsive shape-2"
+                    />
+                  </span>
+                  <span className="course-icon">
+                    <img
+                      alt="logomaker"
+                      src="/assets/imgs/banner/course.svg"
+                      className="img-responsive shape-3"
+                    />
+                  </span>
+                  <span className="web-dev-icon">
+                    <img
+                      alt="logomaker"
+                      src="/assets/imgs/banner/web-dev.svg"
+                      className="img-responsive shape-3"
+                    />
+                  </span>
+                  <span className="tick-icon">
+                    <img
+                      alt="logomaker"
+                      src="/assets/imgs/banner/tick.svg"
+                      className="img-responsive shape-3"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="section-box wow animate__animated animate__fadeIn mt-70">
+        <div className="container">
+          <div className="box-swiper">
+            <div className="swiper-container swiper-group-6">
+              <div className="swiper-wrapper pb-70 pt-5">
+                <div className="swiper-slide hover-up">
+                  <div className="item-logo">
+                    <a href="candidates-single.html">
+                      <img
+                        alt="logomaker"
+                        src="/assets/imgs/slider/logo/google.svg"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div className="swiper-slide hover-up">
+                  <div className="item-logo">
+                    <a href="candidates-single.html">
+                      <img
+                        alt="logomaker"
+                        src="/assets/imgs/slider/logo/airbnb.svg"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div className="swiper-slide hover-up">
+                  <div className="item-logo">
+                    <a href="candidates-single.html">
+                      <img
+                        alt="logomaker"
+                        src="/assets/imgs/slider/logo/dropbox.svg"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div className="swiper-slide hover-up">
+                  <div className="item-logo">
+                    <a href="candidates-single.html">
+                      <img
+                        alt="logomaker"
+                        src="/assets/imgs/slider/logo/fedex.svg"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div className="swiper-slide hover-up">
+                  <div className="item-logo">
+                    <a href="candidates-single.html">
+                      <img
+                        alt="logomaker"
+                        src="/assets/imgs/slider/logo/wallmart.svg"
+                      />
+                    </a>
+                  </div>
+                </div>
+                <div className="swiper-slide hover-up">
+                  <div className="item-logo">
+                    <a href="candidates-single.html">
+                      <img
+                        alt="logomaker"
+                        src="/assets/imgs/slider/logo/hubspot.svg"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="swiper-button-next" />
+            <div className="swiper-button-prev" />
+          </div>
+        </div>
+      </div>
+      <section className="section-box mt-90">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6">
+              <div className="box-image-findjob box-image-about ml-0">
+                <figure>
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/page/about/banner-price.png"
+                  />
+                </figure>
+                <a
+                  href="https://www.youtube.com/watch?v=ea-I4sqgVGY"
+                  className="btn-play-video popup-youtube"
+                />
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className="box-info-job box-info-about pl-90">
+                <span className="text-blue text-uppercase wow animate__animated animate__fadeInUp">
+                  About us
+                </span>
+                <h5 className="heading-36 mb-30 mt-10 wow animate__animated animate__fadeInUp">
+                  {" "}
+                  We help you to set your business{" "}
+                </h5>
+                <p className="text-md mb-10 wow animate__ animate__fadeInUp animated">
+                  {" "}
+                  with a beautiful logo design that you can be proud of. Whether
+                  you opt for an online A.I. logo generator or custom logo
+                  design service!
+                </p>
+                <h5 className="heading-md-regular mt-10 mb-10 wow animate__animated animate__fadeInUp">
+                  1. Start with Logo Maker Tool{" "}
+                </h5>
+                <p className="text-md wow animate__animated animate__fadeInUp">
+                  Whether you’ll find just the design you need in our extensive
+                  library of logo templates.
+                </p>
+                <h5 className="heading-md-regular mt-10 mb-10 wow animate__animated animate__fadeInUp">
+                  2. Perfecting Your Logo Design
+                </h5>
+                <p className="text-md wow animate__animated animate__fadeInUp">
+                  Now it’s time to customize your logo using our easy
+                  drag-and-drop design editor.
+                </p>
+                <div className="mt-20 wow animate__animated animate__fadeInUp">
+                  <a
+                    href="logo.html"
+                    className="mt-sm-15 mt-lg-30 btn btn-border icon-chevron-right"
+                  >
+                    Browse all
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="section-box mt-50 mt-md-0">
+        <div className="container">
+          <div className="row align-items-end">
+            <div className="col-lg-7">
+              <h2 className="section-title mb-20 wow animate__animated animate__fadeInUp">
+                Browse by category
+              </h2>
+              <p className="text-md-lh28 color-black-5 wow animate__animated animate__fadeInUp">
+                Find the type of work you need, clearly defined and ready to
+                start. Work begins as soon as you purchase and provide
+                requirements.
+              </p>
+            </div>
+            <div
+              className="col-lg-5 text-lg-end text-start wow animate__animated animate__fadeInUp"
+              data-wow-delay=".2s"
+            >
+              <a
+                href="job-grid-2.html"
+                className="mt-sm-15 mt-lg-30 btn btn-border icon-chevron-right"
+              >
+                Browse all
+              </a>
+            </div>
+          </div>
+          <div className="row mt-70">
+            <div className="col-lg-3 col-md-6 col-sm-12 col-12">
+              <div className="card-grid hover-up wow animate__animated animate__fadeInUp">
+                <div className="text-center">
+                  <a href="job-grid.html">
+                    <figure>
+                      <img
+                        alt="logomaker"
+                        src="/assets/imgs/theme/icons/marketing.svg"
+                      />
+                    </figure>
+                  </a>
+                </div>
+                <h5 className="text-center mt-20 card-heading">
+                  <a href="job-grid.html">Marketing &amp; Communication</a>
+                </h5>
+                <p className="text-center text-stroke-40 mt-20">
+                  156 Available Vacancy
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12 col-12">
+              <div
+                className="card-grid hover-up wow animate__animated animate__fadeInUp"
+                data-wow-delay=".1s"
+              >
+                <div className="text-center">
+                  <a href="job-grid.html">
+                    <figure>
+                      <img
+                        alt="logomaker"
+                        src="/assets/imgs/theme/icons/content-writer.svg"
+                      />
+                    </figure>
+                  </a>
+                </div>
+                <h5 className="text-center mt-20 card-heading">
+                  <a href="job-grid.html">
+                    Content <br />
+                    Writer
+                  </a>
+                </h5>
+                <p className="text-center text-stroke-40 mt-20">
+                  268 Available Vacancy
+                </p>
+              </div>
+            </div>
+            <div
+              className="col-lg-3 col-md-6 col-sm-12 col-12 wow animate__animated animate__fadeInUp"
+              data-wow-delay=".2s"
+            >
+              <div className="card-grid hover-up">
+                <div className="text-center">
+                  <a href="job-grid.html">
+                    <figure>
+                      <img
+                        src="/assets/imgs/theme/icons/marketing-director.svg"
+                        alt="logomaker"
+                      />
+                    </figure>
+                  </a>
+                </div>
+                <h5 className="text-center mt-20 card-heading">
+                  <a href="job-grid.html">
+                    Marketing <br />
+                    Director
+                  </a>
+                </h5>
+                <p className="text-center text-stroke-40 mt-20">
+                  145 Available Vacancy
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12 col-12">
+              <div
+                className="card-grid hover-up wow animate__animated animate__fadeInUp"
+                data-wow-delay=".3s"
+              >
+                <div className="text-center">
+                  <a href="job-grid.html">
+                    <figure>
+                      <img
+                        src="/assets/imgs/theme/icons/system-analyst.svg"
+                        alt="logomaker"
+                      />
+                    </figure>
+                  </a>
+                </div>
+                <h5 className="text-center mt-20 card-heading">
+                  <a href="job-grid.html">
+                    System <br />
+                    Analyst
+                  </a>
+                </h5>
+                <p className="text-center text-stroke-40 mt-20">
+                  236 Available Vacancy
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12 col-12">
+              <div className="card-grid hover-up wow animate__animated animate__fadeInUp">
+                <div className="text-center">
+                  <a href="job-grid.html">
+                    <figure>
+                      <img
+                        src="/assets/imgs/theme/icons/business-development.svg"
+                        alt="logomaker"
+                      />
+                    </figure>
+                  </a>
+                </div>
+                <h5 className="text-center mt-20 card-heading">
+                  <a href="job-grid.html">
+                    Digital
+                    <br /> Designer
+                  </a>
+                </h5>
+                <p className="text-center text-stroke-40 mt-20">
+                  56 Available Vacancy
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12 col-12">
+              <div
+                className="card-grid hover-up wow animate__animated animate__fadeInUp"
+                data-wow-delay=".1s"
+              >
+                <div className="text-center">
+                  <a href="job-grid.html">
+                    <figure>
+                      <img
+                        src="/assets/imgs/theme/icons/proof-reading.svg"
+                        alt="logomaker"
+                      />
+                    </figure>
+                  </a>
+                </div>
+                <h5 className="text-center mt-20 card-heading">
+                  <a href="job-grid.html">
+                    Market <br />
+                    Research
+                  </a>
+                </h5>
+                <p className="text-center text-stroke-40 mt-20">
+                  168 Available Vacancy
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12 col-12">
+              <div
+                className="card-grid hover-up wow animate__animated animate__fadeInUp"
+                data-wow-delay=".2s"
+              >
+                <div className="text-center card-img">
+                  <a href="job-grid.html">
+                    <figure>
+                      <img
+                        src="/assets/imgs/theme/icons/testing.svg"
+                        alt="logomaker"
+                      />
+                    </figure>
+                  </a>
+                </div>
+                <h5 className="text-center mt-20 card-heading">
+                  <a href="job-grid.html">
+                    Human
+                    <br /> Resource
+                  </a>
+                </h5>
+                <p className="text-center text-stroke-40 mt-20">
+                  628 Available Vacancy
+                </p>
+              </div>
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12 col-12">
+              <div
+                className="card-grid hover-up wow animate__animated animate__fadeInUp"
+                data-wow-delay=".3s"
+              >
+                <div className="text-center mt-15">
+                  <h3>18,265+</h3>
+                </div>
+                <p className="text-center mt-30 text-stroke-40">
+                  Jobs are waiting for you
+                </p>
+                <div className="text-center mt-30">
+                  <div className="box-button-shadow">
+                    <a href="job-grid.html" className="btn btn-default">
+                      Explore more
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="section-box mt-50 mb-70 bg-patern">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6 col-sm-12">
+              <div className="content-job-inner">
+                <h2 className="section-title heading-lg wow animate__animated animate__fadeInUp">
+                  Ready to Roll Out Your Awesome Brand Identity?{" "}
+                </h2>
+                <div className="mt-40 pr-50 text-md-lh28 wow animate__animated animate__fadeInUp">
+                  Now, even your small business can have a rocking brand image
+                  when you use your new custom logo designer. With
+                  LogoDesign.net’s logo maker and brand design maker, you can
+                  literally build your brand in a few clicks!{" "}
+                </div>
+                <div className="mt-40">
+                  <div className="box-button-shadow wow animate__animated animate__fadeInUp">
+                    <a href="#" className="btn btn-default">
+                      Get Started
+                    </a>
+                  </div>
+                  <a
+                    href="#"
+                    className="btn btn-link wow animate__animated animate__fadeInUp"
+                  >
+                    Contact Us
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-6 col-sm-12">
+              <div className="box-image-job">
+                <figure className=" wow animate__animated animate__fadeIn">
+                  <img alt="logomaker" src="/assets/imgs/blog/img-job.png" />
+                </figure>
+                <div className="job-top-creator">
+                  <div className="job-top-creator-head">
+                    <h5>Our Top Logo's</h5>
+                  </div>
+                  <ul>
+                    <li>
+                      <div>
+                        <figure>
+                          <img
+                            alt="logomaker"
+                            src="/assets/imgs/avatar/ava_13.png"
+                          />
+                        </figure>
+                        <div className="job-info-creator">
+                          <strong>Beauty</strong>
+                          <span>UI/UX Designer</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <figure>
+                          <img
+                            alt="logomaker"
+                            src="/assets/imgs/avatar/ava_14.png"
+                          />
+                        </figure>
+                        <div className="job-info-creator">
+                          <strong>Avatar</strong>
+                          <span>Director</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <figure>
+                          <img
+                            alt="logomaker"
+                            src="/assets/imgs/avatar/ava_15.png"
+                          />
+                        </figure>
+                        <div className="job-info-creator">
+                          <strong>Fashion</strong>
+                          <span>Photographer</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <figure>
+                          <img
+                            alt="logomaker"
+                            src="/assets/imgs/avatar/ava_16.png"
+                          />
+                        </figure>
+                        <div className="job-info-creator">
+                          <strong>Sarah Harding</strong>
+                          <span>Motion Designer</span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="section-box">
+        <div className="container">
+          <ul className="list-partners">
+            <li
+              className="wow animate__animated animate__fadeInUp hover-up"
+              data-wow-delay="0s"
+            >
+              <a href="#">
+                <figure>
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/jobs/logos/samsung.svg"
+                  />
+                </figure>
+              </a>
+            </li>
+            <li
+              className="wow animate__animated animate__fadeInUp hover-up"
+              data-wow-delay=".1s"
+            >
+              <a href="#">
+                <figure>
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/jobs/logos/google.svg"
+                  />
+                </figure>
+              </a>
+            </li>
+            <li
+              className="wow animate__animated animate__fadeInUp hover-up"
+              data-wow-delay=".2s"
+            >
+              <a href="#">
+                <figure>
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/jobs/logos/facebook.svg"
+                  />
+                </figure>
+              </a>
+            </li>
+            <li
+              className="wow animate__animated animate__fadeInUp hover-up"
+              data-wow-delay=".3s"
+            >
+              <a href="#">
+                <figure>
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/jobs/logos/pinterest.svg"
+                  />
+                </figure>
+              </a>
+            </li>
+            <li
+              className="wow animate__animated animate__fadeInUp hover-up"
+              data-wow-delay=".4s"
+            >
+              <a href="#">
+                <figure>
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/jobs/logos/avaya.svg"
+                  />
+                </figure>
+              </a>
+            </li>
+            <li
+              className="wow animate__animated animate__fadeInUp hover-up"
+              data-wow-delay=".5s"
+            >
+              <a href="#">
+                <figure>
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/jobs/logos/forbes.svg"
+                  />
+                </figure>
+              </a>
+            </li>
+            <li
+              className="wow animate__animated animate__fadeInUp hover-up"
+              data-wow-delay=".1s"
+            >
+              <a href="#">
+                <figure>
+                  <img alt="logomaker" src="/assets/imgs/jobs/logos/avis.svg" />
+                </figure>
+              </a>
+            </li>
+            <li
+              className="wow animate__animated animate__fadeInUp hover-up"
+              data-wow-delay=".2s"
+            >
+              <a href="#">
+                <figure>
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/jobs/logos/nielsen.svg"
+                  />
+                </figure>
+              </a>
+            </li>
+            <li
+              className="wow animate__animated animate__fadeInUp hover-up"
+              data-wow-delay=".3s"
+            >
+              <a href="#">
+                <figure>
+                  <img
+                    alt="logomaker"
+                    src="/assets/imgs/jobs/logos/doordash.svg"
+                  />
+                </figure>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <section className="section-box mt-90 mb-80">
+        <div className="container">
+          <div className="block-job-bg block-job-bg-homepage-2">
+            <div className="row">
+              <div className="col-lg-6 col-md-12 col-sm-12 col-12 d-none d-md-block">
+                <div className="box-image-findjob findjob-homepage-2 ml-0 wow animate__animated animate__fadeIn">
+                  <figure>
+                    <img
+                      alt="logomaker"
+                      src="/assets/imgs/page/about/img-findjob.png"
+                    />
+                  </figure>
+                </div>
+              </div>
+              <div className="col-lg-6 col-md-12 col-sm-12 col-12">
+                <div className="box-info-job pl-90 pt-30 pr-90">
+                  <span className="text-blue wow animate__animated animate__fadeInUp">
+                    Find Awesome Designs
+                  </span>
+                  <h5 className="heading-36 mb-30 mt-30 wow animate__animated animate__fadeInUp">
+                    Brand Identity Designs{" "}
+                  </h5>
+                  <p className="text-lg wow animate__animated animate__fadeInUp">
+                    Now you can get a business card, letterhead and envelope
+                    designs on the go with our stationery design creator tools.
+                    If you are looking for a consistent branding across all your
+                    printed stationery and business card to match.
+                  </p>
+                  <div className="box-button-shadow mt-30 wow animate__animated animate__fadeInUp">
+                    <a href="job-grid.html" className="btn btn-default">
+                      Explore more
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="section-box mt-50 mt-md-0">
+        <div className="container">
+          <h2 className="section-title text-center mb-15 wow animate__animated animate__fadeInUp">
+            Our Happy Customer
+          </h2>
+          <div className="text-normal text-center color-black-5 box-mw-60 wow animate__animated animate__fadeInUp mt-20">
+            When it comes to choosing the right web hosting provider, we know
+            how easy it is to get overwhelmed with the number.
+          </div>
+          <div className="row mt-70">
+            <div className="box-swiper">
+              <div className="swiper-container swiper-group-3">
+                <div className="swiper-wrapper pb-70 pt-5">
+                  <div className="swiper-slide">
+                    <div className="card-grid-3 hover-up">
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <a href="candidates-single.html">
+                          <figure>
+                            <img
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile.png"
+                            />
+                          </figure>
+                        </a>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star5"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star5"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star4"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star4"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star3"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star3"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star2"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star2"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star1"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star1"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Katy Perry</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="swiper-slide">
+                    <div className="card-grid-3 hover-up">
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <a href="candidates-single.html">
+                          <figure>
+                            <img
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile2.png"
+                            />
+                          </figure>
+                        </a>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star52"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label htmlFor="star52" title="text">
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star42"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star42"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star32"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star32"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star22"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star22"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star12"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star12"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Chris Brown</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="swiper-slide">
+                    <div className="card-grid-3 hover-up">
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <a href="candidates-single.html">
+                          <figure>
+                            <img
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile3.png"
+                            />
+                          </figure>
+                        </a>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star53"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star53"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star43"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star43"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star33"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star33"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star23"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star23"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star13"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star13"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Justin Bieber</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="swiper-pagination swiper-pagination3" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="section-box mt-90 mb-50">
+        <div className="container">
+          <div className="mw-450 text-center">
+            <h3 className="mb-30 wow animate__animated animate__fadeInUp">
+              Choose The Offer That Suits You
+            </h3>
+          </div>
+          <div className="mw-650 text-center wow animate__animated animate__fadeInUp">
+            <p className="mb-35 text-md-lh24 color-black-5">
+              When it comes to choosing the right web hosting provider, we know
+              how easy it is to get overwhelmed with the number.
+            </p>
+          </div>
+          <div className="text-center mt-20">
+            <span className="text-lg text-billed">Billed Yearly</span>
+            <label className="switch ml-20 mr-20">
+              <input
+                type="checkbox"
+                id="cb_billed_type"
+                name="billed_type"
+                onchange="checkBilled()"
+              />
+              <span className="slider round" />
+            </label>
+            <span className="text-lg text-billed">Billed Monthly</span>
+          </div>
+          <div className="block-pricing mt-125 mt-md-50">
+            <div className="row">
+              <div
+                className="col-lg-3 col-md-6 wow animate__animated animate__fadeInUp"
+                data-wow-delay=".1s"
+              >
+                <div className="box-pricing-item">
+                  <div className="box-info-price">
+                    <span className="text-price for-month display-month">
+                      $20
+                    </span>
+                    <span className="text-price for-year">$240</span>
+                    <span className="text-month">/month</span>
+                  </div>
+                  <div>
+                    <h4 className="mb-15">Intro</h4>
+                    <p className="text-desc-package mb-30">
+                      For most businesses that want to otpimize web queries
+                    </p>
+                  </div>
+                  <ul className="list-package-feature">
+                    <li>All limited links</li>
+                    <li>Own analytics platform</li>
+                    <li>Chat support</li>
+                    <li>Optimize hashtags</li>
+                    <li>Unlimited users</li>
+                  </ul>
+                  <div>
+                    <a href="#" className="btn btn-border">
+                      Choose plan
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-3 col-md-6 wow animate__animated animate__fadeInUp"
+                data-wow-delay=".2s"
+              >
+                <div className="box-pricing-item">
+                  <div className="box-info-price">
+                    <span className="text-price for-month display-month">
+                      $50
+                    </span>
+                    <span className="text-price for-year">$600</span>
+                    <span className="text-month">/month</span>
+                  </div>
+                  <div>
+                    <h4 className="mb-15">Base</h4>
+                    <p className="text-desc-package mb-30">
+                      For most businesses that want to otpimize web queries
+                    </p>
+                  </div>
+                  <ul className="list-package-feature">
+                    <li>All limited links</li>
+                    <li>Own analytics platform</li>
+                    <li>Chat support</li>
+                    <li>Optimize hashtags</li>
+                    <li>Unlimited users</li>
+                  </ul>
+                  <div>
+                    <a href="#" className="btn btn-border">
+                      Choose plan
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-3 col-md-6 wow animate__animated animate__fadeInUp"
+                data-wow-delay=".3s"
+              >
+                <div className="box-pricing-item most-popular">
+                  <div className="text-end mb-10">
+                    <a href="#" className="btn btn-white-sm">
+                      Most popular
+                    </a>
+                  </div>
+                  <div className="box-info-price">
+                    <span className="text-price for-month display-month">
+                      $100
+                    </span>
+                    <span className="text-price for-year">$1200</span>
+                    <span className="text-month">/month</span>
+                  </div>
+                  <div>
+                    <h4 className="mb-15">Pro</h4>
+                    <p className="text-desc-package mb-30">
+                      For most businesses that want to otpimize web queries
+                    </p>
+                  </div>
+                  <ul className="list-package-feature">
+                    <li>All limited links</li>
+                    <li>Own analytics platform</li>
+                    <li>Chat support</li>
+                    <li>Optimize hashtags</li>
+                    <li>Unlimited users</li>
+                  </ul>
+                  <div>
+                    <a href="#" className="btn btn-border">
+                      Choose plan
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-3 col-md-6 wow animate__animated animate__fadeInUp"
+                data-wow-delay=".4s"
+              >
+                <div className="box-pricing-item">
+                  <div className="box-info-price">
+                    <span className="text-price for-month display-month">
+                      $200
+                    </span>
+                    <span className="text-price for-year">$2400</span>
+                    <span className="text-month">/month</span>
+                  </div>
+                  <div>
+                    <h4 className="mb-15">Enterprise</h4>
+                    <p className="text-desc-package mb-30">
+                      For most businesses that want to otpimize web queries
+                    </p>
+                  </div>
+                  <ul className="list-package-feature">
+                    <li>All limited links</li>
+                    <li>Own analytics platform</li>
+                    <li>Chat support</li>
+                    <li>Optimize hashtags</li>
+                    <li>Unlimited users</li>
+                  </ul>
+                  <div>
+                    <a href="#" className="btn btn-border">
+                      Choose plan
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="section-box mt-50 mb-60">
+        <div className="container">
+          <div className="box-newsletter">
+            <h5 className="text-md-newsletter">Sign up to get</h5>
+            <h6 className="text-lg-newsletter">the latest Design's Update</h6>
+            <div className="box-form-newsletter mt-30">
+              <form className="form-newsletter">
+                <input
+                  type="text"
+                  className="input-newsletter"
+                  defaultValue=""
+                  placeholder="contact.logomaker@gmail.com"
+                />
+                <button className="btn btn-default font-heading icon-send-letter">
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+          <div className="box-newsletter-bottom">
+            <div className="newsletter-bottom" />
+          </div>
+        </div>
+      </section>
+    </main>
+    // <Container flex={1} maxWidth="1216px" my="20px">
+    //   <SimpleGrid columns={{ base: 4, md: 4, lg: 5, xl: 6 }} spacing={5}>
+    //     {graphics?.map((graphic) => (
+    //       <Box
+    //         onClick={() => {
+    //           dispatch(
+    //             toggleGeneratePostModal({
+    //               open: true,
+    //               data: { logo: graphic.graphic },
+    //             })
+    //           );
+    //         }}
+    //         key={graphic.id}
+    //         dangerouslySetInnerHTML={{ __html: graphic.graphic }}
+    //       />
+    //     ))}
+    //   </SimpleGrid>
+    // </Container>
   );
 };
 
