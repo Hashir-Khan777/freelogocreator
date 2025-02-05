@@ -49,23 +49,18 @@ const Header = () => {
         <div className="main-header">
           <div className="header-left">
             <div className="header-logo">
-              <a href="index.html" className="d-flex">
+              <Link to="/" className="d-flex">
                 <img
                   alt="logomaker"
                   src="assets/imgs/theme/logo-maker-logo0-removebg.png"
                 />
-              </a>
+              </Link>
             </div>
             <div className="header-nav">
               <nav className="nav-main-menu d-none d-xl-block">
                 <ul className="main-menu">
-                  <li>
-                    <a className="active" href="index.html">
-                      Home
-                    </a>
-                  </li>
                   <li className="has-children">
-                    <a href="logo.html">Logo Maker</a>
+                    <Link to="/logo">Logo Maker</Link>
                     <ul className="sub-menu">
                       <li className="hr">
                         <h5>Categories</h5>
@@ -91,13 +86,13 @@ const Header = () => {
                     </ul>
                   </li>
                   <li>
-                    <a href="website-builder.html">Website Builder</a>
+                    <Link to="/website">Website Builder</Link>
                   </li>
                   <li>
-                    <a href="about.html">About Us</a>
+                    <Link to="/about">About Us</Link>
                   </li>
                   <li>
-                    <a href="contact.html">Contact Us</a>
+                    <Link to="/contact">Contact Us</Link>
                   </li>
                 </ul>
               </nav>

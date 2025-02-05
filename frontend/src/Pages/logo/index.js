@@ -1,6 +1,87 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { getAllGraphics } from "../../store/actions/graphics.action";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Box,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Button,
+  Flex,
+} from "@chakra-ui/react";
+import { toJpeg, toPng } from "html-to-image";
+import { showToast } from "../../store/reducers/toast.reducer";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
+import { Link } from "react-router-dom";
 
+let page = 1;
 const Logo = () => {
+  const dispatch = useDispatch();
+  const imageRef = useRef(null);
+
+  const { graphics } = useSelector((x) => x.GraphicsReducer);
+
+  const savePngImage = () => {
+    if (imageRef.current) {
+      toPng(imageRef.current, { quality: 1, pixelRatio: 6 })
+        .then((dataUrl) => {
+          const link = document.createElement("a");
+          link.download = `logo.png`;
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((error) => {
+          dispatch(
+            showToast({
+              type: "error",
+              message: error,
+            })
+          );
+        });
+    }
+  };
+
+  const saveJpegImage = () => {
+    if (imageRef.current) {
+      toJpeg(imageRef.current, { quality: 1, pixelRatio: 6 })
+        .then((dataUrl) => {
+          const link = document.createElement("a");
+          link.download = `logo.jpeg`;
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((error) => {
+          dispatch(
+            showToast({
+              type: "error",
+              message: error,
+            })
+          );
+        });
+    }
+  };
+
+  const savePdfImage = async () => {
+    if (imageRef.current) {
+      const element = imageRef.current;
+      const canvas = await html2canvas(element);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("logo.pdf");
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getAllGraphics({ page }));
+  }, [dispatch]);
+
   return (
     <main className="main">
       <section className="section-box bg-banner-about banner-home-3 pt-100">
@@ -106,493 +187,102 @@ const Logo = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-lg-4 col-md-6">
-                    <div
-                      className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
-                      data-wow-delay=".2s"
-                    >
-                      <div className="text-center card-grid-2-image">
-                        <figure>
-                          <img
-                            alt="logomaker"
-                            src="assets/imgs/jobs/job-1.png"
-                          />
-                        </figure>
-                        <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/shield-check.svg"
-                              />
-                            </span>
-                          </a>
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/bookmark.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="card-block-info">
-                        <div className="row">
-                          <div className="col-lg-6 col-6 text-start">
-                            <a href="#">
-                              <span className="btn btn-primary">Save</span>
+                  {graphics?.map((graphic) => (
+                    <div className="col-lg-4 col-md-6" key={graphic.id}>
+                      <div
+                        className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
+                        data-wow-delay=".2s"
+                      >
+                        <div className="text-center card-grid-2-image">
+                          <Box
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            marginY="20px"
+                          >
+                            <Box
+                              sx={{
+                                "& > svg": {
+                                  height: "100px",
+                                },
+                              }}
+                              ref={imageRef}
+                              dangerouslySetInnerHTML={{
+                                __html: graphic.graphic,
+                              }}
+                            />
+                          </Box>
+                          <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
+                            <a className="p-0 pr-10" href="#">
+                              <span className="text-end">
+                                <img
+                                  alt="logomaker"
+                                  src="assets/imgs/theme/icons/shield-check.svg"
+                                />
+                              </span>
                             </a>
-                          </div>
-                          <div className="col-lg-6 col-6 text-end">
-                            <a href="#">
-                              <span className="btn btn-grey-small disc-btn">
-                                Customize
+                            <a className="p-0 pr-10" href="#">
+                              <span className="text-end">
+                                <img
+                                  alt="logomaker"
+                                  src="assets/imgs/theme/icons/bookmark.svg"
+                                />
                               </span>
                             </a>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
-                    <div
-                      className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
-                      data-wow-delay=".2s"
-                    >
-                      <div className="text-center card-grid-2-image">
-                        <figure>
-                          <img
-                            alt="logomaker"
-                            src="assets/imgs/jobs/job-1.png"
-                          />
-                        </figure>
-                        <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/shield-check.svg"
-                              />
-                            </span>
-                          </a>
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/bookmark.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="card-block-info">
-                        <div className="row">
-                          <div className="col-lg-6 col-6 text-start">
-                            <a href="#">
-                              <span className="btn btn-primary">Save</span>
-                            </a>
-                          </div>
-                          <div className="col-lg-6 col-6 text-end">
-                            <a href="#">
-                              <span className="btn btn-grey-small disc-btn">
-                                Customize
-                              </span>
-                            </a>
+                        <div className="card-block-info">
+                          <div className="row">
+                            <Menu>
+                              <MenuButton
+                                className="col-lg-6 col-6 text-start"
+                                as="button"
+                              >
+                                <span className="btn btn-primary">Save</span>
+                              </MenuButton>
+                              <MenuList>
+                                <MenuItem onClick={savePngImage}>
+                                  Save As Png
+                                </MenuItem>
+                                <MenuItem onClick={saveJpegImage}>
+                                  Save As Jpeg
+                                </MenuItem>
+                                <MenuItem onClick={savePdfImage}>
+                                  Save As PDF
+                                </MenuItem>
+                              </MenuList>
+                            </Menu>
+                            <div className="col-lg-6 col-6 text-end">
+                              <Box
+                                as={Link}
+                                to="/edit"
+                                onClick={() => {
+                                  localStorage.setItem("svg", graphic.graphic);
+                                }}
+                              >
+                                <span className="btn btn-grey-small disc-btn">
+                                  Customize
+                                </span>
+                              </Box>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
-                    <div
-                      className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
-                      data-wow-delay=".2s"
-                    >
-                      <div className="text-center card-grid-2-image">
-                        <figure>
-                          <img
-                            alt="logomaker"
-                            src="assets/imgs/jobs/job-1.png"
-                          />
-                        </figure>
-                        <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/shield-check.svg"
-                              />
-                            </span>
-                          </a>
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/bookmark.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="card-block-info">
-                        <div className="row">
-                          <div className="col-lg-6 col-6 text-start">
-                            <a href="#">
-                              <span className="btn btn-primary">Save</span>
-                            </a>
-                          </div>
-                          <div className="col-lg-6 col-6 text-end">
-                            <a href="#">
-                              <span className="btn btn-grey-small disc-btn">
-                                Customize
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
-                    <div
-                      className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
-                      data-wow-delay=".2s"
-                    >
-                      <div className="text-center card-grid-2-image">
-                        <figure>
-                          <img
-                            alt="logomaker"
-                            src="assets/imgs/jobs/job-1.png"
-                          />
-                        </figure>
-                        <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/shield-check.svg"
-                              />
-                            </span>
-                          </a>
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/bookmark.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="card-block-info">
-                        <div className="row">
-                          <div className="col-lg-6 col-6 text-start">
-                            <a href="#">
-                              <span className="btn btn-primary">Save</span>
-                            </a>
-                          </div>
-                          <div className="col-lg-6 col-6 text-end">
-                            <a href="#">
-                              <span className="btn btn-grey-small disc-btn">
-                                Customize
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
-                    <div
-                      className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
-                      data-wow-delay=".2s"
-                    >
-                      <div className="text-center card-grid-2-image">
-                        <figure>
-                          <img
-                            alt="logomaker"
-                            src="assets/imgs/jobs/job-1.png"
-                          />
-                        </figure>
-                        <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/shield-check.svg"
-                              />
-                            </span>
-                          </a>
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/bookmark.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="card-block-info">
-                        <div className="row">
-                          <div className="col-lg-6 col-6 text-start">
-                            <a href="#">
-                              <span className="btn btn-primary">Save</span>
-                            </a>
-                          </div>
-                          <div className="col-lg-6 col-6 text-end">
-                            <a href="#">
-                              <span className="btn btn-grey-small disc-btn">
-                                Customize
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
-                    <div
-                      className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
-                      data-wow-delay=".2s"
-                    >
-                      <div className="text-center card-grid-2-image">
-                        <figure>
-                          <img
-                            alt="logomaker"
-                            src="assets/imgs/jobs/job-1.png"
-                          />
-                        </figure>
-                        <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/shield-check.svg"
-                              />
-                            </span>
-                          </a>
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/bookmark.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="card-block-info">
-                        <div className="row">
-                          <div className="col-lg-6 col-6 text-start">
-                            <a href="#">
-                              <span className="btn btn-primary">Save</span>
-                            </a>
-                          </div>
-                          <div className="col-lg-6 col-6 text-end">
-                            <a href="#">
-                              <span className="btn btn-grey-small disc-btn">
-                                Customize
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
-                    <div
-                      className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
-                      data-wow-delay=".2s"
-                    >
-                      <div className="text-center card-grid-2-image">
-                        <figure>
-                          <img
-                            alt="logomaker"
-                            src="assets/imgs/jobs/job-1.png"
-                          />
-                        </figure>
-                        <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/shield-check.svg"
-                              />
-                            </span>
-                          </a>
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/bookmark.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="card-block-info">
-                        <div className="row">
-                          <div className="col-lg-6 col-6 text-start">
-                            <a href="#">
-                              <span className="btn btn-primary">Save</span>
-                            </a>
-                          </div>
-                          <div className="col-lg-6 col-6 text-end">
-                            <a href="#">
-                              <span className="btn btn-grey-small disc-btn">
-                                Customize
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
-                    <div
-                      className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
-                      data-wow-delay=".2s"
-                    >
-                      <div className="text-center card-grid-2-image">
-                        <figure>
-                          <img
-                            alt="logomaker"
-                            src="assets/imgs/jobs/job-1.png"
-                          />
-                        </figure>
-                        <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/shield-check.svg"
-                              />
-                            </span>
-                          </a>
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/bookmark.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="card-block-info">
-                        <div className="row">
-                          <div className="col-lg-6 col-6 text-start">
-                            <a href="#">
-                              <span className="btn btn-primary">Save</span>
-                            </a>
-                          </div>
-                          <div className="col-lg-6 col-6 text-end">
-                            <a href="#">
-                              <span className="btn btn-grey-small disc-btn">
-                                Customize
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-md-6">
-                    <div
-                      className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
-                      data-wow-delay=".2s"
-                    >
-                      <div className="text-center card-grid-2-image">
-                        <figure>
-                          <img
-                            alt="logomaker"
-                            src="assets/imgs/jobs/job-1.png"
-                          />
-                        </figure>
-                        <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/shield-check.svg"
-                              />
-                            </span>
-                          </a>
-                          <a className="p-0 pr-10" href="#">
-                            <span className="text-end">
-                              <img
-                                alt="logomaker"
-                                src="assets/imgs/theme/icons/bookmark.svg"
-                              />
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="card-block-info">
-                        <div className="row">
-                          <div className="col-lg-6 col-6 text-start">
-                            <a href="#">
-                              <span className="btn btn-primary">Save</span>
-                            </a>
-                          </div>
-                          <div className="col-lg-6 col-6 text-end">
-                            <a href="#">
-                              <span className="btn btn-grey-small disc-btn">
-                                Customize
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-                <div className="paginations">
-                  <ul className="pager">
-                    <li>
-                      <a href="#" className="pager-prev" />
-                    </li>
-                    <li>
-                      <a href="#" className="pager-number">
-                        1
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="pager-number">
-                        2
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="pager-number">
-                        3
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="pager-number">
-                        4
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="pager-number">
-                        5
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="pager-number active">
-                        6
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="pager-number">
-                        7
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="pager-next" />
-                    </li>
-                  </ul>
-                </div>
+                <Flex justifyContent="center">
+                  <Box
+                    className="text-start"
+                    as="button"
+                    onClick={() => {
+                      page += 1;
+                      dispatch(getAllGraphics({ page }));
+                    }}
+                  >
+                    <span className="btn btn-primary">Load More</span>
+                  </Box>
+                </Flex>
               </div>
             </div>
             <div className="col-lg-3 col-md-12 col-sm-12 col-12">
