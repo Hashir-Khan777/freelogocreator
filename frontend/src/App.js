@@ -3,7 +3,12 @@ import AppRouter from "./Router";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "./store/reducers/toast.reducer";
 import { useEffect } from "react";
-import { GeneratePostModal } from "./modals";
+import {
+  AddShapesIconsModal,
+  GeneratePostModal,
+  ReplaceSymbolModal,
+  ShieldModal,
+} from "./modals";
 import { Footer, Header } from "./components";
 
 const App = () => {
@@ -38,6 +43,9 @@ const App = () => {
         <Footer />
       </Flex>
       <GeneratePostModal />
+      <AddShapesIconsModal />
+      <ReplaceSymbolModal />
+      <ShieldModal />
     </ChakraProvider>
   );
 };

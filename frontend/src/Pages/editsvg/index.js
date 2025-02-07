@@ -12,9 +12,15 @@ import {
   MenuList,
   Select,
 } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  toggleReplaceModal,
+  toggleShapeModal,
+  toggleShieldModal,
+} from "../../store/reducers/modals.reducer";
 
-const canvasHeight = 600;
-const canvasWidth = 850;
+const canvasHeight = 581;
+const canvasWidth = 781;
 
 const fontSizes = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72,
@@ -22,22 +28,31 @@ const fontSizes = [
 
 const fonts = ["Arial", "Times New Roman", "Courier New", "Verdana", "Georgia"];
 
+const gridSize = 20;
+
 const SVGCanvasEditor = () => {
   const [canvas, setCanvas] = useState(null);
   const [selectedObject, setSelectedObject] = useState(null);
   const [selectedFontSize, setSelectedFontSize] = useState(20);
   const [fontFamily, setFontFamily] = useState("Arial");
   const [colors, setColors] = useState([]);
+  const [bgColor, setBgColor] = useState("#ffffff");
 
   const canvasRef = useRef(null);
   const svgString = localStorage.getItem("svg");
   const gridLinesRef = useRef([]);
+  const dispatch = useDispatch();
   const undoStack = useRef([]);
   const redoStack = useRef([]);
+  const [gridVisible, setGridVisible] = useState(true);
 
-  const drawGrid = (canvas, gridSize) => {
-    const width = canvas.width - 8;
-    const height = canvas.height - 18;
+  const { shapesModalData, replaceModalData, shieldModalData } = useSelector(
+    (store) => store.ModalsReducer
+  );
+
+  const drawGrid = (canvas) => {
+    const width = canvas.width;
+    const height = canvas.height;
 
     for (let i = 0; i < width; i += gridSize) {
       const line = new fabric.Line([i, 0, i, height], {
@@ -59,6 +74,21 @@ const SVGCanvasEditor = () => {
       gridLinesRef.current.push(line);
       canvas.add(line);
       canvas.sendToBack(line);
+    }
+  };
+
+  const toggleGrid = () => {
+    if (canvas) {
+      if (gridVisible) {
+        gridLinesRef.current.forEach((line) => canvas.remove(line));
+      } else {
+        gridLinesRef.current.forEach((line) => {
+          canvas.add(line);
+          canvas.sendToBack(line);
+        });
+      }
+      setGridVisible(!gridVisible);
+      canvas.renderAll();
     }
   };
 
@@ -196,8 +226,7 @@ const SVGCanvasEditor = () => {
       link.download = `logo.${type}`;
       link.click();
     }
-    const gridSize = 20;
-    drawGrid(canvas, gridSize);
+    drawGrid(canvas);
   };
 
   const saveState = (canvas) => {
@@ -222,8 +251,7 @@ const SVGCanvasEditor = () => {
       );
       canvas.clear();
 
-      const gridSize = 20;
-      drawGrid(canvas, gridSize);
+      drawGrid(canvas);
 
       if (previousState) {
         fabric.util.enlivenObjects(previousState, (objects) => {
@@ -254,8 +282,7 @@ const SVGCanvasEditor = () => {
       );
       canvas.clear();
 
-      const gridSize = 20;
-      drawGrid(canvas, gridSize);
+      drawGrid(canvas);
 
       if (nextState) {
         fabric.util.enlivenObjects(nextState, (objects) => {
@@ -309,16 +336,14 @@ const SVGCanvasEditor = () => {
         width: canvasWidth,
         height: canvasHeight,
         preserveObjectStacking: true,
+        backgroundColor: bgColor,
       });
 
       initCanvas.renderAll();
 
       initCanvas.sendToBack();
 
-      const gridSize = 20;
-      drawGrid(initCanvas, gridSize);
-
-      const svgColors = [];
+      drawGrid(initCanvas);
 
       fabric.loadSVGFromString(svgString, (objects, options) => {
         if (objects && objects.length > 0) {
@@ -331,14 +356,7 @@ const SVGCanvasEditor = () => {
           initCanvas.remove(group);
           group._objects.forEach((obj) => {
             initCanvas.add(obj);
-            if (obj?.fill && !svgColors.includes(obj?.fill)) {
-              svgColors.push(obj?.fill);
-            }
-            if (obj?.stroke && !svgColors.includes(obj?.stroke)) {
-              svgColors.push(obj?.stroke);
-            }
           });
-          setColors(svgColors);
           initCanvas.renderAll();
         }
       });
@@ -349,16 +367,45 @@ const SVGCanvasEditor = () => {
       initCanvas.on("object:modified", () => saveState(initCanvas));
       initCanvas.on("object:removed", () => saveState(initCanvas));
 
+      let svgColors = [];
       initCanvas.on("selection:created", (event) => {
+        setColors([]);
+        svgColors = [];
         if (event.selected.length > 0) {
           setSelectedObject(event.selected);
+          event.selected.forEach((obj) => {
+            if (obj?.fill && !svgColors.includes(obj?.fill)) {
+              svgColors.push(obj?.fill);
+            }
+            if (obj?.stroke && !svgColors.includes(obj?.stroke)) {
+              svgColors.push(obj?.stroke);
+            }
+          });
+          setColors([...colors, ...svgColors]);
+        } else {
+          setColors([]);
         }
       });
 
       initCanvas.on("selection:updated", (event) => {
         if (event.selected.length > 0) {
           setSelectedObject(event.selected);
+          event.selected.forEach((obj) => {
+            if (obj?.fill && !svgColors.includes(obj?.fill)) {
+              svgColors.push(obj?.fill);
+            }
+            if (obj?.stroke && !svgColors.includes(obj?.stroke)) {
+              svgColors.push(obj?.stroke);
+            }
+          });
+          setColors([...colors, ...svgColors]);
+        } else {
+          setColors([]);
         }
+      });
+
+      initCanvas.on("selection:cleared", () => {
+        setColors([]);
       });
 
       document.addEventListener("keydown", (e) => handleKeyDown(e, initCanvas));
@@ -371,6 +418,87 @@ const SVGCanvasEditor = () => {
     canvasInitialization();
   }, []);
 
+  useEffect(() => {
+    if (shapesModalData) {
+      fabric.loadSVGFromString(shapesModalData, (objects, options) => {
+        if (objects && objects.length > 0) {
+          objects.forEach((obj) => {
+            canvas.add(obj);
+          });
+          canvas.renderAll();
+        }
+      });
+    }
+  }, [shapesModalData]);
+
+  useEffect(() => {
+    if (replaceModalData) {
+      canvas.getObjects("path").forEach((path) => {
+        canvas.remove(path);
+      });
+
+      fabric.loadSVGFromString(replaceModalData, (objects, options) => {
+        if (objects && objects.length > 0) {
+          const group = new fabric.Group(objects, options);
+          canvas.add(group);
+          group.center();
+          group.setCoords();
+          canvas.renderAll();
+
+          canvas.remove(group);
+          group._objects.forEach((obj) => {
+            canvas.add(obj);
+          });
+          canvas.renderAll();
+        }
+      });
+    }
+  }, [replaceModalData]);
+
+  useEffect(() => {
+    if (shieldModalData) {
+      canvas.getObjects("path").forEach((path) => {
+        canvas.remove(path);
+      });
+
+      fabric.loadSVGFromString(shieldModalData, (objects, options) => {
+        const shield = fabric.util.groupSVGElements(objects, options);
+
+        shield.set({
+          left: 100,
+          top: 100,
+          scaleX: 1,
+          scaleY: 1,
+          selectable: false,
+          evented: false,
+        });
+
+        const shieldWidth = shield.width;
+        const shieldHeight = shield.height;
+
+        fabric.loadSVGFromString(svgString, (iconObjects, iconOptions) => {
+          const icon = fabric.util.groupSVGElements(iconObjects, iconOptions);
+
+          icon.set({
+            scaleX: 1,
+            scaleY: 1,
+            left: shieldWidth / 2,
+            top: shieldHeight / 2,
+            clipPath: shield,
+          });
+
+          const group = new fabric.Group([shield, icon], {
+            selectable: true,
+            evented: true,
+          });
+
+          canvas.add(group);
+          canvas.renderAll();
+        });
+      });
+    }
+  }, [shieldModalData]);
+
   return (
     <Container flex={1} maxWidth="1216px" my="20px">
       <Flex justifyContent="center" alignItems="center" height="100vh">
@@ -381,15 +509,28 @@ const SVGCanvasEditor = () => {
             alignItems="center"
             gap="10px"
           >
-            {colors?.map((color, index) => (
+            {colors.length > 0 ? (
+              colors?.map((color, index) => (
+                <Input
+                  key={index}
+                  width="80px"
+                  value={color}
+                  type="color"
+                  onChange={(e) => changeColor(e, index)}
+                />
+              ))
+            ) : (
               <Input
-                key={index}
                 width="80px"
-                value={color}
+                value={bgColor}
                 type="color"
-                onChange={(e) => changeColor(e, index)}
+                onChange={(e) => {
+                  setBgColor(e.target.value);
+                  canvas.setBackgroundColor(e.target.value);
+                  canvas.renderAll();
+                }}
               />
-            ))}
+            )}
             <Button
               onClick={addText}
               width="200px"
@@ -429,7 +570,7 @@ const SVGCanvasEditor = () => {
               Reset
             </Button>
           </Flex>
-          <Flex>
+          <Flex gap="10px">
             <Box>
               <Box as="canvas" ref={canvasRef} position="relative" />
             </Box>
@@ -450,6 +591,38 @@ const SVGCanvasEditor = () => {
                   colorScheme="blue"
                 >
                   Bring To Front
+                </Button>
+                <Button
+                  onClick={toggleGrid}
+                  width="200px"
+                  variant="solid"
+                  colorScheme="blue"
+                >
+                  Grid
+                </Button>
+                <Button
+                  width="200px"
+                  variant="solid"
+                  colorScheme="blue"
+                  onClick={() => dispatch(toggleShapeModal({ open: true }))}
+                >
+                  Add Shapes & Icons
+                </Button>
+                <Button
+                  width="200px"
+                  variant="solid"
+                  colorScheme="blue"
+                  onClick={() => dispatch(toggleReplaceModal({ open: true }))}
+                >
+                  Replace Symbol
+                </Button>
+                <Button
+                  width="200px"
+                  variant="solid"
+                  colorScheme="blue"
+                  onClick={() => dispatch(toggleShieldModal({ open: true }))}
+                >
+                  Apply Shield
                 </Button>
               </Flex>
               <Menu>
