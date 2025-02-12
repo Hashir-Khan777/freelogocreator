@@ -57,7 +57,7 @@ const Logs = () => {
       Header: "Id",
       accessor: "id",
       Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
+        return <span>{row?.cell?.row.index + 1}</span>;
       },
     },
     {

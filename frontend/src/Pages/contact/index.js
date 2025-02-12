@@ -1,6 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { sendQuery } from "../../store/actions/query.action";
 
 const Contact = () => {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    number: "",
+    message: "",
+  });
+
+  const dispatch = useDispatch();
+
+  const changeValue = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <main className="main">
       <div className="container wide mb-50">
@@ -145,12 +163,7 @@ const Contact = () => {
                         </p>
                       </div>
                     </div>
-                    <form
-                      className="contact-form-style mt-80"
-                      id="contact-form"
-                      action="#"
-                      method="post"
-                    >
+                    <div className="contact-form-style mt-80" id="contact-form">
                       <div
                         className="row wow animate__animated animate__fadeInUp"
                         data-wow-delay=".1s"
@@ -159,8 +172,9 @@ const Contact = () => {
                           <div className="input-style mb-20">
                             <input
                               name="name"
-                              placeholder="First Name"
+                              placeholder="Name"
                               type="text"
+                              onChange={changeValue}
                             />
                           </div>
                         </div>
@@ -170,24 +184,17 @@ const Contact = () => {
                               name="email"
                               placeholder="Your Email"
                               type="email"
+                              onChange={changeValue}
                             />
                           </div>
                         </div>
-                        <div className="col-lg-6 col-md-6">
+                        <div className="col-lg-12 col-md-12">
                           <div className="input-style mb-20">
                             <input
-                              name="telephone"
+                              name="number"
                               placeholder="Your Phone"
-                              type="tel"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-6 col-md-6">
-                          <div className="input-style mb-20">
-                            <input
-                              name="subject"
-                              placeholder="Subject"
-                              type="text"
+                              type="number"
+                              onChange={changeValue}
                             />
                           </div>
                         </div>
@@ -196,18 +203,34 @@ const Contact = () => {
                             <textarea
                               name="message"
                               placeholder="Message"
-                              defaultValue={""}
+                              onChange={changeValue}
                             />
                           </div>
                           <button
                             className="submit submit-auto-width"
                             type="submit"
+                            onClick={() => {
+                              if (
+                                form.name &&
+                                form.email &&
+                                form.number &&
+                                form.message
+                              ) {
+                                dispatch(sendQuery(form));
+                                setForm({
+                                  name: "",
+                                  email: "",
+                                  number: "",
+                                  message: "",
+                                });
+                              }
+                            }}
                           >
                             Send message
                           </button>
                         </div>
                       </div>
-                    </form>
+                    </div>
                     <p className="form-messege" />
                   </div>
                 </div>
