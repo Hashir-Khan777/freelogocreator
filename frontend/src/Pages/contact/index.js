@@ -174,6 +174,7 @@ const Contact = () => {
                               name="name"
                               placeholder="Name"
                               type="text"
+                              value={form.name}
                               onChange={changeValue}
                             />
                           </div>
@@ -184,6 +185,7 @@ const Contact = () => {
                               name="email"
                               placeholder="Your Email"
                               type="email"
+                              value={form.email}
                               onChange={changeValue}
                             />
                           </div>
@@ -194,6 +196,7 @@ const Contact = () => {
                               name="number"
                               placeholder="Your Phone"
                               type="number"
+                              value={form.number}
                               onChange={changeValue}
                             />
                           </div>
@@ -203,6 +206,7 @@ const Contact = () => {
                             <textarea
                               name="message"
                               placeholder="Message"
+                              value={form.message}
                               onChange={changeValue}
                             />
                           </div>

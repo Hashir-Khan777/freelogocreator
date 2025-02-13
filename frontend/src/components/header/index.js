@@ -59,31 +59,8 @@ const Header = () => {
             <div className="header-nav">
               <nav className="nav-main-menu d-none d-xl-block">
                 <ul className="main-menu">
-                  <li className="has-children">
+                  <li>
                     <Link to="/logo">Logo Maker</Link>
-                    <ul className="sub-menu">
-                      <li className="hr">
-                        <h5>Categories</h5>
-                      </li>
-                      <li>
-                        <a href="#">Fashion</a>
-                      </li>
-                      <li>
-                        <a href="#">Tech</a>
-                      </li>
-                      <li>
-                        <a href="#">Construction</a>
-                      </li>
-                      <li className="hr">
-                        <h5>Tags</h5>
-                      </li>
-                      <li>
-                        <a href="#">Graphic designing</a>
-                      </li>
-                      <li>
-                        <a href="#">Web</a>
-                      </li>
-                    </ul>
                   </li>
                   <li>
                     <Link to="/website">Website Builder</Link>

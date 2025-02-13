@@ -1,18 +1,12 @@
 import { Box, Container, SimpleGrid } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGraphics } from "../../store/actions/graphics.action";
 import { toggleGeneratePostModal } from "../../store/reducers/modals.reducer";
+import { Link } from "react-router-dom";
 
-let page = 1;
 const Home = () => {
-  const dispatch = useDispatch();
-
-  const { graphics } = useSelector((x) => x.GraphicsReducer);
-
-  useEffect(() => {
-    dispatch(getAllGraphics({ page }));
-  }, [dispatch]);
+  const [inputValue, setInputValue] = useState("");
 
   return (
     <main className="main">
@@ -44,10 +38,13 @@ const Home = () => {
                         type="text"
                         className="form-input input-keysearch mr-10"
                         placeholder="Logo Maker's Site"
+                        onChange={(e) => setInputValue(e.target.value)}
                       />
-                      <button className="btn btn-default btn-find">
-                        Find now
-                      </button>
+                      <Link to={`/logo?query=${inputValue}`}>
+                        <button className="btn btn-default btn-find">
+                          Find now
+                        </button>
+                      </Link>
                     </form>
                   </div>
                   <div

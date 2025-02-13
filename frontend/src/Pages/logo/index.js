@@ -1,5 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { getAllGraphics } from "../../store/actions/graphics.action";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  getAllGraphics,
+  searchGraphics,
+} from "../../store/actions/graphics.action";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
@@ -14,14 +17,22 @@ import { toJpeg, toPng } from "html-to-image";
 import { showToast } from "../../store/reducers/toast.reducer";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { getAllCategories } from "../../store/actions/categories.action";
 
 let page = 1;
 const Logo = () => {
+  const [inputValue, setInputValue] = useState("");
+  const [category, setCategory] = useState("all");
+  const [filteredGraphics, setFilteredGraphics] = useState([]);
+
+  const [searchParams] = useSearchParams();
+
   const dispatch = useDispatch();
   const imageRef = useRef(null);
 
   const { graphics } = useSelector((x) => x.GraphicsReducer);
+  const { categories } = useSelector((x) => x.CategoriesReducer);
 
   const savePngImage = () => {
     if (imageRef.current) {
@@ -78,9 +89,38 @@ const Logo = () => {
     }
   };
 
+  const filter = () => {
+    if (graphics?.length > 0) {
+      if (category) {
+        if (category === "all") {
+          setFilteredGraphics(graphics);
+        } else {
+          setFilteredGraphics(
+            graphics?.filter((x) => x.category_id == category)
+          );
+        }
+      } else {
+        setFilteredGraphics(graphics);
+      }
+    }
+  };
+
   useEffect(() => {
-    dispatch(getAllGraphics({ page }));
+    dispatch(getAllCategories());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (searchParams.get("query")) {
+      setInputValue(searchParams.get("query"));
+      dispatch(searchGraphics({ query: searchParams.get("query") }));
+    } else {
+      dispatch(getAllGraphics({ page }));
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    filter();
+  }, [graphics]);
 
   return (
     <main className="main">
@@ -99,12 +139,16 @@ const Logo = () => {
                     <form className="wow animate__animated animate__fadeInUp">
                       <input
                         type="text"
+                        value={inputValue}
                         className="form-input input-keysearch mr-10"
                         placeholder="Logo Maker's Site"
+                        onChange={(e) => setInputValue(e.target.value)}
                       />
-                      <button className="btn btn-default btn-find wow animate__animated animate__fadeInUp">
-                        Find now
-                      </button>
+                      <Link to={`/logo?query=${inputValue}`}>
+                        <button className="btn btn-default btn-find wow animate__animated animate__fadeInUp">
+                          Find now
+                        </button>
+                      </Link>
                     </form>
                   </div>
                   <div className="list-tags-banner mt-60 text-center wow animate__animated animate__fadeInUp">
@@ -187,7 +231,7 @@ const Logo = () => {
                   </div>
                 </div>
                 <div className="row">
-                  {graphics?.map((graphic) => (
+                  {filteredGraphics?.map((graphic) => (
                     <div className="col-lg-4 col-md-6" key={graphic.id}>
                       <div
                         className="card-grid-2 hover-up wow animate__animated animate__fadeIn"
@@ -312,11 +356,14 @@ const Logo = () => {
                   <div className="filter-block mb-30">
                     <h5 className="medium-heading mb-15">Categoy</h5>
                     <div className="form-group select-style select-style-icon">
-                      <select className="form-control form-icons select-active">
-                        <option>Fashion</option>
-                        <option>Tech</option>
-                        <option>Construction</option>
-                        <option>Web</option>
+                      <select
+                        className="form-control form-icons select-active"
+                        onChange={(e) => setCategory(e.target.value)}
+                      >
+                        <option value="all">All</option>
+                        {categories?.map((cat) => (
+                          <option value={cat.id}>{cat?.name}</option>
+                        ))}
                       </select>
                       <i className="fi-rr-briefcase" />
                     </div>
@@ -371,7 +418,9 @@ const Logo = () => {
                     </div>
                   </div>
                   <div className="buttons-filter">
-                    <button className="btn btn-default">Apply filter</button>
+                    <button className="btn btn-default" onClick={filter}>
+                      Apply filter
+                    </button>
                     <button className="btn">Reset filter</button>
                   </div>
                 </div>
