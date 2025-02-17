@@ -39,11 +39,11 @@ const SignUp = () => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (cookies.get("_user")) {
-      navigate("/", { replace: true });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (cookies.get("_user")) {
+  //     navigate("/", { replace: true });
+  //   }
+  // }, []);
 
   return (
     <Flex

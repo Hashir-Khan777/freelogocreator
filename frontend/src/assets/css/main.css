@@ -1203,7 +1203,7 @@ label {
 .box-swiper .swiper-button-next,
 .box-swiper .swiper-button-prev {
   width: 40px;
-  margin-top: -55px;
+  margin-top: calc(0px - (var(--swiper-navigation-size) / 2)) !important;
 }
 .box-swiper .swiper-button-next {
   left: auto;

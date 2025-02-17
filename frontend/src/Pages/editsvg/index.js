@@ -500,155 +500,256 @@ const SVGCanvasEditor = () => {
   }, [shieldModalData]);
 
   return (
-    <Container flex={1} maxWidth="1216px" my="20px">
-      <Flex justifyContent="center" alignItems="center" height="100vh">
-        <Box>
-          <Flex
-            mb="10px"
-            justifyContent="space-between"
-            alignItems="center"
-            gap="10px"
-          >
-            {colors.length > 0 ? (
-              colors?.map((color, index) => (
-                <Input
-                  key={index}
-                  width="80px"
-                  value={color}
-                  type="color"
-                  onChange={(e) => changeColor(e, index)}
-                />
-              ))
-            ) : (
-              <Input
-                width="80px"
-                value={bgColor}
-                type="color"
-                onChange={(e) => {
-                  setBgColor(e.target.value);
-                  canvas.setBackgroundColor(e.target.value);
-                  canvas.renderAll();
-                }}
-              />
-            )}
-            <Button
-              onClick={addText}
-              width="200px"
-              variant="solid"
-              colorScheme="blue"
-            >
-              Add Text
-            </Button>
-            <Select
-              width="200px"
-              value={selectedFontSize}
-              onChange={changeFontSize}
-            >
-              {fontSizes.map((size) => (
-                <Box as="option" value={size}>
-                  {size}
-                </Box>
-              ))}
-            </Select>
-            <Select
-              width="200px"
-              value={fontFamily}
-              onChange={handleFontChange}
-            >
-              {fonts.map((font) => (
-                <Box as="option" value={font}>
-                  {font}
-                </Box>
-              ))}
-            </Select>
-            <Button
-              onClick={canvasInitialization}
-              width="200px"
-              variant="solid"
-              colorScheme="blue"
-            >
-              Reset
-            </Button>
-          </Flex>
-          <Flex gap="10px">
-            <Box>
-              <Box as="canvas" ref={canvasRef} position="relative" />
-            </Box>
-            <Flex flexDirection="column" justifyContent="space-between">
-              <Flex flexDirection="column" gap={3}>
-                <Button
-                  onClick={sendToBack}
-                  width="200px"
-                  variant="solid"
-                  colorScheme="blue"
-                >
-                  Send To Back
-                </Button>
-                <Button
-                  onClick={bringToFront}
-                  width="200px"
-                  variant="solid"
-                  colorScheme="blue"
-                >
-                  Bring To Front
-                </Button>
-                <Button
-                  onClick={toggleGrid}
-                  width="200px"
-                  variant="solid"
-                  colorScheme="blue"
-                >
-                  Grid
-                </Button>
-                <Button
-                  width="200px"
-                  variant="solid"
-                  colorScheme="blue"
-                  onClick={() => dispatch(toggleShapeModal({ open: true }))}
-                >
-                  Add Shapes & Icons
-                </Button>
-                <Button
-                  width="200px"
-                  variant="solid"
-                  colorScheme="blue"
-                  onClick={() => dispatch(toggleReplaceModal({ open: true }))}
-                >
-                  Replace Symbol
-                </Button>
-                <Button
-                  width="200px"
-                  variant="solid"
-                  colorScheme="blue"
-                  onClick={() => dispatch(toggleShieldModal({ open: true }))}
-                >
-                  Apply Shield
-                </Button>
-              </Flex>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  mt="10px"
-                  float="right"
-                  variant="solid"
-                  colorScheme="blue"
-                >
-                  Save
-                </MenuButton>
-                <MenuList>
-                  <MenuItem onClick={() => saveImage("png")}>
-                    Save As Png
-                  </MenuItem>
-                  <MenuItem onClick={() => saveImage("jpeg")}>
-                    Save As Jpeg
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </Flex>
-          </Flex>
-        </Box>
-      </Flex>
-    </Container>
+    <main class="main">
+      <div class="mb-70 mb-lg-50 mb-md-40 mb-sm-30"></div>
+      <div class="post-loop-grid">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-2 col-md-12 col-sm-12 col-12 pr-10 pr-lg-15 mt-lg-30">
+              <div class="sidebar-shadow p-10">
+                <h6 class="sidebar-title">Customize Option</h6>
+                <div class="block-tags">
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Grid
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Color
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Alignment
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Add Text
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Font Style
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Font Size
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Undo
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Redo
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Reset
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-lg-12 mb-30">
+                  <div
+                    class="card-blog-1 wow animate__animated animate__fadeIn"
+                    data-wow-delay=".0s"
+                  >
+                    <div class="post-thumb mb-15">
+                      <Box
+                        as="canvas"
+                        ref={canvasRef}
+                        position="relative"
+                        margin="0 auto"
+                      />
+                    </div>
+                    <div class="card-block-info">
+                      <div class="card-2-bottom mt-30">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="keep-reading">
+                            <a
+                              href="blog-single.html"
+                              class="btn btn-border btn-brand-hover"
+                            >
+                              Save Editing
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-12 col-sm-12 col-12 pl-10 pl-lg-15 mt-lg-30">
+              <div class="sidebar-shadow p-10">
+                <h6 class="sidebar-title">Advanced Option</h6>
+                <div class="block-tags">
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Send to Back
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Send to Front
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Add Shapes
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Add Icons
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Replace symbol
+                  </a>
+                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                    Apply shield
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    // <Container flex={1} maxWidth="1216px" my="20px">
+    //   <Flex justifyContent="center" alignItems="center" height="100vh">
+    //     <Box>
+    //       <Flex
+    //         mb="10px"
+    //         justifyContent="space-between"
+    //         alignItems="center"
+    //         gap="10px"
+    //       >
+    //         {colors.length > 0 ? (
+    //           colors?.map((color, index) => (
+    //             <Input
+    //               key={index}
+    //               width="80px"
+    //               value={color}
+    //               type="color"
+    //               onChange={(e) => changeColor(e, index)}
+    //             />
+    //           ))
+    //         ) : (
+    //           <Input
+    //             width="80px"
+    //             value={bgColor}
+    //             type="color"
+    //             onChange={(e) => {
+    //               setBgColor(e.target.value);
+    //               canvas.setBackgroundColor(e.target.value);
+    //               canvas.renderAll();
+    //             }}
+    //           />
+    //         )}
+    //         <Button
+    //           onClick={addText}
+    //           width="200px"
+    //           variant="solid"
+    //           colorScheme="blue"
+    //         >
+    //           Add Text
+    //         </Button>
+    //         <Select
+    //           width="200px"
+    //           value={selectedFontSize}
+    //           onChange={changeFontSize}
+    //         >
+    //           {fontSizes.map((size) => (
+    //             <Box as="option" value={size}>
+    //               {size}
+    //             </Box>
+    //           ))}
+    //         </Select>
+    //         <Select
+    //           width="200px"
+    //           value={fontFamily}
+    //           onChange={handleFontChange}
+    //         >
+    //           {fonts.map((font) => (
+    //             <Box as="option" value={font}>
+    //               {font}
+    //             </Box>
+    //           ))}
+    //         </Select>
+    //         <Button
+    //           onClick={canvasInitialization}
+    //           width="200px"
+    //           variant="solid"
+    //           colorScheme="blue"
+    //         >
+    //           Reset
+    //         </Button>
+    //       </Flex>
+    //       <Flex gap="10px">
+    //         <Box>
+    //           <Box as="canvas" ref={canvasRef} position="relative" />
+    //         </Box>
+    //         <Flex flexDirection="column" justifyContent="space-between">
+    //           <Flex flexDirection="column" gap={3}>
+    //             <Button
+    //               onClick={sendToBack}
+    //               width="200px"
+    //               variant="solid"
+    //               colorScheme="blue"
+    //             >
+    //               Send To Back
+    //             </Button>
+    //             <Button
+    //               onClick={bringToFront}
+    //               width="200px"
+    //               variant="solid"
+    //               colorScheme="blue"
+    //             >
+    //               Bring To Front
+    //             </Button>
+    //             <Button
+    //               onClick={toggleGrid}
+    //               width="200px"
+    //               variant="solid"
+    //               colorScheme="blue"
+    //             >
+    //               Grid
+    //             </Button>
+    //             <Button
+    //               width="200px"
+    //               variant="solid"
+    //               colorScheme="blue"
+    //               onClick={() => dispatch(toggleShapeModal({ open: true }))}
+    //             >
+    //               Add Shapes & Icons
+    //             </Button>
+    //             <Button
+    //               width="200px"
+    //               variant="solid"
+    //               colorScheme="blue"
+    //               onClick={() => dispatch(toggleReplaceModal({ open: true }))}
+    //             >
+    //               Replace Symbol
+    //             </Button>
+    //             <Button
+    //               width="200px"
+    //               variant="solid"
+    //               colorScheme="blue"
+    //               onClick={() => dispatch(toggleShieldModal({ open: true }))}
+    //             >
+    //               Apply Shield
+    //             </Button>
+    //           </Flex>
+    //           <Menu>
+    //             <MenuButton
+    //               as={Button}
+    //               mt="10px"
+    //               float="right"
+    //               variant="solid"
+    //               colorScheme="blue"
+    //             >
+    //               Save
+    //             </MenuButton>
+    //             <MenuList>
+    //               <MenuItem onClick={() => saveImage("png")}>
+    //                 Save As Png
+    //               </MenuItem>
+    //               <MenuItem onClick={() => saveImage("jpeg")}>
+    //                 Save As Jpeg
+    //               </MenuItem>
+    //             </MenuList>
+    //           </Menu>
+    //         </Flex>
+    //       </Flex>
+    //     </Box>
+    //   </Flex>
+    // </Container>
   );
 };
 

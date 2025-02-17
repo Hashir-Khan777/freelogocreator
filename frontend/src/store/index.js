@@ -4,6 +4,7 @@ import AuthReducer from "./reducers/auth.reducer";
 import GraphicsReducer from "./reducers/graphics.reducer";
 import ModalsReducer from "./reducers/modals.reducer";
 import CategoriesReducer from "./reducers/categories.reducer";
+import PackageReducer from "./reducers/package.reducer";
 
 const reducers = combineReducers({
   ToastReducer,
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   GraphicsReducer,
   ModalsReducer,
   CategoriesReducer,
+  PackageReducer,
 });
 
 export default configureStore({

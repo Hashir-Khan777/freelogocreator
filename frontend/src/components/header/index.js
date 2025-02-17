@@ -62,9 +62,9 @@ const Header = () => {
                   <li>
                     <Link to="/logo">Logo Maker</Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/website">Website Builder</Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/about">About Us</Link>
                   </li>
@@ -83,9 +83,12 @@ const Header = () => {
           <div className="header-right">
             <div className="block-signin">
               {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
-              <a href="#" className="btn btn-default btn-shadow ml-40 hover-up">
+              <Link
+                to="/login"
+                className="btn btn-default btn-shadow ml-40 hover-up"
+              >
                 Sign in
-              </a>
+              </Link>
             </div>
           </div>
         </div>

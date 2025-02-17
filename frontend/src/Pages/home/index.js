@@ -1,12 +1,34 @@
 import { Box, Container, SimpleGrid } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGraphics } from "../../store/actions/graphics.action";
 import { toggleGeneratePostModal } from "../../store/reducers/modals.reducer";
 import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import { getPackages } from "../../store/actions/package.action";
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
+
+  const { packages } = useSelector((state) => state.PackageReducer);
+
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log({
+      prevEl: prevRef.current,
+      nextEl: nextRef.current,
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch(getPackages());
+  }, [dispatch]);
 
   return (
     <main className="main">
@@ -115,72 +137,146 @@ const Home = () => {
       <div className="section-box wow animate__animated animate__fadeIn mt-70">
         <div className="container">
           <div className="box-swiper">
-            <div className="swiper-container swiper-group-6">
-              <div className="swiper-wrapper pb-70 pt-5">
-                <div className="swiper-slide hover-up">
-                  <div className="item-logo">
-                    <a href="candidates-single.html">
-                      <img
-                        alt="logomaker"
-                        src="/assets/imgs/slider/logo/google.svg"
-                      />
-                    </a>
+            <div className="swiper-button-next" ref={nextRef} />
+            <Swiper
+              modules={[Navigation]}
+              slidesPerView="5"
+              spaceBetween={20}
+              navigation={{
+                prevEl: prevRef.current,
+                nextEl: nextRef.current,
+              }}
+              loop
+              style={{ padding: "15px 0" }}
+            >
+              <SwiperSlide className="swiper-slide hover-up">
+                <div
+                  style={{
+                    border: "1px solid rgba(6, 18, 36, 0.1)",
+                    padding: "39px 0px 36px 0px",
+                    height: "109px",
+                    display: "inline-block",
+                    width: "100%",
+                    textAlign: "center",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <div>
+                    <img
+                      style={{ margin: "0 auto" }}
+                      alt="logomaker"
+                      src="/assets/imgs/slider/logo/google.svg"
+                    />
                   </div>
                 </div>
-                <div className="swiper-slide hover-up">
-                  <div className="item-logo">
-                    <a href="candidates-single.html">
-                      <img
-                        alt="logomaker"
-                        src="/assets/imgs/slider/logo/airbnb.svg"
-                      />
-                    </a>
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide hover-up">
+                <div
+                  style={{
+                    border: "1px solid rgba(6, 18, 36, 0.1)",
+                    padding: "39px 0px 36px 0px",
+                    height: "109px",
+                    display: "inline-block",
+                    width: "100%",
+                    textAlign: "center",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <div>
+                    <img
+                      style={{ margin: "0 auto" }}
+                      alt="logomaker"
+                      src="/assets/imgs/slider/logo/airbnb.svg"
+                    />
                   </div>
                 </div>
-                <div className="swiper-slide hover-up">
-                  <div className="item-logo">
-                    <a href="candidates-single.html">
-                      <img
-                        alt="logomaker"
-                        src="/assets/imgs/slider/logo/dropbox.svg"
-                      />
-                    </a>
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide hover-up">
+                <div
+                  style={{
+                    border: "1px solid rgba(6, 18, 36, 0.1)",
+                    padding: "39px 0px 36px 0px",
+                    height: "109px",
+                    display: "inline-block",
+                    width: "100%",
+                    textAlign: "center",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <div>
+                    <img
+                      style={{ margin: "0 auto" }}
+                      alt="logomaker"
+                      src="/assets/imgs/slider/logo/dropbox.svg"
+                    />
                   </div>
                 </div>
-                <div className="swiper-slide hover-up">
-                  <div className="item-logo">
-                    <a href="candidates-single.html">
-                      <img
-                        alt="logomaker"
-                        src="/assets/imgs/slider/logo/fedex.svg"
-                      />
-                    </a>
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide hover-up">
+                <div
+                  style={{
+                    border: "1px solid rgba(6, 18, 36, 0.1)",
+                    padding: "39px 0px 36px 0px",
+                    height: "109px",
+                    display: "inline-block",
+                    width: "100%",
+                    textAlign: "center",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <div>
+                    <img
+                      style={{ margin: "0 auto" }}
+                      alt="logomaker"
+                      src="/assets/imgs/slider/logo/fedex.svg"
+                    />
                   </div>
                 </div>
-                <div className="swiper-slide hover-up">
-                  <div className="item-logo">
-                    <a href="candidates-single.html">
-                      <img
-                        alt="logomaker"
-                        src="/assets/imgs/slider/logo/wallmart.svg"
-                      />
-                    </a>
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide hover-up">
+                <div
+                  style={{
+                    border: "1px solid rgba(6, 18, 36, 0.1)",
+                    padding: "39px 0px 36px 0px",
+                    height: "109px",
+                    display: "inline-block",
+                    width: "100%",
+                    textAlign: "center",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <div>
+                    <img
+                      style={{ margin: "0 auto" }}
+                      alt="logomaker"
+                      src="/assets/imgs/slider/logo/wallmart.svg"
+                    />
                   </div>
                 </div>
-                <div className="swiper-slide hover-up">
-                  <div className="item-logo">
-                    <a href="candidates-single.html">
-                      <img
-                        alt="logomaker"
-                        src="/assets/imgs/slider/logo/hubspot.svg"
-                      />
-                    </a>
+              </SwiperSlide>
+              <SwiperSlide className="swiper-slide hover-up">
+                <div
+                  style={{
+                    border: "1px solid rgba(6, 18, 36, 0.1)",
+                    padding: "39px 0px 36px 0px",
+                    height: "109px",
+                    display: "inline-block",
+                    width: "100%",
+                    textAlign: "center",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <div>
+                    <img
+                      style={{ margin: "0 auto" }}
+                      alt="logomaker"
+                      src="/assets/imgs/slider/logo/hubspot.svg"
+                    />
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="swiper-button-next" />
-            <div className="swiper-button-prev" />
+              </SwiperSlide>
+            </Swiper>
+            <div className="swiper-button-prev" ref={prevRef} />
           </div>
         </div>
       </div>
@@ -260,33 +356,31 @@ const Home = () => {
               className="col-lg-5 text-lg-end text-start wow animate__animated animate__fadeInUp"
               data-wow-delay=".2s"
             >
-              <a
-                href="job-grid-2.html"
+              <Link
+                to="/logo"
                 className="mt-sm-15 mt-lg-30 btn btn-border icon-chevron-right"
               >
                 Browse all
-              </a>
+              </Link>
             </div>
           </div>
           <div className="row mt-70">
             <div className="col-lg-3 col-md-6 col-sm-12 col-12">
               <div className="card-grid hover-up wow animate__animated animate__fadeInUp">
                 <div className="text-center">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     <figure>
                       <img
+                        style={{ margin: "0 auto" }}
                         alt="logomaker"
                         src="/assets/imgs/theme/icons/marketing.svg"
                       />
                     </figure>
-                  </a>
+                  </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <a href="job-grid.html">Marketing &amp; Communication</a>
+                  <Link to="/logo">Marketing &amp; Communication</Link>
                 </h5>
-                <p className="text-center text-stroke-40 mt-20">
-                  156 Available Vacancy
-                </p>
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-12 col-12">
@@ -295,24 +389,22 @@ const Home = () => {
                 data-wow-delay=".1s"
               >
                 <div className="text-center">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     <figure>
                       <img
+                        style={{ margin: "0 auto" }}
                         alt="logomaker"
                         src="/assets/imgs/theme/icons/content-writer.svg"
                       />
                     </figure>
-                  </a>
+                  </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     Content <br />
                     Writer
-                  </a>
+                  </Link>
                 </h5>
-                <p className="text-center text-stroke-40 mt-20">
-                  268 Available Vacancy
-                </p>
               </div>
             </div>
             <div
@@ -321,24 +413,22 @@ const Home = () => {
             >
               <div className="card-grid hover-up">
                 <div className="text-center">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     <figure>
                       <img
+                        style={{ margin: "0 auto" }}
                         src="/assets/imgs/theme/icons/marketing-director.svg"
                         alt="logomaker"
                       />
                     </figure>
-                  </a>
+                  </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     Marketing <br />
                     Director
-                  </a>
+                  </Link>
                 </h5>
-                <p className="text-center text-stroke-40 mt-20">
-                  145 Available Vacancy
-                </p>
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-12 col-12">
@@ -347,47 +437,43 @@ const Home = () => {
                 data-wow-delay=".3s"
               >
                 <div className="text-center">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     <figure>
                       <img
+                        style={{ margin: "0 auto" }}
                         src="/assets/imgs/theme/icons/system-analyst.svg"
                         alt="logomaker"
                       />
                     </figure>
-                  </a>
+                  </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     System <br />
                     Analyst
-                  </a>
+                  </Link>
                 </h5>
-                <p className="text-center text-stroke-40 mt-20">
-                  236 Available Vacancy
-                </p>
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-12 col-12">
               <div className="card-grid hover-up wow animate__animated animate__fadeInUp">
                 <div className="text-center">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     <figure>
                       <img
+                        style={{ margin: "0 auto" }}
                         src="/assets/imgs/theme/icons/business-development.svg"
                         alt="logomaker"
                       />
                     </figure>
-                  </a>
+                  </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     Digital
                     <br /> Designer
-                  </a>
+                  </Link>
                 </h5>
-                <p className="text-center text-stroke-40 mt-20">
-                  56 Available Vacancy
-                </p>
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-12 col-12">
@@ -396,24 +482,22 @@ const Home = () => {
                 data-wow-delay=".1s"
               >
                 <div className="text-center">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     <figure>
                       <img
+                        style={{ margin: "0 auto" }}
                         src="/assets/imgs/theme/icons/proof-reading.svg"
                         alt="logomaker"
                       />
                     </figure>
-                  </a>
+                  </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     Market <br />
                     Research
-                  </a>
+                  </Link>
                 </h5>
-                <p className="text-center text-stroke-40 mt-20">
-                  168 Available Vacancy
-                </p>
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-12 col-12">
@@ -422,24 +506,22 @@ const Home = () => {
                 data-wow-delay=".2s"
               >
                 <div className="text-center card-img">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     <figure>
                       <img
+                        style={{ margin: "0 auto" }}
                         src="/assets/imgs/theme/icons/testing.svg"
                         alt="logomaker"
                       />
                     </figure>
-                  </a>
+                  </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <a href="job-grid.html">
+                  <Link to="/logo">
                     Human
                     <br /> Resource
-                  </a>
+                  </Link>
                 </h5>
-                <p className="text-center text-stroke-40 mt-20">
-                  628 Available Vacancy
-                </p>
               </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-12 col-12">
@@ -450,14 +532,11 @@ const Home = () => {
                 <div className="text-center mt-15">
                   <h3>18,265+</h3>
                 </div>
-                <p className="text-center mt-30 text-stroke-40">
-                  Jobs are waiting for you
-                </p>
-                <div className="text-center mt-30">
+                <div className="text-center mt-45">
                   <div className="box-button-shadow">
-                    <a href="job-grid.html" className="btn btn-default">
+                    <Link to="/logo" className="btn btn-default">
                       Explore more
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -481,16 +560,16 @@ const Home = () => {
                 </div>
                 <div className="mt-40">
                   <div className="box-button-shadow wow animate__animated animate__fadeInUp">
-                    <a href="#" className="btn btn-default">
+                    <Link to="/logo" className="btn btn-default">
                       Get Started
-                    </a>
+                    </Link>
                   </div>
-                  <a
-                    href="#"
+                  <Link
+                    to="/contact"
                     className="btn btn-link wow animate__animated animate__fadeInUp"
                   >
                     Contact Us
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -716,9 +795,9 @@ const Home = () => {
                     printed stationery and business card to match.
                   </p>
                   <div className="box-button-shadow mt-30 wow animate__animated animate__fadeInUp">
-                    <a href="job-grid.html" className="btn btn-default">
+                    <Link to="/logo" className="btn btn-default">
                       Explore more
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -738,18 +817,27 @@ const Home = () => {
           <div className="row mt-70">
             <div className="box-swiper">
               <div className="swiper-container swiper-group-3">
-                <div className="swiper-wrapper pb-70 pt-5">
-                  <div className="swiper-slide">
-                    <div className="card-grid-3 hover-up">
+                <Swiper
+                  loop
+                  slidesPerView="3"
+                  spaceBetween={20}
+                  style={{ padding: "15px 0" }}
+                >
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
-                        <a href="candidates-single.html">
+                        <div>
                           <figure>
                             <img
+                              style={{ margin: "0 auto" }}
                               alt="logomaker"
                               src="/assets/imgs/page/about/profile.png"
                             />
                           </figure>
-                        </a>
+                        </div>
                       </div>
                       <div className="card-block-info mt-10">
                         <p className="text-lg text-center">
@@ -832,18 +920,22 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div className="card-grid-3 hover-up">
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
-                        <a href="candidates-single.html">
+                        <div>
                           <figure>
                             <img
+                              style={{ margin: "0 auto" }}
                               alt="logomaker"
                               src="/assets/imgs/page/about/profile2.png"
                             />
                           </figure>
-                        </a>
+                        </div>
                       </div>
                       <div className="card-block-info mt-10">
                         <p className="text-lg text-center">
@@ -922,18 +1014,22 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div className="card-grid-3 hover-up">
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      style={{ width: "420px", height: "393px" }}
+                      className="card-grid-3 hover-up"
+                    >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
-                        <a href="candidates-single.html">
+                        <div>
                           <figure>
                             <img
+                              style={{ margin: "0 auto" }}
                               alt="logomaker"
                               src="/assets/imgs/page/about/profile3.png"
                             />
                           </figure>
-                        </a>
+                        </div>
                       </div>
                       <div className="card-block-info mt-10">
                         <p className="text-lg text-center">
@@ -1016,8 +1112,588 @@ const Home = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star5"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star5"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star4"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star4"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star3"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star3"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star2"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star2"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star1"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star1"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Katy Perry</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile2.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star52"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label htmlFor="star52" title="text">
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star42"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star42"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star32"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star32"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star22"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star22"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star12"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star12"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Chris Brown</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      style={{ width: "420px", height: "393px" }}
+                      className="card-grid-3 hover-up"
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile3.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star53"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star53"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star43"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star43"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star33"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star33"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star23"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star23"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star13"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star13"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Justin Bieber</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star5"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star5"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star4"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star4"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star3"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star3"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star2"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star2"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star1"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star1"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Katy Perry</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile2.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star52"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label htmlFor="star52" title="text">
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star42"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star42"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star32"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star32"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star22"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star22"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star12"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star12"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Chris Brown</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      style={{ width: "420px", height: "393px" }}
+                      className="card-grid-3 hover-up"
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile3.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star53"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star53"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star43"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star43"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star33"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star33"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star23"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star23"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star13"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star13"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Justin Bieber</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
                 <div className="swiper-pagination swiper-pagination3" />
               </div>
             </div>
@@ -1037,7 +1713,7 @@ const Home = () => {
               how easy it is to get overwhelmed with the number.
             </p>
           </div>
-          <div className="text-center mt-20">
+          {/* <div className="text-center mt-20">
             <span className="text-lg text-billed">Billed Yearly</span>
             <label className="switch ml-20 mr-20">
               <input
@@ -1049,10 +1725,45 @@ const Home = () => {
               <span className="slider round" />
             </label>
             <span className="text-lg text-billed">Billed Monthly</span>
-          </div>
+          </div> */}
           <div className="block-pricing mt-125 mt-md-50">
             <div className="row">
-              <div
+              {[...packages]?.reverse()?.map((pack, index) => (
+                <div
+                  className="col-lg-3 col-md-6 wow animate__animated animate__fadeInUp"
+                  data-wow-delay=".1s"
+                >
+                  <div
+                    className={`box-pricing-item ${
+                      index === 2 ? "most-popular" : null
+                    }`}
+                  >
+                    <div className="box-info-price">
+                      <span className="text-price for-month display-month">
+                        ${pack.amount}
+                      </span>
+                      <span className="text-price for-year">
+                        ${pack.amount}
+                      </span>
+                      <span className="text-month">/month</span>
+                    </div>
+                    <div>
+                      <h4 className="mb-15">{pack.name}</h4>
+                    </div>
+                    <ul className="list-package-feature">
+                      <li>{pack.logolimit} Logos</li>
+                      <li>Own analytics platform</li>
+                      <li>Chat support</li>
+                      <li>Optimize hashtags</li>
+                      <li>Unlimited users</li>
+                    </ul>
+                    <div>
+                      <button className="btn btn-border">Choose plan</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {/* <div
                 className="col-lg-3 col-md-6 wow animate__animated animate__fadeInUp"
                 data-wow-delay=".1s"
               >
@@ -1184,7 +1895,7 @@ const Home = () => {
                     </a>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
