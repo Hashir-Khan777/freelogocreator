@@ -10,6 +10,8 @@
 
         public string description { get; set; } = string.Empty;
 
+        public string tags { get; set; } = string.Empty;
+
         public int category_id { get; set; }
 
         public Categories? category { get; set; }

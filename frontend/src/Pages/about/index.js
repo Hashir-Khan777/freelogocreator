@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const About = () => {
   return (
@@ -19,13 +21,10 @@ const About = () => {
                   </div>
                   <div className="mt-60">
                     <div className="box-button-shadow mr-10">
-                      <a href="contact.html" className="btn btn-default">
+                      <Link to="/contact" className="btn btn-default">
                         Contact us
-                      </a>
+                      </Link>
                     </div>
-                    <a href="#" className="btn">
-                      Support center
-                    </a>
                   </div>
                 </div>
               </div>
@@ -79,13 +78,16 @@ const About = () => {
                       </figure>
                     </div>
                     <div className="card-grid-4-info">
-                      <h5 className="mt-20">Market Research</h5>
+                      <h5 className="mt-20">Fashion</h5>
                       <p className="text-normal mt-15 mb-20">
                         It is a long established fact that a reader will be.
                       </p>
-                      <a href="#" className="btn-readmore icon-arrow">
-                        Read more
-                      </a>
+                      <Link
+                        to="/logo?cat=3"
+                        className="btn-readmore icon-arrow"
+                      >
+                        Explore
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -100,13 +102,16 @@ const About = () => {
                       </figure>
                     </div>
                     <div className="card-grid-4-info">
-                      <h5 className="mt-20">Creative Layout</h5>
+                      <h5 className="mt-20">Business</h5>
                       <p className="text-normal mt-15 mb-20">
                         It is a long established fact that a reader will be.
                       </p>
-                      <a href="#" className="btn-readmore icon-arrow">
-                        Read more
-                      </a>
+                      <Link
+                        to="/logo?cat=2"
+                        className="btn-readmore icon-arrow"
+                      >
+                        Explore
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -121,13 +126,16 @@ const About = () => {
                       </figure>
                     </div>
                     <div className="card-grid-4-info">
-                      <h5 className="mt-20">Digital Marketing</h5>
+                      <h5 className="mt-20">Technology</h5>
                       <p className="text-normal mt-15 mb-20">
                         It is a long established fact that a reader will be.
                       </p>
-                      <a href="#" className="btn-readmore icon-arrow">
+                      <Link
+                        to="/logo?cat=1"
+                        className="btn-readmore icon-arrow"
+                      >
                         Read more
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -142,13 +150,16 @@ const About = () => {
                       </figure>
                     </div>
                     <div className="card-grid-4-info">
-                      <h5 className="mt-20">SEO &amp; Backlinks</h5>
+                      <h5 className="mt-20">Education</h5>
                       <p className="text-normal mt-15 mb-20">
                         It is a long established fact that a reader will be.
                       </p>
-                      <a href="#" className="btn-readmore icon-arrow">
-                        Read more
-                      </a>
+                      <Link
+                        to="/logo?cat=9"
+                        className="btn-readmore icon-arrow"
+                      >
+                        Explore
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -184,9 +195,9 @@ const About = () => {
                     make it affordable for all through our advance logo creator.
                   </p>
                   <div className="mt-30 wow animate__animated animate__fadeInUp">
-                    <a href="logo.html" className="btn btn-default">
+                    <Link to="/logo" className="btn btn-default">
                       Explore more
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -213,11 +224,6 @@ const About = () => {
                 Responsive Customer Support We are ready to work on your ideas,
                 not matter how far-fetched they may seem.
               </p>
-              <div className="mt-10 wow animate__animated animate__fadeInUp">
-                <a href="#" className="btn btn-default">
-                  Learn more
-                </a>
-              </div>
             </div>
             <div className="col-lg-7 col-md-12 col-sm-12 col-12 pl-200 d-none d-lg-block">
               <div className="banner-imgs banner-imgs-about">
@@ -474,30 +480,39 @@ const About = () => {
           </div>
         </div>
       </section>
-      <section className="section-box mt-80 mt-md-50">
+      <section className="section-box mt-50 mt-md-0">
         <div className="container">
-          <h2 className="text-center mb-15 section-title wow animate__animated animate__fadeInUp">
+          <h2 className="section-title text-center mb-15 wow animate__animated animate__fadeInUp">
             Our Happy Customer
           </h2>
-          <div className="text-normal text-center color-black-5 box-mw-60 wow animate__animated animate__fadeInUp">
+          <div className="text-normal text-center color-black-5 box-mw-60 wow animate__animated animate__fadeInUp mt-20">
             When it comes to choosing the right web hosting provider, we know
             how easy it is to get overwhelmed with the number.
           </div>
           <div className="row mt-70">
             <div className="box-swiper">
               <div className="swiper-container swiper-group-3">
-                <div className="swiper-wrapper pb-70 pt-5">
-                  <div className="swiper-slide">
-                    <div className="card-grid-3 hover-up">
+                <Swiper
+                  loop
+                  slidesPerView="3"
+                  spaceBetween={20}
+                  style={{ padding: "15px 0" }}
+                >
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
-                        <a href="#">
+                        <div>
                           <figure>
                             <img
+                              style={{ margin: "0 auto" }}
                               alt="logomaker"
-                              src="assets/imgs/page/about/profile.png"
+                              src="/assets/imgs/page/about/profile.png"
                             />
                           </figure>
-                        </a>
+                        </div>
                       </div>
                       <div className="card-block-info mt-10">
                         <p className="text-lg text-center">
@@ -506,112 +521,96 @@ const About = () => {
                           as
                         </p>
                         <div className="text-center mt-20 mb-25">
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star5"
+                              name="rate"
+                              defaultValue={5}
                             />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                            <label
+                              htmlFor="star5"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star4"
+                              name="rate"
+                              defaultValue={4}
                             />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                            <label
+                              htmlFor="star4"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star3"
+                              name="rate"
+                              defaultValue={3}
                             />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                            <label
+                              htmlFor="star3"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star2"
+                              name="rate"
+                              defaultValue={2}
                             />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                            <label
+                              htmlFor="star2"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star1"
+                              name="rate"
+                              defaultValue={1}
                             />
-                          </span>
+                            <label
+                              htmlFor="star1"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
                         </div>
                         <div className="card-profile text-center">
-                          <strong>Sarah Harding</strong>
+                          <strong>Katy Perry</strong>
                           <span>Visual Designer</span>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div className="card-grid-3 hover-up">
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
-                        <a href="#">
+                        <div>
                           <figure>
                             <img
+                              style={{ margin: "0 auto" }}
                               alt="logomaker"
-                              src="assets/imgs/page/about/profile2.png"
+                              src="/assets/imgs/page/about/profile2.png"
                             />
                           </figure>
-                        </a>
-                      </div>
-                      <div className="card-block-info mt-10">
-                        <p className="text-lg text-center">
-                          We are on the hunt for a designer who is exceptional
-                          in both making incredible product interfaces as well
-                          as
-                        </p>
-                        <div className="text-center mt-20 mb-25 card-block-rating">
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
-                            />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
-                            />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
-                            />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
-                            />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
-                            />
-                          </span>
                         </div>
-                        <div className="card-profile text-center">
-                          <strong>Sarah Harding</strong>
-                          <span>Visual Designer</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div className="card-grid-3 hover-up">
-                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
-                        <a href="#">
-                          <figure>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/page/about/profile3.png"
-                            />
-                          </figure>
-                        </a>
                       </div>
                       <div className="card-block-info mt-10">
                         <p className="text-lg text-center">
@@ -620,45 +619,756 @@ const About = () => {
                           as
                         </p>
                         <div className="text-center mt-20 mb-25">
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star52"
+                              name="rate"
+                              defaultValue={5}
                             />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                            <label htmlFor="star52" title="text">
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star42"
+                              name="rate"
+                              defaultValue={4}
                             />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                            <label
+                              htmlFor="star42"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star32"
+                              name="rate"
+                              defaultValue={3}
                             />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                            <label
+                              htmlFor="star32"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star22"
+                              name="rate"
+                              defaultValue={2}
                             />
-                          </span>
-                          <span>
-                            <img
-                              alt="logomaker"
-                              src="assets/imgs/theme/icons/star.svg"
+                            <label
+                              htmlFor="star22"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star12"
+                              name="rate"
+                              defaultValue={1}
                             />
-                          </span>
+                            <label
+                              htmlFor="star12"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
                         </div>
                         <div className="card-profile text-center">
-                          <strong>Sarah Harding</strong>
+                          <strong>Chris Brown</strong>
                           <span>Visual Designer</span>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      style={{ width: "420px", height: "393px" }}
+                      className="card-grid-3 hover-up"
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile3.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star53"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star53"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star43"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star43"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star33"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star33"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star23"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star23"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star13"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star13"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Justin Bieber</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star5"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star5"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star4"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star4"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star3"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star3"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star2"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star2"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star1"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star1"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Katy Perry</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile2.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star52"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label htmlFor="star52" title="text">
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star42"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star42"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star32"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star32"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star22"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star22"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star12"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star12"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Chris Brown</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      style={{ width: "420px", height: "393px" }}
+                      className="card-grid-3 hover-up"
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile3.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star53"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star53"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star43"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star43"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star33"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star33"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star23"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star23"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star13"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star13"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Justin Bieber</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star5"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star5"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star4"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star4"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star3"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star3"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star2"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star2"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star1"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star1"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Katy Perry</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      className="card-grid-3 hover-up"
+                      style={{ width: "420px", height: "393px" }}
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile2.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star52"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label htmlFor="star52" title="text">
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star42"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star42"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star32"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star32"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star22"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star22"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star12"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star12"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Chris Brown</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide className="swiper-slide">
+                    <div
+                      style={{ width: "420px", height: "393px" }}
+                      className="card-grid-3 hover-up"
+                    >
+                      <div className="text-center card-grid-3-image card-grid-3-image-circle">
+                        <div>
+                          <figure>
+                            <img
+                              style={{ margin: "0 auto" }}
+                              alt="logomaker"
+                              src="/assets/imgs/page/about/profile3.png"
+                            />
+                          </figure>
+                        </div>
+                      </div>
+                      <div className="card-block-info mt-10">
+                        <p className="text-lg text-center">
+                          We are on the hunt for a designer who is exceptional
+                          in both making incredible product interfaces as well
+                          as
+                        </p>
+                        <div className="text-center mt-20 mb-25">
+                          <div className="rate">
+                            <input
+                              type="radio"
+                              id="star53"
+                              name="rate"
+                              defaultValue={5}
+                            />
+                            <label
+                              htmlFor="star53"
+                              title="text"
+                              className="checked"
+                            >
+                              5 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star43"
+                              name="rate"
+                              defaultValue={4}
+                            />
+                            <label
+                              htmlFor="star43"
+                              title="text"
+                              className="checked"
+                            >
+                              4 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star33"
+                              name="rate"
+                              defaultValue={3}
+                            />
+                            <label
+                              htmlFor="star33"
+                              title="text"
+                              className="checked"
+                            >
+                              3 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star23"
+                              name="rate"
+                              defaultValue={2}
+                            />
+                            <label
+                              htmlFor="star23"
+                              title="text"
+                              className="checked"
+                            >
+                              2 stars
+                            </label>
+                            <input
+                              type="radio"
+                              id="star13"
+                              name="rate"
+                              defaultValue={1}
+                            />
+                            <label
+                              htmlFor="star13"
+                              title="text"
+                              className="checked"
+                            >
+                              1 star
+                            </label>
+                          </div>
+                        </div>
+                        <div className="card-profile text-center">
+                          <strong>Justin Bieber</strong>
+                          <span>Visual Designer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
                 <div className="swiper-pagination swiper-pagination3" />
               </div>
             </div>

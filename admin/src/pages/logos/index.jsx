@@ -21,6 +21,7 @@ import Modal from "components/ui/Modal";
 import Textinput from "components/ui/Textinput";
 import Fileinput from "components/ui/Fileinput";
 import Select from "react-select";
+import Creatable from "react-select/creatable";
 import Loading from "components/Loading";
 import Icons from "components/ui/Icon";
 
@@ -47,6 +48,7 @@ const Logos = () => {
     description: "",
     graphic: "",
     category_id: "",
+    tags: "",
   });
 
   const isEmpty = (value) => {
@@ -111,7 +113,7 @@ const Logos = () => {
     },
     {
       Header: "action",
-      accessor: "action",
+      accessor: "tags",
       Cell: (row) => {
         return (
           <div>
@@ -131,6 +133,10 @@ const Logos = () => {
                         item.name === "edit"
                           ? () => {
                               setForm(row.cell.row.values);
+                              console.log(
+                                row.cell.row.values,
+                                "row.cell.row.values"
+                              );
                               setShow(true);
                               setEdit(true);
                             }
@@ -332,6 +338,9 @@ const Logos = () => {
                 className="block mx-auto w-[100px] mb-2 object-cover rounded-full"
               />
               <div className="space-y-4">
+                <span className="text-sm text-gray-500">
+                  Add 200 X 200 size logo
+                </span>
                 <Fileinput
                   name="basic"
                   accept="image/svg+xml"
@@ -384,6 +393,24 @@ const Logos = () => {
                   id="h_Fullname2"
                   type="text"
                   placeholder="Enter Description"
+                />
+                <label htmlFor=" hh" className="form-label ">
+                  Tags *
+                </label>
+                <Creatable
+                  isMulti
+                  name="colors"
+                  defaultValue={form?.tags
+                    ?.split(", ")
+                    ?.map((e) => ({ label: e, value: e }))}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      tags: e.map((f) => f?.value).join(", "),
+                    })
+                  }
                 />
                 <div className="flex justify-end">
                   <Button

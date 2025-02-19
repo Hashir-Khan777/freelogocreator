@@ -917,6 +917,10 @@
             "type": "string",
             "nullable": true
           },
+          "tags": {
+            "type": "string",
+            "nullable": true
+          },
           "category_id": {
             "type": "integer",
             "format": "int32"

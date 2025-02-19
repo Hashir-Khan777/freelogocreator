@@ -21,12 +21,14 @@ import { Link, useSearchParams } from "react-router-dom";
 import { getAllCategories } from "../../store/actions/categories.action";
 
 let page = 1;
+const tags = ["Fashion", "Technology", "Beauty"];
 const Logo = () => {
   const [inputValue, setInputValue] = useState("");
   const [category, setCategory] = useState("all");
   const [filteredGraphics, setFilteredGraphics] = useState([]);
+  const [selectedTags, setSelectedtags] = useState([]);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const dispatch = useDispatch();
   const imageRef = useRef(null);
@@ -91,16 +93,28 @@ const Logo = () => {
 
   const filter = () => {
     if (graphics?.length > 0) {
-      if (category) {
-        if (category === "all") {
+      if (searchParams.get("cat")) {
+        if (searchParams.get("cat") === "all") {
           setFilteredGraphics(graphics);
         } else {
+          console.log(searchParams.get("cat"), `searchParams.get("cat") else`);
           setFilteredGraphics(
-            graphics?.filter((x) => x.category_id == category)
+            graphics?.filter(
+              (x) => x.category_id == Number(searchParams.get("cat"))
+            )
           );
         }
       } else {
         setFilteredGraphics(graphics);
+      }
+      if (selectedTags.length > 0) {
+        setFilteredGraphics(
+          graphics?.filter((x) =>
+            selectedTags
+              ?.map((e) => x?.tags?.split(", ")?.includes(e))
+              ?.includes(true)
+          )
+        );
       }
     }
   };
@@ -116,6 +130,9 @@ const Logo = () => {
     } else {
       dispatch(getAllGraphics({ page }));
     }
+    return () => {
+      setInputValue("");
+    };
   }, [searchParams]);
 
   useEffect(() => {
@@ -358,7 +375,10 @@ const Logo = () => {
                     <div className="form-group select-style select-style-icon">
                       <select
                         className="form-control form-icons select-active"
-                        onChange={(e) => setCategory(e.target.value)}
+                        value={searchParams.get("cat")}
+                        onChange={(e) =>
+                          setSearchParams({ cat: e.target.value })
+                        }
                       >
                         <option value="all">All</option>
                         {categories?.map((cat) => (
@@ -372,48 +392,24 @@ const Logo = () => {
                     <h5 className="medium-heading mb-15">Filter by Tags</h5>
                     <div className="form-group">
                       <ul className="list-checkbox">
-                        <li>
-                          <label className="cb-container">
-                            <input type="checkbox" />{" "}
-                            <span className="text-small">
-                              Graphic Designing
-                            </span>
-                            <span className="checkmark" />
-                          </label>
-                          <span className="number-item">235</span>
-                        </li>
-                        <li>
-                          <label className="cb-container">
-                            <input type="checkbox" defaultChecked="checked" />{" "}
-                            <span className="text-small">Web</span>
-                            <span className="checkmark" />
-                          </label>
-                          <span className="number-item">28</span>
-                        </li>
-                        <li>
-                          <label className="cb-container">
-                            <input type="checkbox" defaultChecked="checked" />{" "}
-                            <span className="text-small">Remote Office</span>
-                            <span className="checkmark" />
-                          </label>
-                          <span className="number-item">67</span>
-                        </li>
-                        <li>
-                          <label className="cb-container">
-                            <input type="checkbox" />{" "}
-                            <span className="text-small">Beauty</span>
-                            <span className="checkmark" />
-                          </label>
-                          <span className="number-item">92</span>
-                        </li>
-                        <li>
-                          <label className="cb-container">
-                            <input type="checkbox" />{" "}
-                            <span className="text-small">Restaurants</span>
-                            <span className="checkmark" />
-                          </label>
-                          <span className="number-item">14</span>
-                        </li>
+                        {tags.map((tag) => (
+                          <li>
+                            <label className="cb-container">
+                              <input
+                                type="checkbox"
+                                defaultChecked={selectedTags.includes(tag)}
+                                onClick={() =>
+                                  setSelectedtags([
+                                    ...selectedTags,
+                                    tag?.toLowerCase(),
+                                  ])
+                                }
+                              />{" "}
+                              <span className="text-small">{tag}</span>
+                              <span className="checkmark" />
+                            </label>
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -421,7 +417,17 @@ const Logo = () => {
                     <button className="btn btn-default" onClick={filter}>
                       Apply filter
                     </button>
-                    <button className="btn">Reset filter</button>
+                    <button
+                      className="btn"
+                      onClick={() => {
+                        setSearchParams({});
+                        setSelectedtags([]);
+                        setFilteredGraphics(graphics);
+                        // window.location.reload();
+                      }}
+                    >
+                      Reset filter
+                    </button>
                   </div>
                 </div>
               </div>

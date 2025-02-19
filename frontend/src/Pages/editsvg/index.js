@@ -115,10 +115,10 @@ const SVGCanvasEditor = () => {
   };
 
   const changeFontSize = (e) => {
-    setSelectedFontSize(e.target.value);
+    setSelectedFontSize(e);
     if (selectedObject) {
       selectedObject.map((obj) => {
-        obj.set("fontSize", e.target.value);
+        obj.set("fontSize", e);
       });
       canvas.renderAll();
     }
@@ -201,10 +201,10 @@ const SVGCanvasEditor = () => {
   };
 
   const handleFontChange = (e) => {
-    setFontFamily(e.target.value);
+    setFontFamily(e);
     if (selectedObject) {
       selectedObject.map((obj) => {
-        obj.set("fontFamily", e.target.value);
+        obj.set("fontFamily", e);
       });
       canvas.renderAll();
     }
@@ -509,33 +509,68 @@ const SVGCanvasEditor = () => {
               <div class="sidebar-shadow p-10">
                 <h6 class="sidebar-title">Customize Option</h6>
                 <div class="block-tags">
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                  <button
+                    onClick={toggleGrid}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
                     Grid
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
-                    Color
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                  </button>
+                  {/* <a href="#" class="btn btn-tags-sm mb-10 mr-5">
                     Alignment
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                  </a> */}
+                  <button onClick={addText} class="btn btn-tags-sm mb-10 mr-5">
                     Add Text
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
-                    Font Style
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
-                    Font Size
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                  </button>
+                  <div class="btn btn-tags-sm mb-10 mr-5">
+                    <Menu>
+                      <MenuButton>Font Family</MenuButton>
+                      <MenuList>
+                        {fonts.map((size) => (
+                          <MenuItem
+                            as="option"
+                            value={size}
+                            onClick={() => handleFontChange(size)}
+                          >
+                            {size}
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </Menu>
+                  </div>
+                  <div class="btn btn-tags-sm mb-10 mr-5">
+                    <Menu>
+                      <MenuButton>Font Size</MenuButton>
+                      <MenuList>
+                        {fontSizes.map((size) => (
+                          <MenuItem
+                            as="option"
+                            value={size}
+                            onClick={() => changeFontSize(size)}
+                          >
+                            {size}
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </Menu>
+                  </div>
+                  <button
+                    onClick={() => undo(canvas)}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
                     Undo
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                  </button>
+                  <button
+                    onClick={() => redo(canvas)}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
                     Redo
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                  </button>
+                  <button
+                    onClick={canvasInitialization}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
                     Reset
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -546,7 +581,32 @@ const SVGCanvasEditor = () => {
                     class="card-blog-1 wow animate__animated animate__fadeIn"
                     data-wow-delay=".0s"
                   >
-                    <div class="post-thumb mb-15">
+                    {colors.length > 0 ? (
+                      colors?.map((color, index) => (
+                        <Input
+                          key={index}
+                          width="80px"
+                          value={color}
+                          type="color"
+                          onChange={(e) => changeColor(e, index)}
+                        />
+                      ))
+                    ) : (
+                      <Input
+                        width="80px"
+                        value={bgColor}
+                        type="color"
+                        onChange={(e) => {
+                          setBgColor(e.target.value);
+                          canvas.setBackgroundColor(e.target.value);
+                          canvas.renderAll();
+                        }}
+                      />
+                    )}
+                    <div
+                      class="post-thumb mb-15"
+                      style={{ display: "flex", justifyContent: "center" }}
+                    >
                       <Box
                         as="canvas"
                         ref={canvasRef}
@@ -556,14 +616,28 @@ const SVGCanvasEditor = () => {
                     </div>
                     <div class="card-block-info">
                       <div class="card-2-bottom mt-30">
-                        <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center justify-content-end">
                           <div class="keep-reading">
-                            <a
-                              href="blog-single.html"
-                              class="btn btn-border btn-brand-hover"
-                            >
-                              Save Editing
-                            </a>
+                            <Menu>
+                              <MenuButton
+                                mt="10px"
+                                float="right"
+                                variant="solid"
+                                colorScheme="blue"
+                              >
+                                <button class="btn btn-border btn-brand-hover">
+                                  Save Editing
+                                </button>
+                              </MenuButton>
+                              <MenuList>
+                                <MenuItem onClick={() => saveImage("png")}>
+                                  Save As Png
+                                </MenuItem>
+                                <MenuItem onClick={() => saveImage("jpeg")}>
+                                  Save As Jpeg
+                                </MenuItem>
+                              </MenuList>
+                            </Menu>
                           </div>
                         </div>
                       </div>
@@ -576,24 +650,37 @@ const SVGCanvasEditor = () => {
               <div class="sidebar-shadow p-10">
                 <h6 class="sidebar-title">Advanced Option</h6>
                 <div class="block-tags">
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                  <button
+                    onClick={sendToBack}
+                    href="#"
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
                     Send to Back
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
-                    Send to Front
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
-                    Add Shapes
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
-                    Add Icons
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                  </button>
+                  <button
+                    onClick={bringToFront}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
+                    Bring to Front
+                  </button>
+                  <button
+                    onClick={() => dispatch(toggleShapeModal({ open: true }))}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
+                    Add Shapes & Icons
+                  </button>
+                  <button
+                    onClick={() => dispatch(toggleReplaceModal({ open: true }))}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
                     Replace symbol
-                  </a>
-                  <a href="#" class="btn btn-tags-sm mb-10 mr-5">
+                  </button>
+                  <button
+                    onClick={() => dispatch(toggleShieldModal({ open: true }))}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
                     Apply shield
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>

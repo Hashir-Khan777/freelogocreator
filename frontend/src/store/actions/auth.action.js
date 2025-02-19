@@ -26,6 +26,7 @@ export const login = createAsyncThunk(
           message: data.message,
         })
       );
+      localStorage.setItem("user", JSON.stringify(data.data));
       return data.data;
     } catch (err) {
       dispatch(
@@ -63,6 +64,7 @@ export const register = createAsyncThunk(
           message: data.message,
         })
       );
+      localStorage.setItem("user", JSON.stringify(data.data));
       return data.data;
     } catch (err) {
       dispatch(
@@ -126,6 +128,35 @@ export const resetPassword = createAsyncThunk(
         })
       );
       return data;
+    } catch (err) {
+      dispatch(
+        showToast({
+          type: "error",
+          message: err.response.data.message
+            ? err.response.data.message
+            : err.message,
+        })
+      );
+      return rejectWithValue(
+        err.response.data.message ? err.response.data.message : err.message
+      );
+    }
+  }
+);
+
+export const signOut = createAsyncThunk(
+  "auth/signout",
+  async (obj, { rejectWithValue, dispatch }) => {
+    try {
+      cookies.remove("_user");
+      localStorage.removeItem("user");
+      dispatch(
+        showToast({
+          type: "success",
+          message: "Logout successfully",
+        })
+      );
+      return null;
     } catch (err) {
       dispatch(
         showToast({

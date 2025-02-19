@@ -1,0 +1,6 @@
+1) searching and filtering individual applying
+2) edit logo page functionality and UI issues
+3) random categories in browse by category
+4) add random categories in about us page
+5) add an editor for blogs in admin page and UI in user site
+6) show info message on add logo

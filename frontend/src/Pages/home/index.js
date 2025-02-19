@@ -327,12 +327,12 @@ const Home = () => {
                   drag-and-drop design editor.
                 </p>
                 <div className="mt-20 wow animate__animated animate__fadeInUp">
-                  <a
-                    href="logo.html"
+                  <Link
+                    to="/logo"
                     className="mt-sm-15 mt-lg-30 btn btn-border icon-chevron-right"
                   >
                     Browse all
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -368,7 +368,7 @@ const Home = () => {
             <div className="col-lg-3 col-md-6 col-sm-12 col-12">
               <div className="card-grid hover-up wow animate__animated animate__fadeInUp">
                 <div className="text-center">
-                  <Link to="/logo">
+                  <Link to="/logo?cat=10">
                     <figure>
                       <img
                         style={{ margin: "0 auto" }}
@@ -379,7 +379,7 @@ const Home = () => {
                   </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <Link to="/logo">Marketing &amp; Communication</Link>
+                  <Link to="/logo?cat=10">Real Estate</Link>
                 </h5>
               </div>
             </div>
@@ -389,7 +389,7 @@ const Home = () => {
                 data-wow-delay=".1s"
               >
                 <div className="text-center">
-                  <Link to="/logo">
+                  <Link to="/logo?cat=9">
                     <figure>
                       <img
                         style={{ margin: "0 auto" }}
@@ -400,10 +400,7 @@ const Home = () => {
                   </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <Link to="/logo">
-                    Content <br />
-                    Writer
-                  </Link>
+                  <Link to="/logo?cat=9">Education</Link>
                 </h5>
               </div>
             </div>
@@ -413,7 +410,7 @@ const Home = () => {
             >
               <div className="card-grid hover-up">
                 <div className="text-center">
-                  <Link to="/logo">
+                  <Link to="/logo?cat=8">
                     <figure>
                       <img
                         style={{ margin: "0 auto" }}
@@ -424,10 +421,7 @@ const Home = () => {
                   </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <Link to="/logo">
-                    Marketing <br />
-                    Director
-                  </Link>
+                  <Link to="/logo?cat=8">Apparel</Link>
                 </h5>
               </div>
             </div>
@@ -437,7 +431,7 @@ const Home = () => {
                 data-wow-delay=".3s"
               >
                 <div className="text-center">
-                  <Link to="/logo">
+                  <Link to="/logo?cat=7">
                     <figure>
                       <img
                         style={{ margin: "0 auto" }}
@@ -448,10 +442,7 @@ const Home = () => {
                   </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <Link to="/logo">
-                    System <br />
-                    Analyst
-                  </Link>
+                  <Link to="/logo?cat=7">Fitness</Link>
                 </h5>
               </div>
             </div>
@@ -469,10 +460,7 @@ const Home = () => {
                   </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <Link to="/logo">
-                    Digital
-                    <br /> Designer
-                  </Link>
+                  <Link to="/logo?cat=6">Beauty</Link>
                 </h5>
               </div>
             </div>
@@ -482,7 +470,7 @@ const Home = () => {
                 data-wow-delay=".1s"
               >
                 <div className="text-center">
-                  <Link to="/logo">
+                  <Link to="/logo?cat=5">
                     <figure>
                       <img
                         style={{ margin: "0 auto" }}
@@ -493,10 +481,7 @@ const Home = () => {
                   </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <Link to="/logo">
-                    Market <br />
-                    Research
-                  </Link>
+                  <Link to="/logo?cat=5">Transportation</Link>
                 </h5>
               </div>
             </div>
@@ -506,7 +491,7 @@ const Home = () => {
                 data-wow-delay=".2s"
               >
                 <div className="text-center card-img">
-                  <Link to="/logo">
+                  <Link to="/logo?cat=4">
                     <figure>
                       <img
                         style={{ margin: "0 auto" }}
@@ -517,10 +502,7 @@ const Home = () => {
                   </Link>
                 </div>
                 <h5 className="text-center mt-20 card-heading">
-                  <Link to="/logo">
-                    Human
-                    <br /> Resource
-                  </Link>
+                  <Link to="/logo?cat=4">Restaurants</Link>
                 </h5>
               </div>
             </div>

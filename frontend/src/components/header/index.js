@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Container,
@@ -18,6 +19,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories } from "../../store/actions/categories.action";
 import { Link, useNavigate } from "react-router-dom";
 import { searchGraphics } from "../../store/actions/graphics.action";
+import { signOut } from "../../store/actions/auth.action";
+import Cookies from "universal-cookie";
 
 const Header = () => {
   const [search, setSearch] = useState("");
@@ -26,7 +29,9 @@ const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
 
-  const { categories } = useSelector((state) => state.CategoriesReducer);
+  const { data } = useSelector((x) => x.AuthReducer);
+
+  console.log(data, "data");
 
   const uploadSvg = (e) => {
     const reader = new FileReader();
@@ -73,23 +78,44 @@ const Header = () => {
                   </li>
                 </ul>
               </nav>
-              <div className="burger-icon burger-icon-white">
+              {/* <div className="burger-icon burger-icon-white">
                 <span className="burger-icon-top" />
                 <span className="burger-icon-mid" />
                 <span className="burger-icon-bottom" />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="header-right">
-            <div className="block-signin">
-              {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
-              <Link
-                to="/login"
-                className="btn btn-default btn-shadow ml-40 hover-up"
-              >
-                Sign in
-              </Link>
-            </div>
+            {data != null ? (
+              <Menu>
+                <MenuButton>
+                  <Avatar name={data.name} />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>
+                    <div
+                      className="block-signin"
+                      onClick={() => dispatch(signOut())}
+                    >
+                      {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
+                      <button className="btn btn-default btn-shadow ml-40 hover-up">
+                        Sign Out
+                      </button>
+                    </div>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            ) : (
+              <div className="block-signin">
+                {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
+                <Link
+                  to="/login"
+                  className="btn btn-default btn-shadow ml-40 hover-up"
+                >
+                  Sign in
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

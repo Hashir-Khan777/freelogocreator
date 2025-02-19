@@ -4,11 +4,12 @@ import {
   login,
   register,
   resetPassword,
+  signOut,
 } from "../actions/auth.action";
 
 const initialState = {
   loading: false,
-  data: null,
+  data: JSON.parse(localStorage.getItem("user")),
   user: null,
   forgetpasswordsuccess: false,
   resetpasswordsuccess: false,
@@ -60,6 +61,10 @@ export default createSlice({
     });
     builder.addCase(resetPassword.rejected, (state) => {
       state.loading = false;
+    });
+
+    builder.addCase(signOut.fulfilled, (state, { payload }) => {
+      state.data = payload;
     });
   },
 }).reducer;
