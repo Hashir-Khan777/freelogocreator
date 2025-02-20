@@ -165,8 +165,8 @@ const SVGCanvasEditor = () => {
           canvas: canvas,
         });
 
-        activeSelection.center();
-        activeSelection.setCoords();
+        // activeSelection.center();
+        // activeSelection.setCoords();
 
         canvas.setActiveObject(activeSelection);
         canvas.renderAll();
@@ -257,9 +257,9 @@ const SVGCanvasEditor = () => {
         fabric.util.enlivenObjects(previousState, (objects) => {
           const group = new fabric.Group(objects);
           canvas.add(group);
-          group.center();
-          group.setCoords();
-          canvas.renderAll();
+          // group.center();
+          // group.setCoords();
+          // canvas.renderAll();
 
           canvas.remove(group);
           group._objects.forEach((obj) => {
@@ -288,9 +288,9 @@ const SVGCanvasEditor = () => {
         fabric.util.enlivenObjects(nextState, (objects) => {
           const group = new fabric.Group(objects);
           canvas.add(group);
-          group.center();
-          group.setCoords();
-          canvas.renderAll();
+          // group.center();
+          // group.setCoords();
+          // canvas.renderAll();
 
           canvas.remove(group);
           group._objects.forEach((obj) => {
@@ -335,29 +335,52 @@ const SVGCanvasEditor = () => {
       const initCanvas = new fabric.Canvas(canvasRef.current, {
         width: canvasWidth,
         height: canvasHeight,
+        selection: true,
         preserveObjectStacking: true,
+        // isDrawingMode: true,
         backgroundColor: bgColor,
       });
+      initCanvas.preserveObjectStacking = true;
 
       initCanvas.renderAll();
 
-      initCanvas.sendToBack();
+      // initCanvas.sendToBack();
 
       drawGrid(initCanvas);
 
+      // fabric.loadSVGFromString(svgString, (objects, options) => {
+      //   if (objects && objects.length > 0) {
+      //     objects.forEach((obj) => {
+      //       initCanvas.add(obj);
+      //     });
+      //     initCanvas.renderAll();
+      //   }
+      // });
+
       fabric.loadSVGFromString(svgString, (objects, options) => {
         if (objects && objects.length > 0) {
-          const group = new fabric.Group(objects, options);
+          const group = new fabric.Group(objects);
+
+          group.set({
+            left: initCanvas.width / 2,
+            top: initCanvas.height / 2,
+            originX: "center",
+            originY: "center",
+          });
+
           initCanvas.add(group);
-          group.center();
-          group.setCoords();
           initCanvas.renderAll();
 
-          initCanvas.remove(group);
-          group._objects.forEach((obj) => {
-            initCanvas.add(obj);
-          });
-          initCanvas.renderAll();
+          setTimeout(() => {
+            const items = group.getObjects();
+            group._restoreObjectsState();
+            initCanvas.remove(group);
+            items.forEach((obj) => {
+              initCanvas.add(obj);
+            });
+
+            initCanvas.renderAll();
+          }, 0);
         }
       });
 
@@ -441,9 +464,9 @@ const SVGCanvasEditor = () => {
         if (objects && objects.length > 0) {
           const group = new fabric.Group(objects, options);
           canvas.add(group);
-          group.center();
-          group.setCoords();
-          canvas.renderAll();
+          // group.center();
+          // group.setCoords();
+          // canvas.renderAll();
 
           canvas.remove(group);
           group._objects.forEach((obj) => {
