@@ -15,6 +15,7 @@ const PackagesPage = lazy(() => import("./pages/packages"));
 const SubscriptionsPage = lazy(() => import("./pages/subscriptions"));
 const QueriesPage = lazy(() => import("./pages/queries"));
 const LogsPage = lazy(() => import("./pages/logs"));
+const NewsLetterPage = lazy(() => import("./pages/newsletter"));
 
 const Login = lazy(() => import("./pages/auth/login"));
 const ResetPass = lazy(() => import("./pages/auth/reset-password"));
@@ -148,6 +149,7 @@ function App() {
           <Route path="subscriptions" element={<SubscriptionsPage />} />
           <Route path="queries" element={<QueriesPage />} />
           <Route path="logs" element={<LogsPage />} />
+          <Route path="newsletters" element={<NewsLetterPage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="ecommerce" element={<Ecommerce />} />
           <Route path="crm" element={<CrmPage />} />

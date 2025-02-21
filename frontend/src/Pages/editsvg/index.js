@@ -5,11 +5,17 @@ import {
   Button,
   Container,
   Flex,
+  Icon,
   Input,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
   Select,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +24,20 @@ import {
   toggleShapeModal,
   toggleShieldModal,
 } from "../../store/reducers/modals.reducer";
+import {
+  MdOutlineAlignHorizontalCenter,
+  MdOutlineAlignHorizontalLeft,
+  MdOutlineAlignHorizontalRight,
+  MdOutlineAlignVerticalBottom,
+  MdOutlineAlignVerticalCenter,
+  MdOutlineAlignVerticalTop,
+} from "react-icons/md";
+import {
+  FiAlignCenter,
+  FiAlignJustify,
+  FiAlignLeft,
+  FiAlignRight,
+} from "react-icons/fi";
 
 const canvasHeight = 581;
 const canvasWidth = 781;
@@ -37,6 +57,8 @@ const SVGCanvasEditor = () => {
   const [fontFamily, setFontFamily] = useState("Arial");
   const [colors, setColors] = useState([]);
   const [bgColor, setBgColor] = useState("#ffffff");
+  const [opacity, setOpacity] = useState(1);
+  const [textAlignment, setTextAlignment] = useState("center");
 
   const canvasRef = useRef(null);
   const svgString = localStorage.getItem("svg");
@@ -188,8 +210,10 @@ const SVGCanvasEditor = () => {
       const text = new fabric.Textbox("Text", {
         fontSize: selectedFontSize,
         fontFamily: fontFamily,
-        textAlign: "center",
-        top: canvasHeight / 2 + Math.abs(topXPos?.top) + 20,
+        textAlign: textAlignment,
+        originX: "center",
+        originY: "center",
+        top: canvasHeight / 2,
         left: canvasWidth / 2,
       });
       canvas.add(text);
@@ -327,6 +351,12 @@ const SVGCanvasEditor = () => {
     }
   };
 
+  const draw = () => {
+    canvas.isDrawingMode = !canvas.isDrawingMode;
+
+    canvas.renderAll();
+  };
+
   const canvasInitialization = () => {
     if (canvas) {
       canvas.dispose();
@@ -337,7 +367,6 @@ const SVGCanvasEditor = () => {
         height: canvasHeight,
         selection: true,
         preserveObjectStacking: true,
-        // isDrawingMode: true,
         backgroundColor: bgColor,
       });
       initCanvas.preserveObjectStacking = true;
@@ -434,6 +463,136 @@ const SVGCanvasEditor = () => {
       document.addEventListener("keydown", (e) => handleKeyDown(e, initCanvas));
 
       setCanvas(() => initCanvas);
+    }
+  };
+
+  const handleOpacityChange = (event) => {
+    const newOpacity = event.target.value;
+    setOpacity(newOpacity);
+
+    if (canvas) {
+      selectedObject.map((obj) => {
+        obj.set({ opacity: newOpacity });
+      });
+      canvas.renderAll();
+    }
+  };
+
+  function alignToObject(alignType) {
+    if (canvas) {
+      if (selectedObject?.length > 0) {
+        if (selectedObject.length === 1) {
+          selectedObject.map((target) => {
+            if (alignType === "left") target.set({ left: 0 });
+            if (alignType === "right")
+              target.set({ left: canvas.width - target.width * target.scaleX });
+            if (alignType === "center") target.centerH();
+            if (alignType === "top") target.set({ top: 0 });
+            if (alignType === "bottom")
+              target.set({
+                top: canvas.height - target.height * target.scaleY,
+              });
+            if (alignType === "middle") target.centerV();
+            target.setCoords();
+          });
+          canvas.renderAll();
+        } else if (selectedObject.length > 1) {
+          let activeObject = canvas.getActiveObject();
+
+          let objects = activeObject._objects;
+
+          if (activeObject && activeObject.type === "activeSelection") {
+            let minX = Math.min(...objects.map((obj) => obj.left));
+            let maxX = Math.max(...objects.map((obj) => obj.left + obj.width));
+            let minY = Math.min(...objects.map((obj) => obj.top));
+            let maxY = Math.max(...objects.map((obj) => obj.top + obj.height));
+            let centerX = (minX + maxX) / 2;
+            let centerY = (minY + maxY) / 2;
+
+            objects.forEach((obj) => {
+              switch (alignType) {
+                case "left":
+                  obj.left = minX;
+                  break;
+                case "right":
+                  obj.left = maxX - obj.width;
+                  break;
+                case "top":
+                  obj.top = minY;
+                  break;
+                case "bottom":
+                  obj.top = maxY - obj.height;
+                  break;
+                case "center":
+                  obj.left = centerX - obj.width / 2;
+                  break;
+                case "middle":
+                  obj.top = centerY - obj.height / 2;
+                  break;
+              }
+              obj.setCoords();
+            });
+
+            canvas.renderAll();
+          }
+        }
+      }
+    }
+  }
+
+  const alignText = (alignment) => {
+    if (selectedObject.length === 1) {
+      const isText =
+        selectedObject[0] instanceof fabric.Text ||
+        selectedObject[0] instanceof fabric.IText ||
+        selectedObject[0] instanceof fabric.Textbox;
+
+      if (isText) {
+        setTextAlignment(alignment);
+        selectedObject[0].set({ textAlign: alignment });
+        canvas.renderAll();
+      }
+    }
+  };
+
+  const group = () => {
+    const activeObjects = canvas.getActiveObjects();
+    if (activeObjects.length > 1) {
+      const group = new fabric.Group([]);
+
+      activeObjects.forEach((obj) => {
+        obj.clone((cloned) => {
+          group.addWithUpdate(cloned);
+        });
+      });
+
+      group.set({
+        left: canvas.width / 2,
+        top: canvas.height / 2,
+        originX: "center",
+        originY: "center",
+      });
+
+      canvas.remove(...activeObjects);
+      canvas.add(group);
+      canvas.setActiveObject(group);
+      canvas.renderAll();
+    }
+  };
+
+  const ungroup = () => {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === "group") {
+      const items = activeObject._objects;
+      activeObject._restoreObjectsState();
+      canvas.remove(activeObject);
+
+      items.forEach((obj) => {
+        canvas.add(obj);
+      });
+
+      canvas.discardActiveObject();
+      canvas.renderAll();
     }
   };
 
@@ -544,38 +703,41 @@ const SVGCanvasEditor = () => {
                   <button onClick={addText} class="btn btn-tags-sm mb-10 mr-5">
                     Add Text
                   </button>
-                  <div class="btn btn-tags-sm mb-10 mr-5">
-                    <Menu>
-                      <MenuButton>Font Family</MenuButton>
-                      <MenuList>
-                        {fonts.map((size) => (
-                          <MenuItem
-                            as="option"
-                            value={size}
-                            onClick={() => handleFontChange(size)}
-                          >
-                            {size}
-                          </MenuItem>
-                        ))}
-                      </MenuList>
-                    </Menu>
-                  </div>
-                  <div class="btn btn-tags-sm mb-10 mr-5">
-                    <Menu>
-                      <MenuButton>Font Size</MenuButton>
-                      <MenuList>
-                        {fontSizes.map((size) => (
-                          <MenuItem
-                            as="option"
-                            value={size}
-                            onClick={() => changeFontSize(size)}
-                          >
-                            {size}
-                          </MenuItem>
-                        ))}
-                      </MenuList>
-                    </Menu>
-                  </div>
+                  <button onClick={draw} class="btn btn-tags-sm mb-10 mr-5">
+                    Draw
+                  </button>
+                  <Menu>
+                    <MenuButton as="div" className="btn btn-tags-sm mb-10 mr-5">
+                      Font Family
+                    </MenuButton>
+                    <MenuList>
+                      {fonts.map((size) => (
+                        <MenuItem
+                          as="option"
+                          value={size}
+                          onClick={() => handleFontChange(size)}
+                        >
+                          {size}
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Menu>
+                  <Menu>
+                    <MenuButton as="div" className="btn btn-tags-sm mb-10 mr-5">
+                      Font Size
+                    </MenuButton>
+                    <MenuList>
+                      {fontSizes.map((size) => (
+                        <MenuItem
+                          as="option"
+                          value={size}
+                          onClick={() => changeFontSize(size)}
+                        >
+                          {size}
+                        </MenuItem>
+                      ))}
+                    </MenuList>
+                  </Menu>
                   <button
                     onClick={() => undo(canvas)}
                     class="btn btn-tags-sm mb-10 mr-5"
@@ -594,6 +756,121 @@ const SVGCanvasEditor = () => {
                   >
                     Reset
                   </button>
+                  <Popover>
+                    <PopoverTrigger>
+                      <div className="btn btn-tags-sm mb-10 mr-5">Opacity</div>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverBody>
+                        <input
+                          type="range"
+                          min="0"
+                          max="1"
+                          step="0.1"
+                          value={opacity}
+                          onChange={handleOpacityChange}
+                          style={{ padding: 0 }}
+                        />
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                  <Popover>
+                    <PopoverTrigger>
+                      <div className="btn btn-tags-sm mb-10 mr-5">Align</div>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverBody>
+                        <Box>
+                          <Box width="max-content" mx="auto">
+                            <Icon
+                              as={MdOutlineAlignHorizontalLeft}
+                              fontSize="30px"
+                              cursor="pointer"
+                              onClick={() => alignToObject("left")}
+                            />
+                            <Icon
+                              as={MdOutlineAlignHorizontalCenter}
+                              mx="20px"
+                              fontSize="30px"
+                              cursor="pointer"
+                              onClick={() => alignToObject("center")}
+                            />
+                            <Icon
+                              as={MdOutlineAlignHorizontalRight}
+                              fontSize="30px"
+                              cursor="pointer"
+                              onClick={() => alignToObject("right")}
+                            />
+                          </Box>
+                          <Box mt="25px" width="max-content" mx="auto">
+                            <Icon
+                              as={MdOutlineAlignVerticalTop}
+                              fontSize="30px"
+                              cursor="pointer"
+                              onClick={() => alignToObject("top")}
+                            />
+                            <Icon
+                              as={MdOutlineAlignVerticalCenter}
+                              mx="20px"
+                              fontSize="30px"
+                              cursor="pointer"
+                              onClick={() => alignToObject("middle")}
+                            />
+                            <Icon
+                              as={MdOutlineAlignVerticalBottom}
+                              fontSize="30px"
+                              cursor="pointer"
+                              onClick={() => alignToObject("bottom")}
+                            />
+                          </Box>
+                        </Box>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                  <Popover>
+                    <PopoverTrigger>
+                      <div className="btn btn-tags-sm mb-10 mr-5">
+                        Text Align
+                      </div>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverBody>
+                        <Box>
+                          <Box width="max-content" mx="auto">
+                            <Icon
+                              as={FiAlignLeft}
+                              fontSize="30px"
+                              cursor="pointer"
+                              onClick={() => alignText("left")}
+                            />
+                            <Icon
+                              as={FiAlignCenter}
+                              mx="20px"
+                              fontSize="30px"
+                              cursor="pointer"
+                              onClick={() => alignText("center")}
+                            />
+                            <Icon
+                              as={FiAlignRight}
+                              fontSize="30px"
+                              cursor="pointer"
+                              onClick={() => alignText("right")}
+                            />
+                            <Icon
+                              as={FiAlignJustify}
+                              fontSize="30px"
+                              cursor="pointer"
+                              ml="20px"
+                              onClick={() => alignText("justify")}
+                            />
+                          </Box>
+                        </Box>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
             </div>
@@ -703,6 +980,18 @@ const SVGCanvasEditor = () => {
                     class="btn btn-tags-sm mb-10 mr-5"
                   >
                     Apply shield
+                  </button>
+                  <button
+                    onClick={() => group()}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
+                    Group
+                  </button>
+                  <button
+                    onClick={() => ungroup()}
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
+                    Un Group
                   </button>
                 </div>
               </div>

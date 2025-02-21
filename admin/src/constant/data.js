@@ -47,6 +47,12 @@ export const menuItems = [
     icon: "heroicons-outline:document",
     link: "logs",
   },
+  {
+    title: "Newsletters",
+    isHide: false,
+    icon: "heroicons-outline:envelope",
+    link: "newsletters",
+  },
 ];
 
 export const topMenu = [

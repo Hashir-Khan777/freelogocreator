@@ -9,9 +9,11 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { getPackages } from "../../store/actions/package.action";
+import { subscribe } from "./../../store/actions/newsletter.action";
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
+  const [email, setEmail] = useState("");
 
   const { packages } = useSelector((state) => state.PackageReducer);
 
@@ -1885,15 +1887,23 @@ const Home = () => {
       <section className="section-box mt-50 mb-60">
         <div className="container">
           <div className="box-newsletter">
-            <h5 className="text-md-newsletter">Sign up to get</h5>
+            <h5 className="text-md-newsletter">Subscribe to get</h5>
             <h6 className="text-lg-newsletter">the latest Design's Update</h6>
             <div className="box-form-newsletter mt-30">
-              <form className="form-newsletter">
+              <form
+                className="form-newsletter"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  dispatch(subscribe({ email }));
+                  setEmail("");
+                }}
+              >
                 <input
                   type="text"
+                  value={email}
                   className="input-newsletter"
-                  defaultValue=""
                   placeholder="contact.logomaker@gmail.com"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <button className="btn btn-default font-heading icon-send-letter">
                   Subscribe

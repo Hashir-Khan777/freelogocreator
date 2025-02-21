@@ -328,6 +328,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "backend.Controllers.NewsLetterController",
+    "Method": "Subscribe",
+    "RelativePath": "api/newsletter/subscribe",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "obj",
+        "Type": "backend.Models.Newsletter",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.NewsLetterController",
+    "Method": "GetNewsLetter",
+    "RelativePath": "api/newsletter/subscribers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "backend.Controllers.PackagesController",
     "Method": "Add",
     "RelativePath": "api/packages",

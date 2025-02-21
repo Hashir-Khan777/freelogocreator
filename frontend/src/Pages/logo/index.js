@@ -569,7 +569,7 @@ const Logo = () => {
       <section className="section-box mt-50 mb-60">
         <div className="container">
           <div className="box-newsletter">
-            <h5 className="text-md-newsletter">Sign up to get</h5>
+            <h5 className="text-md-newsletter">Subscribe to get</h5>
             <h6 className="text-lg-newsletter">the latest Logo's Updates</h6>
             <div className="box-form-newsletter mt-30">
               <form className="form-newsletter">

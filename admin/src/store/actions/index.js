@@ -8,6 +8,7 @@ import * as Package from "./packages.js";
 import * as Subscription from "./subscriptions.js";
 import * as Query from "./queries.js";
 import * as Log from "./logs.js";
+import * as NewsLetters from "./newsletter.js";
 
 export {
   Auth,
@@ -20,4 +21,5 @@ export {
   Subscription,
   Query,
   Log,
+  NewsLetters,
 };

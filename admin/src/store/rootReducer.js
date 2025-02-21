@@ -16,6 +16,7 @@ import packages from "./reducers/packages.js";
 import subscriptions from "./reducers/subscriptions.js";
 import queries from "./reducers/queries.js";
 import logs from "./reducers/logs.js";
+import newsletter from "./reducers/newsletter.js";
 
 const rootReducer = {
   layout,
@@ -36,5 +37,6 @@ const rootReducer = {
   subscriptions,
   queries,
   logs,
+  newsletter,
 };
 export default rootReducer;

@@ -112,8 +112,15 @@ const Logos = () => {
       },
     },
     {
-      Header: "action",
+      Header: "Tags",
       accessor: "tags",
+      Cell: (row) => {
+        return <span>{row?.cell?.value}</span>;
+      },
+    },
+    {
+      Header: "action",
+      accessor: "actions",
       Cell: (row) => {
         return (
           <div>

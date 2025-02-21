@@ -14,6 +14,7 @@ namespace backend
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Queries> Queries { get; set; }
         public DbSet<Logs> Logs { get; set; }
+        public DbSet<Newsletter> Newsletter { get; set; }
 
         private void AuditChanges()
         {

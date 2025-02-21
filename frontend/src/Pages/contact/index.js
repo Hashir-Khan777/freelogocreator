@@ -23,7 +23,17 @@ const Contact = () => {
     <main className="main">
       <div className="container wide mb-50">
         <div className="border-radius-15 overflow-hidden">
-          <div id="map-basic" className="leaflet-map" />
+          <div id="map-basic" className="leaflet-map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d220447.21941396626!2d-97.9956118486981!3d30.31188194716275!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x865b39cddf100005%3A0xf13ec5349ee39a53!2s2802%20Flintrock%20Trace%20%23378%2C%20Austin%2C%20TX%2078738%2C%20USA!5e0!3m2!1sen!2s!4v1740146325659!5m2!1sen!2s"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
         </div>
       </div>
       <div className="container mt-90 mt-md-30">
@@ -246,7 +256,7 @@ const Contact = () => {
       <section className="section-box mt-50 mb-60">
         <div className="container">
           <div className="box-newsletter">
-            <h5 className="text-md-newsletter">Sign up to get</h5>
+            <h5 className="text-md-newsletter">Subscribe to get</h5>
             <h6 className="text-lg-newsletter">the latest jobs</h6>
             <div className="box-form-newsletter mt-30">
               <form className="form-newsletter">
