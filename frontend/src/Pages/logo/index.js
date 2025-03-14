@@ -12,12 +12,13 @@ import {
   MenuItem,
   Button,
   Flex,
+  Input,
 } from "@chakra-ui/react";
 import { toJpeg, toPng } from "html-to-image";
 import { showToast } from "../../store/reducers/toast.reducer";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { getAllCategories } from "../../store/actions/categories.action";
 
 let page = 1;
@@ -29,6 +30,7 @@ const Logo = () => {
   const [selectedTags, setSelectedtags] = useState([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const imageRef = useRef(null);
@@ -89,6 +91,17 @@ const Logo = () => {
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
       pdf.save("logo.pdf");
     }
+  };
+
+  const uploadSvg = (e) => {
+    const reader = new FileReader();
+
+    reader.onload = function (f) {
+      localStorage.setItem("svg", f.target.result);
+      navigate("/edit");
+    };
+
+    reader.readAsText(e.target.files[0]);
   };
 
   const filter = () => {
@@ -194,56 +207,24 @@ const Logo = () => {
                       </span>
                     </div>
                     <div className="col-lg-5 text-lg-end mt-sm-15">
-                      <div className="display-flex2">
-                        <span className="text-sortby">Sort by:</span>
-                        <div className="dropdown dropdown-sort">
-                          <button
-                            className="btn dropdown-toggle"
-                            type="button"
-                            id="dropdownSort"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                            data-bs-display="static"
-                          >
-                            <span>Newest Post</span>{" "}
-                            <i className="fi-rr-angle-small-down" />
-                          </button>
-                          <ul
-                            className="dropdown-menu dropdown-menu-light"
-                            aria-labelledby="dropdownSort"
-                          >
-                            <li>
-                              <a className="dropdown-item active" href="#">
-                                Newest Post
-                              </a>
-                            </li>
-                            <li>
-                              <a className="dropdown-item" href="#">
-                                Oldest Post
-                              </a>
-                            </li>
-                            <li>
-                              <a className="dropdown-item" href="#">
-                                Rating Post
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="box-view-type">
-                          <a href="job-grid.html" className="view-type">
-                            <img
-                              src="assets/imgs/theme/icons/icon-list.svg"
-                              alt="logomaker"
-                            />
-                          </a>
-                          <a href="job-list.html" className="view-type">
-                            <img
-                              src="assets/imgs/theme/icons/icon-grid.svg"
-                              alt="logomaker"
-                            />
-                          </a>
-                        </div>
-                      </div>
+                      <Box position="relative" cursor="pointer">
+                        <Input
+                          type="file"
+                          position="absolute"
+                          cursor="pointer"
+                          top={0}
+                          left={0}
+                          opacity={0}
+                          width="100%"
+                          height="100%"
+                          accept="image/svg+xml"
+                          onChange={uploadSvg}
+                          zIndex={999}
+                        />
+                        <button className="btn btn-primary">
+                          Upload SVG logo
+                        </button>
+                      </Box>
                     </div>
                   </div>
                 </div>

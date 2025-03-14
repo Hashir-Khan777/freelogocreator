@@ -39,8 +39,8 @@ import {
   FiAlignRight,
 } from "react-icons/fi";
 
-const canvasHeight = 581;
-const canvasWidth = 781;
+const canvasHeight = 2000;
+const canvasWidth = 2000;
 
 const fontSizes = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72,
@@ -48,7 +48,7 @@ const fontSizes = [
 
 const fonts = ["Arial", "Times New Roman", "Courier New", "Verdana", "Georgia"];
 
-const gridSize = 20;
+const gridSize = 40.72;
 
 const SVGCanvasEditor = () => {
   const [canvas, setCanvas] = useState(null);
@@ -59,6 +59,7 @@ const SVGCanvasEditor = () => {
   const [bgColor, setBgColor] = useState("#ffffff");
   const [opacity, setOpacity] = useState(1);
   const [textAlignment, setTextAlignment] = useState("center");
+  const [zoom, setZoom] = useState(0.45);
 
   const canvasRef = useRef(null);
   const svgString = localStorage.getItem("svg");
@@ -239,11 +240,12 @@ const SVGCanvasEditor = () => {
       gridLinesRef.current.forEach((line) => (line.visible = false));
       canvas.discardActiveObject();
       canvas.renderAll();
-
+      canvas.setZoom(1);
       const dataURL = canvas.toDataURL({
         format: type,
         quality: 1,
       });
+      canvas.setZoom(zoom);
 
       const link = document.createElement("a");
       link.href = dataURL;
@@ -251,6 +253,14 @@ const SVGCanvasEditor = () => {
       link.click();
     }
     drawGrid(canvas);
+  };
+
+  const setCanvasZoom = (canvaszoom) => {
+    setZoom(canvaszoom);
+    if (canvas) {
+      canvas.setZoom(canvaszoom);
+      canvas.renderAll();
+    }
   };
 
   const saveState = (canvas) => {
@@ -370,6 +380,8 @@ const SVGCanvasEditor = () => {
         backgroundColor: bgColor,
       });
       initCanvas.preserveObjectStacking = true;
+
+      initCanvas.setZoom(zoom);
 
       initCanvas.renderAll();
 
@@ -904,8 +916,16 @@ const SVGCanvasEditor = () => {
                       />
                     )}
                     <div
-                      class="post-thumb mb-15"
-                      style={{ display: "flex", justifyContent: "center" }}
+                      class="post-thumb mt-15"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        overflow: "hidden",
+                        width: "900px",
+                        height: "900px",
+                        margin: "0 auto",
+                        borderRadius: 0,
+                      }}
                     >
                       <Box
                         as="canvas"
@@ -916,7 +936,23 @@ const SVGCanvasEditor = () => {
                     </div>
                     <div class="card-block-info">
                       <div class="card-2-bottom mt-30">
-                        <div class="d-flex align-items-center justify-content-end">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div></div>
+                          <div
+                            className="d-flex align-items-center"
+                            style={{ gap: "20px" }}
+                          >
+                            <input
+                              type="range"
+                              style={{ padding: 0, width: "200px" }}
+                              min="0.10"
+                              max="1"
+                              step="0.10"
+                              value={zoom}
+                              onChange={(e) => setCanvasZoom(e.target.value)}
+                            />
+                            <p>({zoom * 100}%)</p>
+                          </div>
                           <div class="keep-reading">
                             <Menu>
                               <MenuButton
