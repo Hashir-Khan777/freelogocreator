@@ -1,0 +1,7 @@
+1) account creation is required on save
+2) watermarks on full canvas on preview
+3) QR code generation and QR code tracking
+4) Dynamic QR codes
+
+References:
+https://online-barcode-generator.net/

@@ -300,6 +300,10 @@ const Logo = () => {
                                 to="/edit"
                                 onClick={() => {
                                   localStorage.setItem("svg", graphic.graphic);
+                                  localStorage.setItem(
+                                    "backsvg",
+                                    graphic?.backGraphic
+                                  );
                                 }}
                               >
                                 <span className="btn btn-grey-small disc-btn">

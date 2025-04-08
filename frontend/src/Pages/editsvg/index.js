@@ -38,6 +38,7 @@ import {
   FiAlignLeft,
   FiAlignRight,
 } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const canvasHeight = 2000;
 const canvasWidth = 2000;
@@ -47,6 +48,11 @@ const fontSizes = [
 ];
 
 const fonts = ["Arial", "Times New Roman", "Courier New", "Verdana", "Georgia"];
+
+let centerGuideLines = {
+  vertical: null,
+  horizontal: null,
+};
 
 const gridSize = 40.72;
 
@@ -59,10 +65,14 @@ const SVGCanvasEditor = () => {
   const [bgColor, setBgColor] = useState("#ffffff");
   const [opacity, setOpacity] = useState(1);
   const [textAlignment, setTextAlignment] = useState("center");
+  const [isBackDesigned, setIsBackDesigned] = useState(false);
   const [zoom, setZoom] = useState(0.45);
 
   const canvasRef = useRef(null);
+  const navigate = useNavigate();
   const svgString = localStorage.getItem("svg");
+  const backSvgString = localStorage.getItem("backsvg");
+  const user = JSON.parse(localStorage.getItem("user"));
   const gridLinesRef = useRef([]);
   const dispatch = useDispatch();
   const undoStack = useRef([]);
@@ -367,7 +377,68 @@ const SVGCanvasEditor = () => {
     canvas.renderAll();
   };
 
-  const canvasInitialization = () => {
+  const updateCenterGuides = (canvas, target) => {
+    const canvasCenterX = canvas.getWidth() / 2;
+    const canvasCenterY = canvas.getHeight() / 2;
+    const objectCenter = target.getCenterPoint();
+
+    const tolerance = 5;
+
+    const isCenteredX = Math.abs(objectCenter.x - canvasCenterX) < tolerance;
+    const isCenteredY = Math.abs(objectCenter.y - canvasCenterY) < tolerance;
+
+    if (isCenteredX) {
+      if (!centerGuideLines.vertical) {
+        centerGuideLines.vertical = new fabric.Line(
+          [canvasCenterX, 0, canvasCenterX, canvas.getHeight()],
+          {
+            stroke: "red",
+            selectable: false,
+            evented: false,
+            excludeFromExport: true,
+          }
+        );
+        canvas.add(centerGuideLines.vertical);
+      }
+    } else if (centerGuideLines.vertical) {
+      canvas.remove(centerGuideLines.vertical);
+      centerGuideLines.vertical = null;
+    }
+
+    if (isCenteredY) {
+      if (!centerGuideLines.horizontal) {
+        centerGuideLines.horizontal = new fabric.Line(
+          [0, canvasCenterY, canvas.getWidth(), canvasCenterY],
+          {
+            stroke: "red",
+            selectable: false,
+            evented: false,
+            excludeFromExport: true,
+          }
+        );
+        canvas.add(centerGuideLines.horizontal);
+      }
+    } else if (centerGuideLines.horizontal) {
+      canvas.remove(centerGuideLines.horizontal);
+      centerGuideLines.horizontal = null;
+    }
+
+    canvas.renderAll();
+  };
+
+  const clearCenterGuides = (canvas) => {
+    if (centerGuideLines.vertical) {
+      canvas.remove(centerGuideLines.vertical);
+      centerGuideLines.vertical = null;
+    }
+    if (centerGuideLines.horizontal) {
+      canvas.remove(centerGuideLines.horizontal);
+      centerGuideLines.horizontal = null;
+    }
+    canvas.renderAll();
+  };
+
+  const canvasInitialization = (svg) => {
     if (canvas) {
       canvas.dispose();
     }
@@ -398,7 +469,7 @@ const SVGCanvasEditor = () => {
       //   }
       // });
 
-      fabric.loadSVGFromString(svgString, (objects, options) => {
+      fabric.loadSVGFromString(svg, (objects, options) => {
         if (objects && objects.length > 0) {
           const group = new fabric.Group(objects);
 
@@ -428,7 +499,10 @@ const SVGCanvasEditor = () => {
       saveState(initCanvas);
 
       initCanvas.on("object:added", () => saveState(initCanvas));
-      initCanvas.on("object:modified", () => saveState(initCanvas));
+      initCanvas.on("object:modified", () => {
+        clearCenterGuides(initCanvas);
+        saveState(initCanvas);
+      });
       initCanvas.on("object:removed", () => saveState(initCanvas));
 
       let svgColors = [];
@@ -470,6 +544,30 @@ const SVGCanvasEditor = () => {
 
       initCanvas.on("selection:cleared", () => {
         setColors([]);
+      });
+
+      initCanvas.on("object:moving", (e) => {
+        const obj = e.target;
+        const canvasCenterX = initCanvas.getWidth() / 2;
+        const canvasCenterY = initCanvas.getHeight() / 2;
+
+        const tolerance = 20;
+
+        updateCenterGuides(initCanvas, obj);
+
+        const objCenter = obj.getCenterPoint();
+
+        if (Math.abs(objCenter.x - canvasCenterX) < tolerance) {
+          obj.left = canvasCenterX - obj.getScaledWidth() / 2;
+        }
+
+        if (Math.abs(objCenter.y - canvasCenterY) < tolerance) {
+          obj.top = canvasCenterY - obj.getScaledHeight() / 2;
+        }
+      });
+
+      initCanvas.on("mouse:up", () => {
+        clearCenterGuides(initCanvas);
       });
 
       document.addEventListener("keydown", (e) => handleKeyDown(e, initCanvas));
@@ -609,7 +707,7 @@ const SVGCanvasEditor = () => {
   };
 
   useEffect(() => {
-    canvasInitialization();
+    canvasInitialization(svgString);
   }, []);
 
   useEffect(() => {
@@ -763,7 +861,7 @@ const SVGCanvasEditor = () => {
                     Redo
                   </button>
                   <button
-                    onClick={canvasInitialization}
+                    onClick={() => canvasInitialization(svgString)}
                     class="btn btn-tags-sm mb-10 mr-5"
                   >
                     Reset
@@ -937,7 +1035,23 @@ const SVGCanvasEditor = () => {
                     <div class="card-block-info">
                       <div class="card-2-bottom mt-30">
                         <div class="d-flex align-items-center justify-content-between">
-                          <div></div>
+                          <div>
+                            {backSvgString ? (
+                              <button
+                                class="btn btn-border btn-brand-hover"
+                                onClick={() => {
+                                  if (isBackDesigned) {
+                                    canvasInitialization(svgString);
+                                  } else {
+                                    canvasInitialization(backSvgString);
+                                  }
+                                  setIsBackDesigned(!isBackDesigned);
+                                }}
+                              >
+                                Design {isBackDesigned ? "Front" : "Back"}
+                              </button>
+                            ) : null}
+                          </div>
                           <div
                             className="d-flex align-items-center"
                             style={{ gap: "20px" }}
@@ -966,10 +1080,26 @@ const SVGCanvasEditor = () => {
                                 </button>
                               </MenuButton>
                               <MenuList>
-                                <MenuItem onClick={() => saveImage("png")}>
+                                <MenuItem
+                                  onClick={() => {
+                                    if (user?.email) {
+                                      saveImage("png");
+                                    } else {
+                                      navigate("/login");
+                                    }
+                                  }}
+                                >
                                   Save As Png
                                 </MenuItem>
-                                <MenuItem onClick={() => saveImage("jpeg")}>
+                                <MenuItem
+                                  onClick={() => {
+                                    if (user?.email) {
+                                      saveImage("jpeg");
+                                    } else {
+                                      navigate("/login");
+                                    }
+                                  }}
+                                >
                                   Save As Jpeg
                                 </MenuItem>
                               </MenuList>

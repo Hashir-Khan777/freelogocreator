@@ -36,6 +36,11 @@ const actions = [
   },
 ];
 
+const sides = [
+  { label: "One Sided", value: 0 },
+  { label: "Two Sided", value: 1 },
+];
+
 let logoPage = 1;
 const Logos = () => {
   const [data, setData] = useState([]);
@@ -43,10 +48,12 @@ const Logos = () => {
   const [deleteShow, setDeleteShow] = useState(false);
   const [deleteData, setDeleteData] = useState(null);
   const [edit, setEdit] = useState(false);
+  const [side, setSide] = useState(0);
   const [form, setForm] = useState({
     title: "",
     description: "",
     graphic: "",
+    backGraphic: "",
     category_id: "",
     tags: "",
   });
@@ -73,6 +80,24 @@ const Logos = () => {
     {
       Header: "Logo",
       accessor: "graphic",
+      Cell: (row) => {
+        return (
+          <div>
+            <span className="inline-flex items-center">
+              <span className="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none">
+                <div
+                  dangerouslySetInnerHTML={{ __html: row?.cell?.value }}
+                  className="object-cover w-full h-full rounded-full"
+                />
+              </span>
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      Header: "Back Side",
+      accessor: "backGraphic",
       Cell: (row) => {
         return (
           <div>
@@ -146,6 +171,11 @@ const Logos = () => {
                               );
                               setShow(true);
                               setEdit(true);
+                              if (row.cell.row.values?.backGraphic) {
+                                setSide(1);
+                              } else {
+                                setSide(0);
+                              }
                             }
                           : () => {
                               setDeleteShow(true);
@@ -340,16 +370,37 @@ const Logos = () => {
             }}
           >
             <Card>
-              <div
-                dangerouslySetInnerHTML={{ __html: form.graphic }}
-                className="block mx-auto w-[100px] mb-2 object-cover rounded-full"
+              <div className="flex items-center gap-2">
+                <div
+                  dangerouslySetInnerHTML={{ __html: form.graphic }}
+                  className="block mx-auto w-[100px] mb-2 object-cover rounded-full"
+                />
+                {form.backGraphic ? (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: form.backGraphic }}
+                    className="block mx-auto w-[100px] mb-2 object-cover rounded-full"
+                  />
+                ) : null}
+              </div>
+              <label htmlFor=" hh" className="form-label ">
+                Select Sides *
+              </label>
+              <Select
+                className="react-select"
+                classNamePrefix="select"
+                value={sides[side]}
+                options={sides}
+                styles={styles}
+                onChange={(e) => setSide(e.value)}
+                id="hh"
               />
-              <div className="space-y-4">
+              <div className="space-y-4 mt-4">
                 <span className="text-sm text-gray-500">
                   Add 200 X 200 size logo
                 </span>
                 <Fileinput
                   name="basic"
+                  placeholder="Upload Front Side"
                   accept="image/svg+xml"
                   onChange={(e) => {
                     const reader = new FileReader();
@@ -361,6 +412,22 @@ const Logos = () => {
                     reader.readAsText(e.target.files[0]);
                   }}
                 />
+                {side === 1 ? (
+                  <Fileinput
+                    name="basic"
+                    placeholder="Upload Back Side"
+                    accept="image/svg+xml"
+                    onChange={(e) => {
+                      const reader = new FileReader();
+
+                      reader.onload = function (f) {
+                        setForm({ ...form, backGraphic: f.target.result });
+                      };
+
+                      reader.readAsText(e.target.files[0]);
+                    }}
+                  />
+                ) : null}
                 <Textinput
                   label="Title *"
                   value={form.title}

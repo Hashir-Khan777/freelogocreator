@@ -952,6 +952,10 @@
             "type": "string",
             "nullable": true
           },
+          "backGraphic": {
+            "type": "string",
+            "nullable": true
+          },
           "title": {
             "type": "string",
             "nullable": true
