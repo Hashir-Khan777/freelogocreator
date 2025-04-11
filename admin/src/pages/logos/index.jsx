@@ -370,7 +370,7 @@ const Logos = () => {
             }}
           >
             <Card>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 svg-container2">
                 <div
                   dangerouslySetInnerHTML={{ __html: form.graphic }}
                   className="block mx-auto w-[100px] mb-2 object-cover rounded-full"
