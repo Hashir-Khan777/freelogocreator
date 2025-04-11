@@ -84,10 +84,10 @@ const Logos = () => {
         return (
           <div>
             <span className="inline-flex items-center">
-              <span className="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none">
+              <span className="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none svg-container">
                 <div
                   dangerouslySetInnerHTML={{ __html: row?.cell?.value }}
-                  className="object-cover w-full h-full rounded-full"
+                  className="object-cover w-7 h-7 rounded-full"
                 />
               </span>
             </span>
