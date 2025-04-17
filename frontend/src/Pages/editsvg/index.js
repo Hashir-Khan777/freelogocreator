@@ -66,7 +66,7 @@ const SVGCanvasEditor = () => {
   const [opacity, setOpacity] = useState(1);
   const [textAlignment, setTextAlignment] = useState("center");
   const [isBackDesigned, setIsBackDesigned] = useState(false);
-  const [zoom, setZoom] = useState(0.45);
+  const [zoom, setZoom] = useState(0.5);
 
   const canvasRef = useRef(null);
   const navigate = useNavigate();
@@ -478,6 +478,8 @@ const SVGCanvasEditor = () => {
             top: initCanvas.height / 2,
             originX: "center",
             originY: "center",
+            scaleX: 4,
+            scaleY: 4,
           });
 
           initCanvas.add(group);
@@ -507,11 +509,12 @@ const SVGCanvasEditor = () => {
 
       let svgColors = [];
       initCanvas.on("selection:created", (event) => {
+        const objects = initCanvas.getObjects().filter((x) => x.selectable);
         setColors([]);
         svgColors = [];
         if (event.selected.length > 0) {
           setSelectedObject(event.selected);
-          event.selected.forEach((obj) => {
+          objects.forEach((obj) => {
             if (obj?.fill && !svgColors.includes(obj?.fill)) {
               svgColors.push(obj?.fill);
             }
@@ -526,9 +529,10 @@ const SVGCanvasEditor = () => {
       });
 
       initCanvas.on("selection:updated", (event) => {
+        const objects = initCanvas.getObjects().filter((x) => x.selectable);
         if (event.selected.length > 0) {
           setSelectedObject(event.selected);
-          event.selected.forEach((obj) => {
+          objects.forEach((obj) => {
             if (obj?.fill && !svgColors.includes(obj?.fill)) {
               svgColors.push(obj?.fill);
             }
@@ -790,6 +794,10 @@ const SVGCanvasEditor = () => {
       });
     }
   }, [shieldModalData]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
 
   return (
     <main class="main">

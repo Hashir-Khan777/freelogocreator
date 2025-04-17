@@ -29,6 +29,8 @@ const Logo = () => {
   const [filteredGraphics, setFilteredGraphics] = useState([]);
   const [selectedTags, setSelectedtags] = useState([]);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -39,57 +41,69 @@ const Logo = () => {
   const { categories } = useSelector((x) => x.CategoriesReducer);
 
   const savePngImage = () => {
-    if (imageRef.current) {
-      toPng(imageRef.current, { quality: 1, pixelRatio: 6 })
-        .then((dataUrl) => {
-          const link = document.createElement("a");
-          link.download = `logo.png`;
-          link.href = dataUrl;
-          link.click();
-        })
-        .catch((error) => {
-          dispatch(
-            showToast({
-              type: "error",
-              message: error,
-            })
-          );
-        });
+    if (user?.email) {
+      if (imageRef.current) {
+        toPng(imageRef.current, { quality: 1, pixelRatio: 6 })
+          .then((dataUrl) => {
+            const link = document.createElement("a");
+            link.download = `logo.png`;
+            link.href = dataUrl;
+            link.click();
+          })
+          .catch((error) => {
+            dispatch(
+              showToast({
+                type: "error",
+                message: error,
+              })
+            );
+          });
+      }
+    } else {
+      navigate("/login");
     }
   };
 
   const saveJpegImage = () => {
-    if (imageRef.current) {
-      toJpeg(imageRef.current, { quality: 1, pixelRatio: 6 })
-        .then((dataUrl) => {
-          const link = document.createElement("a");
-          link.download = `logo.jpeg`;
-          link.href = dataUrl;
-          link.click();
-        })
-        .catch((error) => {
-          dispatch(
-            showToast({
-              type: "error",
-              message: error,
-            })
-          );
-        });
+    if (user?.email) {
+      if (imageRef.current) {
+        toJpeg(imageRef.current, { quality: 1, pixelRatio: 6 })
+          .then((dataUrl) => {
+            const link = document.createElement("a");
+            link.download = `logo.jpeg`;
+            link.href = dataUrl;
+            link.click();
+          })
+          .catch((error) => {
+            dispatch(
+              showToast({
+                type: "error",
+                message: error,
+              })
+            );
+          });
+      }
+    } else {
+      navigate("/login");
     }
   };
 
   const savePdfImage = async () => {
-    if (imageRef.current) {
-      const element = imageRef.current;
-      const canvas = await html2canvas(element);
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
+    if (user?.email) {
+      if (imageRef.current) {
+        const element = imageRef.current;
+        const canvas = await html2canvas(element);
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
 
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("logo.pdf");
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save("logo.pdf");
+      }
+    } else {
+      navigate("/login");
     }
   };
 
@@ -110,7 +124,6 @@ const Logo = () => {
         if (searchParams.get("cat") === "all") {
           setFilteredGraphics(graphics);
         } else {
-          console.log(searchParams.get("cat"), `searchParams.get("cat") else`);
           setFilteredGraphics(
             graphics?.filter(
               (x) => x.category_id == Number(searchParams.get("cat"))

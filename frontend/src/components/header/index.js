@@ -31,8 +31,6 @@ const Header = () => {
 
   const { data } = useSelector((x) => x.AuthReducer);
 
-  console.log(data, "data");
-
   const uploadSvg = (e) => {
     const reader = new FileReader();
 
