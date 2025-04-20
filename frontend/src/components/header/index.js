@@ -55,7 +55,7 @@ const Header = () => {
               <Link to="/" className="d-flex">
                 <img
                   alt="logomaker"
-                  src="assets/imgs/theme/logo-maker-logo0-removebg.png"
+                  src="../../assets/imgs/theme/logo-maker-logo0-removebg.png"
                 />
               </Link>
             </div>
@@ -64,6 +64,9 @@ const Header = () => {
                 <ul className="main-menu">
                   <li>
                     <Link to="/logo">Logo Maker</Link>
+                  </li>
+                  <li>
+                    <Link to="/qrcode">QR Code Maker</Link>
                   </li>
                   {/* <li>
                     <Link to="/website">Website Builder</Link>

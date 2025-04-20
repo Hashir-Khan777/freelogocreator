@@ -7,6 +7,8 @@ import {
   Home,
   Login,
   Logo,
+  QRCode,
+  QRData,
   ResetPassword,
   SignUp,
   SVGCanvasEditor,
@@ -30,6 +32,8 @@ const AppRouter = () => {
       />
       <Route caseSensitive path="/resetpassword" element={<ResetPassword />} />
       <Route caseSensitive path="/edit" element={<SVGCanvasEditor />} />
+      <Route caseSensitive path="/qrcode" element={<QRCode />} />
+      <Route caseSensitive path="/qr/:id" element={<QRData />} />
       <Route caseSensitive path="/filter/:category" element={<Filter />} />
     </Routes>
   );

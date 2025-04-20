@@ -5,10 +5,14 @@ const initialState = {
   isShapesModalOpen: false,
   isReplaceModalOpen: false,
   isShieldModalOpen: false,
+  isQRCodeModalOpen: false,
+  isCraeteQRCodeModalOpen: false,
   generatePostModalData: {},
   shapesModalData: "",
   replaceModalData: "",
   shieldModalData: "",
+  qrCodeModalData: "",
+  createQRCodeModalData: "",
 };
 
 const modalsSlice = createSlice({
@@ -34,6 +38,16 @@ const modalsSlice = createSlice({
       state.isShieldModalOpen = payload.open;
       state.shieldModalData = payload.data;
     },
+
+    toggleQRCodeModal: (state, { payload }) => {
+      state.isQRCodeModalOpen = payload.open;
+      state.qrCodeModalData = payload.data;
+    },
+
+    toggleCreateQRCodeModal: (state, { payload }) => {
+      state.isCraeteQRCodeModalOpen = payload.open;
+      state.createQRCodeModalData = payload.data;
+    },
   },
 });
 
@@ -42,6 +56,8 @@ export const {
   toggleShapeModal,
   toggleReplaceModal,
   toggleShieldModal,
+  toggleQRCodeModal,
+  toggleCreateQRCodeModal,
 } = modalsSlice.actions;
 
 export default modalsSlice.reducer;

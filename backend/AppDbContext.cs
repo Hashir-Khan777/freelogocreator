@@ -15,6 +15,7 @@ namespace backend
         public DbSet<Queries> Queries { get; set; }
         public DbSet<Logs> Logs { get; set; }
         public DbSet<Newsletter> Newsletter { get; set; }
+        public DbSet<QRCode> QRCode { get; set; }
 
         private void AuditChanges()
         {

@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -7,12 +8,12 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-4 col-sm-12">
-            <a href="index.html">
+            <Link to="/">
               <img
                 alt="logomaker"
-                src="assets/imgs/theme/logo-maker-logo0-removebg.png"
+                src="../../assets/imgs/theme/logo-maker-logo0-removebg.png"
               />
-            </a>
+            </Link>
             <div className="mt-20 mb-20">
               We are a SaaS company that offers graphic design maker tools for
               startups, small business owners, website designers, and online

@@ -5,7 +5,9 @@ import { showToast } from "./store/reducers/toast.reducer";
 import { useEffect } from "react";
 import {
   AddShapesIconsModal,
+  CreateQRCode,
   GeneratePostModal,
+  QRCodeModal,
   ReplaceSymbolModal,
   ShieldModal,
 } from "./modals";
@@ -45,7 +47,9 @@ const App = () => {
       <GeneratePostModal />
       <AddShapesIconsModal />
       <ReplaceSymbolModal />
+      <QRCodeModal />
       <ShieldModal />
+      <CreateQRCode />
     </ChakraProvider>
   );
 };

@@ -296,3 +296,8 @@ D:\Zini Technology Projects\freelogocreator\backend\obj\Debug\net8.0\refint\back
 D:\Zini Technology Projects\freelogocreator\backend\obj\Debug\net8.0\backend.pdb
 D:\Zini Technology Projects\freelogocreator\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 D:\Zini Technology Projects\freelogocreator\backend\obj\Debug\net8.0\ref\backend.dll
+D:\Zini Technology Projects\freelogocreator\backend\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\Zini Technology Projects\freelogocreator\backend\bin\Debug\net8.0\QRCoder.dll
+D:\Zini Technology Projects\freelogocreator\backend\bin\Debug\net8.0\System.Drawing.Common.dll
+D:\Zini Technology Projects\freelogocreator\backend\bin\Debug\net8.0\System.Private.Windows.Core.dll
+D:\Zini Technology Projects\freelogocreator\backend\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll

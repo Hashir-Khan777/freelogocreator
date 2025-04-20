@@ -9,6 +9,8 @@ import About from "./about";
 import Contact from "./contact";
 import Website from "./website";
 import Logo from "./logo";
+import QRCode from "./qrcode";
+import QRData from "./qrdata";
 
 export {
   Login,
@@ -22,4 +24,6 @@ export {
   Contact,
   Website,
   Logo,
+  QRCode,
+  QRData,
 };
