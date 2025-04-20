@@ -21,7 +21,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import {
   toggleCreateQRCodeModal,
@@ -40,8 +39,9 @@ const QRCode = () => {
   const { qrcodes } = useSelector((state) => state.QrcodeReducer);
 
   const navigate = useNavigate();
-  const cookies = new Cookies();
   const dispatch = useDispatch();
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const deleteQR = () => {
     dispatch(deleteQRCode({ id }));
@@ -62,7 +62,7 @@ const QRCode = () => {
             <Button
               colorScheme="blue"
               onClick={() => {
-                if (!cookies.get("_user")) {
+                if (!user?.id) {
                   navigate("/login", { replace: true });
                 } else {
                   dispatch(toggleCreateQRCodeModal({ open: true }));
