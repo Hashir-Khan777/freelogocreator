@@ -5,3 +5,20 @@
 
 References:
 https://online-barcode-generator.net/
+
+New Issues
+
+1) url redirection on QR Code (Done)
+2) QR code should ear as "My QR Codes" on logo maker (Done)
+3) QR code tracking on Admin dashboard
+4) QR codes showing while logged out (Done)
+5) Screenshot disable on canvas (We can't disable ss fully)
+6) Link shortener in QR codes (Link can't be shortened)
+7) QR code subscription (Don not have stripe)
+8) Id and notes on QR code page (Done)
+9) Page size on logo maker (Done)
+10) QR code limit field in packages
+11) Packages menu on top header (Done)
+12) Remove all address fields in contact us page (Done)
+13) Basic help in canvas (Done)
+14) Basic help in QR codes (Not necessary)

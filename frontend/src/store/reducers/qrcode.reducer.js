@@ -57,6 +57,7 @@ export default createSlice({
       let code = state.qrcodes.find((x) => x.id === payload.id);
       if (code) {
         code.text = payload.text;
+        code.note = payload.note;
       }
       state.loading = false;
     });

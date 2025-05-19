@@ -11,6 +11,11 @@ const QRData = () => {
 
   const { id } = useParams();
 
+  const redirectIfURL = (value) => {
+    const url = new URL(value);
+    window.location.href = url.href;
+  };
+
   useEffect(() => {
     dispatch(getQRCodeById({ id }));
   }, [dispatch]);
@@ -25,6 +30,7 @@ const QRData = () => {
           })
         );
         sessionStorage.setItem("scanned", true);
+        redirectIfURL(qrcode?.text);
       }
     }
   }, [dispatch, qrcode]);
@@ -33,7 +39,11 @@ const QRData = () => {
     <main className="main">
       <section className="section-box mt-100 mb-100">
         <Container maxWidth="1600px" mx="auto">
-          {qrcode ? <Text fontSize="25px">{qrcode?.text}</Text> : null}
+          {qrcode ? (
+            !qrcode?.deleted ? (
+              <Text fontSize="25px">{qrcode?.text}</Text>
+            ) : null
+          ) : null}
         </Container>
       </section>
     </main>

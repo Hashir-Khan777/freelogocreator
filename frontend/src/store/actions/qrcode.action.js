@@ -38,7 +38,7 @@ export const getAllQRCodes = createAsyncThunk(
   async (obj, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/qrcode`
+        `${process.env.REACT_APP_BASE_API_URL}/qrcode/user/${obj.user}`
       );
       return data.data;
     } catch (err) {

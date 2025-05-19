@@ -21,7 +21,7 @@ const Contact = () => {
 
   return (
     <main className="main">
-      <div className="container wide mb-50">
+      {/* <div className="container wide mb-50">
         <div className="border-radius-15 overflow-hidden">
           <div id="map-basic" className="leaflet-map">
             <iframe
@@ -35,12 +35,12 @@ const Contact = () => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="container mt-90 mt-md-30">
         <div className="row">
           <div className="col-xl-10 col-lg-12 m-auto">
             <section className="mb-50">
-              <h5
+              {/* <h5
                 className="text-blue text-center wow animate__animated animate__fadeInUp"
                 data-wow-delay=".1s"
               >
@@ -107,7 +107,7 @@ const Contact = () => {
                     View map
                   </a>
                 </div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-xl-9 col-md-12 mx-auto">
                   <div className="contact-from-area padding-20-row-col">
@@ -123,14 +123,7 @@ const Contact = () => {
                     >
                       Drop Us a Line
                     </h2>
-                    <p
-                      className="text-muted mb-30 font-md text-center wow animate__animated animate__fadeInUp"
-                      data-wow-delay=".1s"
-                    >
-                      Your email address will not be published. Required fields
-                      are marked *
-                    </p>
-                    <div className="row mt-50">
+                    {/* <div className="row mt-50">
                       <div
                         className="col-md-4 text-center wow animate__animated animate__fadeInUp"
                         data-wow-delay=".1s"
@@ -172,7 +165,7 @@ const Contact = () => {
                           Colorado(CO), 80117
                         </p>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="contact-form-style mt-80" id="contact-form">
                       <div
                         className="row wow animate__animated animate__fadeInUp"

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend;
@@ -11,9 +12,11 @@ using backend;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250506210622_AddColorField")]
+    partial class AddColorField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,18 +184,11 @@ namespace backend.Migrations
                     b.Property<DateTime>("created_at")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("deleted")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("image")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("logo")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("note")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -206,12 +202,7 @@ namespace backend.Migrations
                     b.Property<DateTime>("updated_at")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("user_id")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("user_id");
 
                     b.ToTable("QRCode");
                 });
@@ -341,17 +332,6 @@ namespace backend.Migrations
                     b.Navigation("category");
                 });
 
-            modelBuilder.Entity("backend.Models.QRCode", b =>
-                {
-                    b.HasOne("backend.Models.User", "user")
-                        .WithMany("qrCodes")
-                        .HasForeignKey("user_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("user");
-                });
-
             modelBuilder.Entity("backend.Models.Queries", b =>
                 {
                     b.HasOne("backend.Models.User", "user")
@@ -379,11 +359,6 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Categories", b =>
                 {
                     b.Navigation("graphics");
-                });
-
-            modelBuilder.Entity("backend.Models.User", b =>
-                {
-                    b.Navigation("qrCodes");
                 });
 #pragma warning restore 612, 618
         }

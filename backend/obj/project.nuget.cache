@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BCF1KYQj+Kc=",
+  "dgSpecHash": "edziegEcpUM=",
   "success": true,
   "projectFilePath": "D:\\Zini Technology Projects\\freelogocreator\\backend\\backend.csproj",
   "expectedPackageFiles": [
@@ -44,7 +44,7 @@
     "C:\\Users\\MAACOMPUTER\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
     "C:\\Users\\MAACOMPUTER\\.nuget\\packages\\npgsql\\9.0.2\\npgsql.9.0.2.nupkg.sha512",
     "C:\\Users\\MAACOMPUTER\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\9.0.2\\npgsql.entityframeworkcore.postgresql.9.0.2.nupkg.sha512",
-    "C:\\Users\\MAACOMPUTER\\.nuget\\packages\\qrcoder\\1.6.0\\qrcoder.1.6.0.nupkg.sha512",
+    "C:\\Users\\MAACOMPUTER\\.nuget\\packages\\qrcoder\\1.4.1\\qrcoder.1.4.1.nupkg.sha512",
     "C:\\Users\\MAACOMPUTER\\.nuget\\packages\\swashbuckle.aspnetcore\\7.1.0\\swashbuckle.aspnetcore.7.1.0.nupkg.sha512",
     "C:\\Users\\MAACOMPUTER\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\7.1.0\\swashbuckle.aspnetcore.swagger.7.1.0.nupkg.sha512",
     "C:\\Users\\MAACOMPUTER\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\7.1.0\\swashbuckle.aspnetcore.swaggergen.7.1.0.nupkg.sha512",

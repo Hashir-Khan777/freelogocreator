@@ -62,6 +62,12 @@ namespace backend
                 .WithMany(c => c.graphics)
                 .HasForeignKey(g => g.category_id)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<QRCode>()
+                .HasOne(g => g.user)
+                .WithMany(c => c.qrCodes)
+                .HasForeignKey(g => g.user_id)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

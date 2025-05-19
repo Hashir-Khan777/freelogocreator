@@ -37,6 +37,7 @@ const QRCode = () => {
   const [id, setId] = useState(null);
 
   const { qrcodes } = useSelector((state) => state.QrcodeReducer);
+  const { data } = useSelector((x) => x.AuthReducer);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,8 +51,12 @@ const QRCode = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllQRCodes());
-  }, [dispatch]);
+    if (data?.id) {
+      dispatch(getAllQRCodes({ user: data?.id }));
+    } else {
+      navigate("/login");
+    }
+  }, [dispatch, data]);
 
   return (
     <main className="main">
@@ -72,67 +77,78 @@ const QRCode = () => {
               Create
             </Button>
           </Flex>
-          <TableContainer>
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>QR code</Th>
-                  <Th>value</Th>
-                  <Th>scans</Th>
-                  <Th>actions</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {qrcodes?.map((code) => (
+          {qrcodes?.filter((x) => !x.deleted)?.length > 0 ? (
+            <TableContainer>
+              <Table variant="simple">
+                <Thead>
                   <Tr>
-                    <Td>
-                      <Image
-                        width="50px"
-                        src={`data:image/png;base64,${code?.image}`}
-                      />
-                    </Td>
-                    <Td verticalAlign="middle">{code?.text}</Td>
-                    <Td verticalAlign="middle">{code?.scans}</Td>
-                    <Td verticalAlign="middle">
-                      <Icon
-                        as={FaRegEye}
-                        fontSize="20px"
-                        cursor="pointer"
-                        onClick={() =>
-                          dispatch(
-                            toggleQRCodeModal({
-                              open: true,
-                              data: { data: code?.image },
-                            })
-                          )
-                        }
-                      />
-                      <Icon
-                        mx="10px"
-                        as={HiOutlinePencilSquare}
-                        fontSize="20px"
-                        cursor="pointer"
-                        onClick={() =>
-                          dispatch(
-                            toggleCreateQRCodeModal({ open: true, data: code })
-                          )
-                        }
-                      />
-                      <Icon
-                        as={MdDelete}
-                        fontSize="20px"
-                        cursor="pointer"
-                        onClick={() => {
-                          setDeleteShow(true);
-                          setId(code?.id);
-                        }}
-                      />
-                    </Td>
+                    <Th>Id</Th>
+                    <Th>QR code</Th>
+                    <Th>value</Th>
+                    <Th>Note</Th>
+                    <Th>scans</Th>
+                    <Th>actions</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
+                </Thead>
+                <Tbody>
+                  {qrcodes
+                    ?.filter((x) => !x.deleted)
+                    ?.map((code) => (
+                      <Tr>
+                        <Td verticalAlign="middle">{code?.id}</Td>
+                        <Td>
+                          <Image
+                            width="50px"
+                            src={`data:image/png;base64,${code?.image}`}
+                          />
+                        </Td>
+                        <Td verticalAlign="middle">{code?.text}</Td>
+                        <Td verticalAlign="middle">{code?.note}</Td>
+                        <Td verticalAlign="middle">{code?.scans}</Td>
+                        <Td verticalAlign="middle">
+                          <Icon
+                            as={FaRegEye}
+                            fontSize="20px"
+                            cursor="pointer"
+                            onClick={() =>
+                              dispatch(
+                                toggleQRCodeModal({
+                                  open: true,
+                                  data: { data: code?.image },
+                                })
+                              )
+                            }
+                          />
+                          <Icon
+                            mx="10px"
+                            as={HiOutlinePencilSquare}
+                            fontSize="20px"
+                            cursor="pointer"
+                            onClick={() =>
+                              dispatch(
+                                toggleCreateQRCodeModal({
+                                  open: true,
+                                  data: code,
+                                })
+                              )
+                            }
+                          />
+                          <Icon
+                            as={MdDelete}
+                            fontSize="20px"
+                            cursor="pointer"
+                            onClick={() => {
+                              setDeleteShow(true);
+                              setId(code?.id);
+                            }}
+                          />
+                        </Td>
+                      </Tr>
+                    ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          ) : null}
         </Container>
       </section>
       <Modal isOpen={deleteShow} onClose={() => setDeleteShow(false)}>

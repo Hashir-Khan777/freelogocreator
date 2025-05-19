@@ -40,7 +40,11 @@ const QRCodeModal = () => {
         <ModalHeader>Download QR Code</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Image src={`data:image/png;base64,${qrCodeModalData?.image}`} />
+          <Image
+            src={`data:image/png;base64,${
+              qrCodeModalData?.data || qrCodeModalData?.image
+            }`}
+          />
           <Button
             mt={4}
             float="right"
@@ -48,7 +52,9 @@ const QRCodeModal = () => {
             onClick={() => {
               onClose();
               downloadBase64File(
-                `data:image/png;base64,${qrCodeModalData?.image}`,
+                `data:image/png;base64,${
+                  qrCodeModalData?.data || qrCodeModalData?.image
+                }`,
                 "qrcode.png"
               );
             }}

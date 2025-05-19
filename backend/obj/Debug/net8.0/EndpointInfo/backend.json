@@ -753,6 +753,29 @@
         }
       }
     },
+    "/api/qrcode/user/{id}": {
+      "get": {
+        "tags": [
+          "QRCode"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/qrcode/{id}": {
       "get": {
         "tags": [
@@ -1165,9 +1188,28 @@
             "type": "string",
             "nullable": true
           },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
           "image": {
             "type": "string",
             "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "nullable": true
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true
+          },
+          "user_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deleted": {
+            "type": "boolean"
           },
           "scans": {
             "type": "integer",
@@ -1180,6 +1222,9 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
           }
         },
         "additionalProperties": false
@@ -1287,6 +1332,13 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "qrCodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QRCode"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

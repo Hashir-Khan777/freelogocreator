@@ -20,15 +20,19 @@ import { useCallback, useEffect, useState } from "react";
 
 const CreateQRCode = () => {
   const [inputValue, setInputValue] = useState("");
+  const [color, setColor] = useState("#000000");
+  const [image, setImage] = useState("");
+  const [note, setNote] = useState("");
 
   const { isCraeteQRCodeModalOpen, createQRCodeModalData } = useSelector(
     (store) => store.ModalsReducer
   );
+  const { data } = useSelector((x) => x.AuthReducer);
 
   const dispatch = useDispatch();
 
   const onClose = useCallback(
-    (obj) => dispatch(toggleCreateQRCodeModal({ open: false })),
+    () => dispatch(toggleCreateQRCodeModal({ open: false })),
     [dispatch]
   );
 
@@ -36,13 +40,28 @@ const CreateQRCode = () => {
     if (createQRCodeModalData) {
       dispatch(
         updateQRCode({
-          data: { ...createQRCodeModalData, text: inputValue },
+          data: {
+            ...createQRCodeModalData,
+            text: inputValue,
+            color: color,
+            logo: image,
+            note: note,
+            user_id: data.id,
+          },
           message: true,
         })
       );
     } else {
       if (inputValue) {
-        dispatch(generateQRCode({ text: inputValue }));
+        dispatch(
+          generateQRCode({
+            text: inputValue,
+            color: color,
+            logo: image,
+            note: note,
+            user_id: data.id,
+          })
+        );
         setInputValue("");
       }
     }
@@ -51,6 +70,8 @@ const CreateQRCode = () => {
   useEffect(() => {
     if (createQRCodeModalData) {
       setInputValue(() => createQRCodeModalData?.text);
+      setColor(() => createQRCodeModalData?.color);
+      setNote(() => createQRCodeModalData?.note);
     }
   }, [createQRCodeModalData]);
 
@@ -72,6 +93,45 @@ const CreateQRCode = () => {
               onChange={(e) => setInputValue(e.target.value)}
             />
           </FormControl>
+          <FormControl mt="20px">
+            <FormLabel>Note</FormLabel>
+            <Input
+              placeholder="Enter Note..."
+              value={note}
+              defaultValue={note}
+              onChange={(e) => setNote(e.target.value)}
+            />
+          </FormControl>
+          {!createQRCodeModalData ? (
+            <>
+              <FormControl isRequired my="20px">
+                <FormLabel>Color</FormLabel>
+                <Input
+                  placeholder="Select Color..."
+                  type="color"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Logo</FormLabel>
+                <Input
+                  placeholder="Select Logo..."
+                  type="file"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      setImage(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                  }}
+                />
+              </FormControl>
+            </>
+          ) : null}
           <Button mt={4} float="right" colorScheme="blue" onClick={generate}>
             {createQRCodeModalData ? "Update" : "Generate"}
           </Button>

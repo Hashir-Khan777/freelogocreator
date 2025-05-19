@@ -1,6 +1,7 @@
 ﻿using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using QRCoder;
+using System.Drawing;
 
 namespace backend.Controllers
 {
@@ -16,7 +17,7 @@ namespace backend.Controllers
         }
 
         [HttpPost("generate")]
-        public IActionResult GenerateQRCode([FromBody] QRCode data)
+        public IActionResult GenerateQRCode([FromBody] Models.QRCode data)
         {
             if (db.QRCode.Count() > 0)
             {
@@ -29,25 +30,56 @@ namespace backend.Controllers
             data.created_at = DateTime.UtcNow;
             data.updated_at = DateTime.UtcNow;
 
-            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
-            using (QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://ec2-3-88-133-167.compute-1.amazonaws.com/qr/" + data.Id, QRCodeGenerator.ECCLevel.Q))
-            using (PngByteQRCode qrCode = new PngByteQRCode(qrCodeData))
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode("http://ec2-3-88-133-167.compute-1.amazonaws.com/qr/" + data.Id, QRCodeGenerator.ECCLevel.Q);
+            QRCoder.QRCode qrCode = new QRCoder.QRCode(qrCodeData);
+
+            Color darkColor = ColorTranslator.FromHtml(data.color);
+            Color lightColor = Color.Transparent;
+
+            Bitmap qrCodeImage;
+
+            if (!String.IsNullOrEmpty(data.logo))
             {
-                byte[] qrCodeImage = qrCode.GetGraphic(20);
+                var base64Data = data.logo.Contains(",") ? data.logo.Split(',')[1] : data.logo;
+                byte[] imageBytes = Convert.FromBase64String(base64Data);
+                using var logo_ms = new MemoryStream(imageBytes);
+                using var bitmapLogo = new Bitmap(logo_ms);
 
-                data.image = Convert.ToBase64String(qrCodeImage);
-
-                db.QRCode.Add(data);
-                db.SaveChanges();
-
-                return Ok(new { message = "Qr code generated", data = data });
+                qrCodeImage = qrCode.GetGraphic(lightColor: lightColor, darkColor: darkColor, pixelsPerModule: 20, drawQuietZones: true, icon: bitmapLogo);
+            } else
+            {
+                qrCodeImage = qrCode.GetGraphic(lightColor: lightColor, darkColor: darkColor, pixelsPerModule: 20, drawQuietZones: true);
             }
+
+            byte[] qrCodeBytes;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                qrCodeImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                qrCodeBytes = ms.ToArray();
+            }
+
+            data.image = Convert.ToBase64String(qrCodeBytes);
+
+            db.QRCode.Add(data);
+            db.SaveChanges();
+
+            return Ok(new { message = "Qr code generated", data = data });
         }
 
         [HttpGet]
         public IActionResult GetAllQRData()
         {
-            List<QRCode> qrcodes = db.QRCode.ToList();
+            List<Models.QRCode> qrcodes = db.QRCode.ToList();
+
+            return Ok(new { data = qrcodes });
+        }
+
+        [HttpGet("user/{id}")]
+        public IActionResult GetAllQRDataByUser(int id)
+        {
+            List<Models.QRCode> qrcodes = db.QRCode.Where(x => x.user_id == id).ToList();
 
             return Ok(new { data = qrcodes });
         }
@@ -55,7 +87,7 @@ namespace backend.Controllers
         [HttpGet("{id}")]
         public IActionResult GetQRData(int id)
         {
-            QRCode? qrcode = db.QRCode.FirstOrDefault(x => x.Id == id);
+            Models.QRCode? qrcode = db.QRCode.FirstOrDefault(x => x.Id == id);
 
             if (qrcode != null)
             {
@@ -68,7 +100,7 @@ namespace backend.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateQRData([FromBody] QRCode qrcode)
+        public IActionResult UpdateQRData([FromBody] Models.QRCode qrcode)
         {
             qrcode.created_at = DateTime.UtcNow;
             qrcode.updated_at = DateTime.UtcNow;
@@ -81,11 +113,12 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            QRCode? qrcode = db.QRCode.FirstOrDefault(x => x.Id == id);
+            Models.QRCode? qrcode = db.QRCode.FirstOrDefault(x => x.Id == id);
 
             if (qrcode != null)
             {
-                db.QRCode.Remove(qrcode);
+                qrcode.deleted = true;
+                db.QRCode.Update(qrcode);
                 db.SaveChanges();
                 return Ok(new { message = "QR code deleted successfully", data = qrcode });
             }

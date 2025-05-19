@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "./store/reducers/toast.reducer";
 import { useEffect } from "react";
 import {
+  AddQRCode,
   AddShapesIconsModal,
   CreateQRCode,
   GeneratePostModal,
@@ -50,6 +51,7 @@ const App = () => {
       <QRCodeModal />
       <ShieldModal />
       <CreateQRCode />
+      <AddQRCode />
     </ChakraProvider>
   );
 };

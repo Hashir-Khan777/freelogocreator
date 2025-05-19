@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGraphics } from "../../store/actions/graphics.action";
 import { toggleGeneratePostModal } from "../../store/reducers/modals.reducer";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -20,6 +20,7 @@ const Home = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const dispatch = useDispatch();
+  const { hash } = useLocation();
 
   useEffect(() => {
     console.log({
@@ -31,6 +32,13 @@ const Home = () => {
   useEffect(() => {
     dispatch(getPackages());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [hash]);
 
   return (
     <main className="main">
@@ -1710,7 +1718,7 @@ const Home = () => {
             </label>
             <span className="text-lg text-billed">Billed Monthly</span>
           </div> */}
-          <div className="block-pricing mt-125 mt-md-50">
+          <div className="block-pricing mt-125 mt-md-50" id="packages">
             <div className="row">
               {[...packages]?.reverse()?.map((pack, index) => (
                 <div

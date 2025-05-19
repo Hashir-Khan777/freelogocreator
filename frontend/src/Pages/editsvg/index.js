@@ -17,9 +17,11 @@ import {
   PopoverContent,
   PopoverTrigger,
   Select,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  toggleAddQRCodeModal,
   toggleReplaceModal,
   toggleShapeModal,
   toggleShieldModal,
@@ -39,9 +41,7 @@ import {
   FiAlignRight,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-
-const canvasHeight = 2000;
-const canvasWidth = 2000;
+import { IoHelpCircleSharp } from "react-icons/io5";
 
 const fontSizes = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72,
@@ -56,6 +56,14 @@ let centerGuideLines = {
 
 const gridSize = 40.72;
 
+const dpi = 300;
+
+const pageSizes = {
+  A4: { width: 8.27, height: 11.69 },
+  A5: { width: 5.83, height: 8.27 },
+  "Business Card": { width: 3.5, height: 2 },
+};
+
 const SVGCanvasEditor = () => {
   const [canvas, setCanvas] = useState(null);
   const [selectedObject, setSelectedObject] = useState(null);
@@ -67,6 +75,10 @@ const SVGCanvasEditor = () => {
   const [textAlignment, setTextAlignment] = useState("center");
   const [isBackDesigned, setIsBackDesigned] = useState(false);
   const [zoom, setZoom] = useState(0.5);
+  const [canvasWidth, setCanvasWidth] = useState(pageSizes["A4"].width * dpi);
+  const [canvasHeight, setCanvasHeight] = useState(
+    pageSizes["A4"].height * dpi
+  );
 
   const canvasRef = useRef(null);
   const navigate = useNavigate();
@@ -79,9 +91,12 @@ const SVGCanvasEditor = () => {
   const redoStack = useRef([]);
   const [gridVisible, setGridVisible] = useState(true);
 
-  const { shapesModalData, replaceModalData, shieldModalData } = useSelector(
-    (store) => store.ModalsReducer
-  );
+  const {
+    isAddQRCodeModalData,
+    shapesModalData,
+    replaceModalData,
+    shieldModalData,
+  } = useSelector((store) => store.ModalsReducer);
 
   const drawGrid = (canvas) => {
     const width = canvas.width;
@@ -438,14 +453,19 @@ const SVGCanvasEditor = () => {
     canvas.renderAll();
   };
 
-  const canvasInitialization = (svg) => {
+  const canvasInitialization = (
+    svg,
+    width = canvasWidth,
+    height = canvasHeight
+  ) => {
     if (canvas) {
       canvas.dispose();
+      setColors([]);
     }
     if (canvasRef.current) {
       const initCanvas = new fabric.Canvas(canvasRef.current, {
-        width: canvasWidth,
-        height: canvasHeight,
+        width,
+        height,
         selection: true,
         preserveObjectStacking: true,
         backgroundColor: bgColor,
@@ -474,12 +494,12 @@ const SVGCanvasEditor = () => {
           const group = new fabric.Group(objects);
 
           group.set({
-            left: initCanvas.width / 2,
-            top: initCanvas.height / 2,
+            left: 900 / 2 / zoom,
+            top: 700 / 2 / zoom,
             originX: "center",
             originY: "center",
-            scaleX: 4,
-            scaleY: 4,
+            scaleX: 3,
+            scaleY: 3,
           });
 
           initCanvas.add(group);
@@ -669,6 +689,33 @@ const SVGCanvasEditor = () => {
     }
   };
 
+  const setCanvasSize = (sizeName) => {
+    const { width, height } = pageSizes[sizeName];
+    const pixelWidth = Math.round(width * dpi);
+    const pixelHeight = Math.round(height * dpi);
+
+    if (canvas) {
+      setCanvasWidth(() => pixelWidth);
+      setCanvasHeight(() => pixelHeight);
+      canvasInitialization(svgString, pixelWidth, pixelHeight);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (f) {
+      fabric.Image.fromURL(f.target.result, (img) => {
+        img.set({ left: 100, top: 100, scaleX: 0.5, scaleY: 0.5 });
+        if (canvasRef.current) {
+          canvas.add(img);
+        }
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
   const group = () => {
     const activeObjects = canvas.getActiveObjects();
     if (activeObjects.length > 1) {
@@ -726,6 +773,21 @@ const SVGCanvasEditor = () => {
       });
     }
   }, [shapesModalData]);
+
+  useEffect(() => {
+    if (isAddQRCodeModalData) {
+      fabric.Image.fromURL(isAddQRCodeModalData, function (img) {
+        img.set({
+          left: 100,
+          top: 100,
+          scaleX: 1,
+          scaleY: 1,
+        });
+        canvas.add(img);
+        canvas.renderAll();
+      });
+    }
+  }, [isAddQRCodeModalData]);
 
   useEffect(() => {
     if (replaceModalData) {
@@ -815,9 +877,6 @@ const SVGCanvasEditor = () => {
                   >
                     Grid
                   </button>
-                  {/* <a href="#" class="btn btn-tags-sm mb-10 mr-5">
-                    Alignment
-                  </a> */}
                   <button onClick={addText} class="btn btn-tags-sm mb-10 mr-5">
                     Add Text
                   </button>
@@ -996,41 +1055,80 @@ const SVGCanvasEditor = () => {
               <div class="row">
                 <div class="col-lg-12 mb-30">
                   <div
-                    class="card-blog-1 wow animate__animated animate__fadeIn"
+                    className="card-blog-1 relative wow animate__animated animate__fadeIn"
                     data-wow-delay=".0s"
+                    style={{ position: "relative" }}
                   >
-                    {colors.length > 0 ? (
-                      colors?.map((color, index) => (
-                        <Input
-                          key={index}
-                          width="80px"
-                          value={color}
-                          type="color"
-                          onChange={(e) => changeColor(e, index)}
+                    <Icon
+                      as={IoHelpCircleSharp}
+                      fontSize="25px"
+                      cursor="pointer"
+                      position="absolute"
+                      right="1"
+                      top="1"
+                      color="grey"
+                    />
+                    <div className="d-flex items-center justify-content-between w-full">
+                      <div>
+                        {colors.length > 0 ? (
+                          colors?.map((color, index) => (
+                            <Input
+                              key={index}
+                              width="80px"
+                              value={color}
+                              type="color"
+                              onChange={(e) => changeColor(e, index)}
+                            />
+                          ))
+                        ) : (
+                          <Input
+                            width="80px"
+                            value={bgColor}
+                            type="color"
+                            onChange={(e) => {
+                              setBgColor(e.target.value);
+                              canvas.setBackgroundColor(e.target.value);
+                              canvas.renderAll();
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <select onChange={(e) => setCanvasSize(e.target.value)}>
+                          {Object.keys(pageSizes).map((key, index) => (
+                            <option key={index} value={key}>
+                              {key}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div
+                        className="position-relative cursor-pointer"
+                        style={{ cursor: "pointer" }}
+                      >
+                        <button class="btn btn-border btn-brand-hover">
+                          Upload
+                        </button>
+                        <input
+                          type="file"
+                          onChange={handleFileChange}
+                          className="position-absolute w-full h-full top-0 start-0 cursor-pointer"
+                          style={{ opacity: 0, cursor: "pointer" }}
                         />
-                      ))
-                    ) : (
-                      <Input
-                        width="80px"
-                        value={bgColor}
-                        type="color"
-                        onChange={(e) => {
-                          setBgColor(e.target.value);
-                          canvas.setBackgroundColor(e.target.value);
-                          canvas.renderAll();
-                        }}
-                      />
-                    )}
+                      </div>
+                    </div>
                     <div
-                      class="post-thumb mt-15"
+                      className="post-thumb mt-15"
                       style={{
                         display: "flex",
                         justifyContent: "center",
+                        // alignItems: "center",
                         overflow: "hidden",
                         width: "900px",
-                        height: "900px",
+                        height: "65vh",
                         margin: "0 auto",
                         borderRadius: 0,
+                        position: "relative",
                       }}
                     >
                       <Box
@@ -1142,6 +1240,14 @@ const SVGCanvasEditor = () => {
                     class="btn btn-tags-sm mb-10 mr-5"
                   >
                     Add Shapes & Icons
+                  </button>
+                  <button
+                    onClick={() =>
+                      dispatch(toggleAddQRCodeModal({ open: true }))
+                    }
+                    class="btn btn-tags-sm mb-10 mr-5"
+                  >
+                    QR Codes
                   </button>
                   <button
                     onClick={() => dispatch(toggleReplaceModal({ open: true }))}
