@@ -34,8 +34,6 @@ const AddQRCode = () => {
     }
   }, [dispatch, data]);
 
-  console.log(qrcodes);
-
   return (
     <Modal isOpen={isAddQRCodeModalOpen} onClose={onClose} size="full">
       <ModalOverlay />

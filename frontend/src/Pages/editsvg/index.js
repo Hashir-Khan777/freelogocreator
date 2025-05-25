@@ -1241,14 +1241,16 @@ const SVGCanvasEditor = () => {
                   >
                     Add Shapes & Icons
                   </button>
-                  <button
-                    onClick={() =>
-                      dispatch(toggleAddQRCodeModal({ open: true }))
-                    }
-                    class="btn btn-tags-sm mb-10 mr-5"
-                  >
-                    QR Codes
-                  </button>
+                  {user?.id ? (
+                    <button
+                      onClick={() =>
+                        dispatch(toggleAddQRCodeModal({ open: true }))
+                      }
+                      class="btn btn-tags-sm mb-10 mr-5"
+                    >
+                      QR Codes
+                    </button>
+                  ) : null}
                   <button
                     onClick={() => dispatch(toggleReplaceModal({ open: true }))}
                     class="btn btn-tags-sm mb-10 mr-5"

@@ -63,6 +63,7 @@ const CreateQRCode = () => {
           })
         );
         setInputValue("");
+        setNote("");
       }
     }
   };
@@ -104,7 +105,7 @@ const CreateQRCode = () => {
           </FormControl>
           {!createQRCodeModalData ? (
             <>
-              <FormControl isRequired my="20px">
+              <FormControl my="20px">
                 <FormLabel>Color</FormLabel>
                 <Input
                   placeholder="Select Color..."
