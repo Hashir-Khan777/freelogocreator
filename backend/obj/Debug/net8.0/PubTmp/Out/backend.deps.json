@@ -13,7 +13,9 @@
           "Microsoft.EntityFrameworkCore": "9.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.2",
+          "QRCoder": "1.4.1",
           "Swashbuckle.AspNetCore": "7.1.0",
+          "System.Drawing.Common": "9.0.4",
           "System.IdentityModel.Tokens.Jwt": "8.3.0"
         },
         "runtime": {
@@ -323,6 +325,22 @@
           }
         }
       },
+      "Microsoft.Win32.SystemEvents/9.0.4": {
+        "runtime": {
+          "lib/net8.0/Microsoft.Win32.SystemEvents.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.425.16305"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.425.16305"
+          }
+        }
+      },
       "Mono.TextTemplating/3.0.0": {
         "dependencies": {
           "System.CodeDom": "6.0.0"
@@ -349,6 +367,17 @@
           "lib/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
             "assemblyVersion": "9.0.2.0",
             "fileVersion": "9.0.2.0"
+          }
+        }
+      },
+      "QRCoder/1.4.1": {
+        "dependencies": {
+          "System.Drawing.Common": "9.0.4"
+        },
+        "runtime": {
+          "lib/netstandard2.0/QRCoder.dll": {
+            "assemblyVersion": "1.4.1.0",
+            "fileVersion": "1.4.1.0"
           }
         }
       },
@@ -425,6 +454,21 @@
           "lib/net8.0/System.Diagnostics.DiagnosticSource.dll": {
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.24.52809"
+          }
+        }
+      },
+      "System.Drawing.Common/9.0.4": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "9.0.4"
+        },
+        "runtime": {
+          "lib/net8.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.425.16312"
+          },
+          "lib/net8.0/System.Private.Windows.Core.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.425.16312"
           }
         }
       },
@@ -724,6 +768,13 @@
       "path": "microsoft.openapi/1.6.22",
       "hashPath": "microsoft.openapi.1.6.22.nupkg.sha512"
     },
+    "Microsoft.Win32.SystemEvents/9.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kHgtAkXhNEP8oGuAVe3Q5admxsdMlSdWE2rXcA9FfeGDZJQawPccmZgnOswgW3ugUPSJt7VH+TMQPz65mnhGSQ==",
+      "path": "microsoft.win32.systemevents/9.0.4",
+      "hashPath": "microsoft.win32.systemevents.9.0.4.nupkg.sha512"
+    },
     "Mono.TextTemplating/3.0.0": {
       "type": "package",
       "serviceable": true,
@@ -744,6 +795,13 @@
       "sha512": "sha512-cYdOGplIvr9KgsG8nJ8xnzBTImeircbgetlzS1OmepS5dAQW6PuGpVrLOKBNEwEvGYZPsV8037X5vZ/Dmpwz7Q==",
       "path": "npgsql.entityframeworkcore.postgresql/9.0.2",
       "hashPath": "npgsql.entityframeworkcore.postgresql.9.0.2.nupkg.sha512"
+    },
+    "QRCoder/1.4.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-W8KwCwsOJe9SI7Cm7XeIMawd08F/US6xNw34lg2Qnx6m7GYYakxbyBQaNoW1Q75oJOmX/32sJUZr6Cix2B6GUQ==",
+      "path": "qrcoder/1.4.1",
+      "hashPath": "qrcoder.1.4.1.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/7.1.0": {
       "type": "package",
@@ -835,6 +893,13 @@
       "sha512": "sha512-ddppcFpnbohLWdYKr/ZeLZHmmI+DXFgZ3Snq+/E7SwcdW4UnvxmaugkwGywvGVWkHPGCSZjCP+MLzu23AL5SDw==",
       "path": "system.diagnostics.diagnosticsource/9.0.0",
       "hashPath": "system.diagnostics.diagnosticsource.9.0.0.nupkg.sha512"
+    },
+    "System.Drawing.Common/9.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SbtusMUT1bCxZ14904ZPo2GZyelze0rwUni9wXrp8KX9Zlsda8idqpxra1RBvOA85WM0wW+fCI4GLrlCTYiE6A==",
+      "path": "system.drawing.common/9.0.4",
+      "hashPath": "system.drawing.common.9.0.4.nupkg.sha512"
     },
     "System.IdentityModel.Tokens.Jwt/8.3.0": {
       "type": "package",
