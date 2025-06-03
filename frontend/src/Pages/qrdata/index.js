@@ -30,7 +30,12 @@ const QRData = () => {
           })
         );
         sessionStorage.setItem("scanned", true);
-        redirectIfURL(qrcode?.text);
+        if (
+          qrcode?.text.startsWith("http://") ||
+          qrcode?.text.startsWith("https://")
+        ) {
+          redirectIfURL(qrcode?.text);
+        }
       }
     }
   }, [dispatch, qrcode]);
@@ -42,8 +47,104 @@ const QRData = () => {
           {qrcode ? (
             !qrcode?.deleted ? (
               <Text fontSize="25px">{qrcode?.text}</Text>
-            ) : null
-          ) : null}
+            ) : (
+              <main className="main bg-purple">
+                <div className="stars">
+                  <div className="central-body">
+                    <h1 className="text-center text-white display-1">404</h1>
+                    <h5 className="text-white">Look like you're lost</h5>
+                    <p className="text-white">
+                      the page you are looking for not avaible!
+                    </p>
+                    <a href="#" className="btn-go-home">
+                      GO BACK HOME
+                    </a>
+                  </div>
+                  <div className="objects">
+                    <img
+                      className="object_rocket"
+                      src="http://salehriaz.com/404Page/img/rocket.svg"
+                      width="40px"
+                    />
+                    <div className="earth-moon">
+                      <img
+                        className="object_earth"
+                        src="http://salehriaz.com/404Page/img/earth.svg"
+                        width="100px"
+                      />
+                      <img
+                        className="object_moon"
+                        src="http://salehriaz.com/404Page/img/moon.svg"
+                        width="80px"
+                      />
+                    </div>
+                    <div className="box_astronaut">
+                      <img
+                        className="object_astronaut"
+                        src="http://salehriaz.com/404Page/img/astronaut.svg"
+                        width="140px"
+                      />
+                    </div>
+                  </div>
+                  <div className="glowing_stars">
+                    <div className="star" />
+                    <div className="star" />
+                    <div className="star" />
+                    <div className="star" />
+                    <div className="star" />
+                  </div>
+                </div>
+              </main>
+            )
+          ) : (
+            <main className="main bg-purple">
+              <div className="stars">
+                <div className="central-body">
+                  <h1 className="text-center text-white display-1">404</h1>
+                  <h5 className="text-white">Look like you're lost</h5>
+                  <p className="text-white">
+                    the page you are looking for not avaible!
+                  </p>
+                  <a href="#" className="btn-go-home">
+                    GO BACK HOME
+                  </a>
+                </div>
+                <div className="objects">
+                  <img
+                    className="object_rocket"
+                    src="http://salehriaz.com/404Page/img/rocket.svg"
+                    width="40px"
+                  />
+                  <div className="earth-moon">
+                    <img
+                      className="object_earth"
+                      src="http://salehriaz.com/404Page/img/earth.svg"
+                      width="100px"
+                    />
+                    <img
+                      className="object_moon"
+                      src="http://salehriaz.com/404Page/img/moon.svg"
+                      width="80px"
+                    />
+                  </div>
+                  <div className="box_astronaut">
+                    <img
+                      className="object_astronaut"
+                      src="http://salehriaz.com/404Page/img/astronaut.svg"
+                      width="140px"
+                    />
+                  </div>
+                </div>
+                <div className="glowing_stars">
+                  <div className="star" />
+                  <div className="star" />
+                  <div className="star" />
+                  <div className="star" />
+                  <div className="star" />
+                </div>
+              </div>
+            </main>
+          )}
         </Container>
       </section>
     </main>

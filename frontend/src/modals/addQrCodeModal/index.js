@@ -8,6 +8,7 @@ import {
   Button,
   Box,
   Image,
+  Text,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleAddQRCodeModal } from "../../store/reducers/modals.reducer";
@@ -54,6 +55,9 @@ const AddQRCode = () => {
                   }
                 >
                   <Image src={`data:image/png;base64,${code?.image}`} />
+                  <Text textAlign="center" fontSize="20px" fontWeight={500}>
+                    {code?.note}
+                  </Text>
                 </Box>
               ))}
           </div>
