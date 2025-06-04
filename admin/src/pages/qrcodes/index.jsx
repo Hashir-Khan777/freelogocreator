@@ -14,7 +14,7 @@ import {
 } from "react-table";
 import GlobalFilter from "../table/react-tables/GlobalFilter";
 import { useDispatch } from "react-redux";
-import { Category, Logo } from "store/actions";
+import { Category, Logo, User } from "store/actions";
 import { useSelector } from "react-redux";
 import Button from "components/ui/Button";
 import Modal from "components/ui/Modal";
@@ -104,6 +104,22 @@ const QrCodes = () => {
       },
     },
     {
+      Header: "User",
+      accessor: "user_id",
+      Cell: (row) => {
+        return (
+          <span>{users.find((x) => x.id === row?.cell?.value)?.name}</span>
+        );
+      },
+    },
+    {
+      Header: "Deleted",
+      accessor: "deleted",
+      Cell: (row) => {
+        return <span>{row?.cell?.value ? "Yes" : "No"}</span>;
+      },
+    },
+    {
       Header: "action",
       accessor: "actions",
       Cell: (row) => {
@@ -151,9 +167,9 @@ const QrCodes = () => {
   ];
 
   const { loading, qrcodes } = useSelector((x) => x.logos);
-  const { categories } = useSelector((x) => x.categories);
+  const { users } = useSelector((x) => x.users);
 
-  const columns = useMemo(() => COLUMNS, [categories]);
+  const columns = useMemo(() => COLUMNS, [users]);
   const dispatch = useDispatch();
 
   const styles = {
@@ -197,7 +213,7 @@ const QrCodes = () => {
 
   useEffect(() => {
     dispatch(Logo.getQrCodes());
-    dispatch(Category.getCategories());
+    dispatch(User.getUsers());
     setPageSize(9999999999);
   }, [dispatch]);
 
