@@ -12,6 +12,12 @@ export const menuItems = [
     link: "logos",
   },
   {
+    title: "qr codes",
+    isHide: false,
+    icon: "heroicons-outline:qr-code",
+    link: "qrcodes",
+  },
+  {
     title: "Categories",
     isHide: false,
     icon: "heroicons-outline:mail",

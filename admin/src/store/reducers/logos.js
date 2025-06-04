@@ -4,6 +4,7 @@ import { Logo } from "../actions/index.js";
 const initialState = {
   loading: false,
   graphics: [],
+  qrcodes: [],
 };
 
 export default createSlice({
@@ -55,6 +56,17 @@ export default createSlice({
       state.graphics = state.graphics.filter((x) => x.id != payload.data.id);
     });
     builder.addCase(Logo.deleteGraphics.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(Logo.getQrCodes.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(Logo.getQrCodes.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.qrcodes = payload.data;
+    });
+    builder.addCase(Logo.getQrCodes.rejected, (state) => {
       state.loading = false;
     });
   },

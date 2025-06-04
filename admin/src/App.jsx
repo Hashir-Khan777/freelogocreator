@@ -128,6 +128,7 @@ import Customers from "./pages/ecommerce/customers";
 import Sellers from "./pages/ecommerce/sellers";
 import AddProduct from "./pages/ecommerce/add-product";
 import InvoiceEPage from "./pages/ecommerce/invoice-ecompage";
+import QrCodes from "pages/qrcodes";
 
 function App() {
   return (
@@ -144,6 +145,7 @@ function App() {
         <Route path="/*" element={<Layout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="logos" element={<LogosPage />} />
+          <Route path="qrcodes" element={<QrCodes />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="packages" element={<PackagesPage />} />
           <Route path="subscriptions" element={<SubscriptionsPage />} />

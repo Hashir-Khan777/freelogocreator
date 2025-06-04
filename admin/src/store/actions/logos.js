@@ -81,4 +81,23 @@ const deleteGraphics = createAsyncThunk(
   }
 );
 
-export { getGraphics, addGraphics, editGraphics, deleteGraphics };
+const getQrCodes = createAsyncThunk(
+  "qrcode/get",
+  async (obj, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}/qrcode`
+      );
+      return data;
+    } catch (err) {
+      toast.error(
+        err.response.data.message ? err.response.data.message : err.message
+      );
+      return rejectWithValue(
+        err.response.data.message ? err.response.data.message : err.message
+      );
+    }
+  }
+);
+
+export { getGraphics, addGraphics, editGraphics, deleteGraphics, getQrCodes };
