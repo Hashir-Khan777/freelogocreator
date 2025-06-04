@@ -1097,7 +1097,9 @@ const SVGCanvasEditor = () => {
                         <select onChange={(e) => setCanvasSize(e.target.value)}>
                           {Object.keys(pageSizes).map((key, index) => (
                             <option key={index} value={key}>
-                              {key}
+                              {console.log(key, pageSizes[key])}
+                              {key} ({pageSizes[key]?.width}in X{" "}
+                              {pageSizes[key]?.height}in)
                             </option>
                           ))}
                         </select>

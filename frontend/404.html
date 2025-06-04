@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Logo Maker</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="assets/imgs/theme/favicon-removebg.png"
+    />
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="assets/css/plugins/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/main.css?v=1.0" />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css?family=Dosis:300,400,500");
+
+      @-moz-keyframes rocket-movement {
+        100% {
+          -moz-transform: translate(1200px, -600px);
+        }
+      }
+      @-webkit-keyframes rocket-movement {
+        100% {
+          -webkit-transform: translate(1200px, -600px);
+        }
+      }
+      @keyframes rocket-movement {
+        100% {
+          transform: translate(1200px, -600px);
+        }
+      }
+      @-moz-keyframes spin-earth {
+        100% {
+          -moz-transform: rotate(-360deg);
+          transition: transform 20s;
+        }
+      }
+      @-webkit-keyframes spin-earth {
+        100% {
+          -webkit-transform: rotate(-360deg);
+          transition: transform 20s;
+        }
+      }
+      @keyframes spin-earth {
+        100% {
+          -webkit-transform: rotate(-360deg);
+          transform: rotate(-360deg);
+          transition: transform 20s;
+        }
+      }
+
+      @-moz-keyframes move-astronaut {
+        100% {
+          -moz-transform: translate(-160px, -160px);
+        }
+      }
+      @-webkit-keyframes move-astronaut {
+        100% {
+          -webkit-transform: translate(-160px, -160px);
+        }
+      }
+      @keyframes move-astronaut {
+        100% {
+          -webkit-transform: translate(-160px, -160px);
+          transform: translate(-160px, -160px);
+        }
+      }
+      @-moz-keyframes rotate-astronaut {
+        100% {
+          -moz-transform: rotate(-720deg);
+        }
+      }
+      @-webkit-keyframes rotate-astronaut {
+        100% {
+          -webkit-transform: rotate(-720deg);
+        }
+      }
+      @keyframes rotate-astronaut {
+        100% {
+          -webkit-transform: rotate(-720deg);
+          transform: rotate(-720deg);
+        }
+      }
+
+      @-moz-keyframes glow-star {
+        40% {
+          -moz-opacity: 0.3;
+        }
+        90%,
+        100% {
+          -moz-opacity: 1;
+          -moz-transform: scale(1.2);
+        }
+      }
+      @-webkit-keyframes glow-star {
+        40% {
+          -webkit-opacity: 0.3;
+        }
+        90%,
+        100% {
+          -webkit-opacity: 1;
+          -webkit-transform: scale(1.2);
+        }
+      }
+      @keyframes glow-star {
+        40% {
+          -webkit-opacity: 0.3;
+          opacity: 0.3;
+        }
+        90%,
+        100% {
+          -webkit-opacity: 1;
+          opacity: 1;
+          -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+          border-radius: 999999px;
+        }
+      }
+
+      .spin-earth-on-hover {
+        transition: ease 200s !important;
+        transform: rotate(-3600deg) !important;
+      }
+
+      .bg-purple {
+        background: url(http://salehriaz.com/404Page/img/bg_purple.png);
+        background-repeat: repeat-x;
+        background-size: cover;
+        background-position: left top;
+        height: 100%;
+        overflow: hidden;
+      }
+      .btn-request {
+        padding: 10px 25px;
+        border: 1px solid #ffcb39;
+        border-radius: 100px;
+        font-weight: 400;
+      }
+
+      .btn-request:hover {
+        background-color: #ffcb39;
+        color: #fff;
+        transform: scale(1.05);
+        box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-go-home {
+        position: relative;
+        z-index: 200;
+        margin: 15px auto;
+        width: 100px;
+        padding: 10px 15px;
+        border: 1px solid #ffcb39;
+        border-radius: 100px;
+        font-weight: 400;
+        display: block;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        letter-spacing: 2px;
+        font-size: 11px;
+
+        -webkit-transition: all 0.3s ease-in;
+        -moz-transition: all 0.3s ease-in;
+        -ms-transition: all 0.3s ease-in;
+        -o-transition: all 0.3s ease-in;
+        transition: all 0.3s ease-in;
+      }
+
+      .btn-go-home:hover {
+        background-color: #ffcb39;
+        color: #fff;
+        transform: scale(1.05);
+        box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .central-body {
+        /*    width: 100%;*/
+        padding: 17% 5% 10% 5%;
+        text-align: center;
+      }
+
+      .objects img {
+        z-index: 90;
+        pointer-events: none;
+      }
+
+      .object_rocket {
+        z-index: 95;
+        position: absolute;
+        transform: translateX(-50px);
+        top: 75%;
+        pointer-events: none;
+        animation: rocket-movement 200s linear infinite both running;
+      }
+
+      .object_earth {
+        position: absolute;
+        top: 20%;
+        left: 15%;
+        z-index: 90;
+        /*    animation: spin-earth 100s infinite linear both;*/
+      }
+
+      .object_moon {
+        position: absolute;
+        top: 12%;
+        left: 25%;
+        /*
+    transform: rotate(0deg);
+    transition: transform ease-in 99999999999s;
+*/
+      }
+
+      .earth-moon {
+      }
+
+      .object_astronaut {
+        animation: rotate-astronaut 200s infinite linear both alternate;
+      }
+
+      .box_astronaut {
+        z-index: 110 !important;
+        position: absolute;
+        top: 60%;
+        right: 20%;
+        will-change: transform;
+        animation: move-astronaut 50s infinite linear both alternate;
+      }
+
+      .image-404 {
+        position: relative;
+        z-index: 100;
+        pointer-events: none;
+      }
+
+      .stars {
+        background: url(http://salehriaz.com/404Page/img/overlay_stars.svg);
+        background-repeat: repeat;
+        background-size: contain;
+        background-position: left top;
+      }
+
+      .glowing_stars .star {
+        position: absolute;
+        border-radius: 100%;
+        background-color: #fff;
+        width: 3px;
+        height: 3px;
+        opacity: 0.3;
+        will-change: opacity;
+      }
+
+      .glowing_stars .star:nth-child(1) {
+        top: 80%;
+        left: 25%;
+        animation: glow-star 2s infinite ease-in-out alternate 1s;
+      }
+      .glowing_stars .star:nth-child(2) {
+        top: 20%;
+        left: 40%;
+        animation: glow-star 2s infinite ease-in-out alternate 3s;
+      }
+      .glowing_stars .star:nth-child(3) {
+        top: 25%;
+        left: 25%;
+        animation: glow-star 2s infinite ease-in-out alternate 5s;
+      }
+      .glowing_stars .star:nth-child(4) {
+        top: 75%;
+        left: 80%;
+        animation: glow-star 2s infinite ease-in-out alternate 7s;
+      }
+      .glowing_stars .star:nth-child(5) {
+        top: 90%;
+        left: 50%;
+        animation: glow-star 2s infinite ease-in-out alternate 9s;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .box_astronaut {
+          top: 45%;
+          right: 3%;
+        }
+        .box_astronaut .object_astronaut {
+          width: 40px !important;
+        }
+
+        .central-body {
+          padding-top: 25%;
+        }
+        .object_earth {
+          width: 70px;
+          top: 20%;
+          left: 9%;
+        }
+        .glowing_stars .star:nth-child(1) {
+          top: 40%;
+          left: 25%;
+        }
+        .glowing_stars .star:nth-child(3) {
+          top: 25%;
+          left: 25%;
+        }
+        .glowing_stars .star:nth-child(4) {
+          top: 50%;
+          left: 80%;
+        }
+        .glowing_stars .star:nth-child(5) {
+          top: 50%;
+          left: 50%;
+        }
+        .object_rocket {
+          top: 45%;
+          animation: rocket-movement 50s linear infinite both running;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+      <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+          <div class="text-center">
+            <img src="assets/imgs/theme/loading.gif" alt="logomaker" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <header class="header sticky-bar">
+      <div class="container">
+        <div class="main-header">
+          <div class="header-left">
+            <div class="header-logo">
+              <a href="index.html" class="d-flex"
+                ><img
+                  alt="logomaker"
+                  src="assets/imgs/theme/logo-maker-logo0-removebg.png"
+              /></a>
+            </div>
+            <div class="header-nav">
+              <nav class="nav-main-menu d-none d-xl-block">
+                <ul class="main-menu">
+                  <li>
+                    <a class="active" href="index.html">Home</a>
+                  </li>
+                  <li class="has-children">
+                    <a href="logo.html">Logo Maker</a>
+                    <ul class="sub-menu">
+                      <li class="hr"><h5>Categories</h5></li>
+                      <li><a href="#">Fashion</a></li>
+                      <li><a href="#">Tech</a></li>
+                      <li><a href="#">Construction</a></li>
+                      <li class="hr"><h5>Tags</h5></li>
+                      <li><a href="#">Graphic designing</a></li>
+                      <li><a href="#">Web</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="website-builder.html">Website Builder</a>
+                  </li>
+                  <li>
+                    <a href="about.html">About Us</a>
+                  </li>
+                  <li>
+                    <a href="contact.html">Contact Us</a>
+                  </li>
+                </ul>
+              </nav>
+              <div class="burger-icon burger-icon-white">
+                <span class="burger-icon-top"></span>
+                <span class="burger-icon-mid"></span>
+                <span class="burger-icon-bottom"></span>
+              </div>
+            </div>
+          </div>
+          <div class="header-right">
+            <div class="block-signin">
+              <!--<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>-->
+              <a href="#" class="btn btn-default btn-shadow ml-40 hover-up"
+                >Sign in</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar"
+    >
+      <div class="mobile-header-wrapper-inner">
+        <div class="mobile-header-top">
+          <div class="user-account">
+            <img src="assets/imgs/avatar/ava_1.png" alt="logomaker" />
+            <div class="content">
+              <h6 class="user-name">
+                Hi, <span class="text-brand">User</span>
+              </h6>
+              <p class="font-xs text-muted">You have 2 new messages</p>
+            </div>
+          </div>
+          <div class="burger-icon burger-icon-white">
+            <span class="burger-icon-top"></span>
+            <span class="burger-icon-mid"></span>
+            <span class="burger-icon-bottom"></span>
+          </div>
+        </div>
+        <div class="mobile-header-content-area">
+          <div class="perfect-scroll">
+            <div class="mobile-search mobile-header-border mb-30">
+              <form action="#">
+                <input type="text" placeholder="Search for items…" />
+                <i class="fi-rr-search"></i>
+              </form>
+            </div>
+            <div class="mobile-menu-wrap mobile-header-border">
+              <!-- mobile menu start -->
+              <nav>
+                <ul class="mobile-menu font-heading">
+                  <li>
+                    <a class="active" href="index.html">Home</a>
+                  </li>
+                  <li class="has-children">
+                    <a href="logo.html">Logo Maker</a>
+                    <ul class="sub-menu">
+                      <li class="hr"><h5>Categories</h5></li>
+                      <li><a href="#">Fashion</a></li>
+                      <li><a href="#">Tech</a></li>
+                      <li><a href="#">Construction</a></li>
+                      <li class="hr"><h5>Tags</h5></li>
+                      <li><a href="#">Graphic designing</a></li>
+                      <li><a href="#">Web</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="#">Website Builder</a>
+                  </li>
+                  <li>
+                    <a href="#">Favourite</a>
+                  </li>
+                  <li class="has-children">
+                    <a href="#">Company Pages</a>
+                    <ul class="sub-menu">
+                      <li><a href="page-about.html">About Us</a></li>
+                      <li><a href="page-service.html">Our Services</a></li>
+                      <li><a href="page-pricing.html">Pricing Plan</a></li>
+                      <li><a href="pages-faqs.html">FAQs</a></li>
+                      <li><a href="page-contact.html">Contact Us</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+              <!-- mobile menu end -->
+            </div>
+            <div class="mobile-account">
+              <h6 class="mb-10">Your Account</h6>
+              <ul class="mobile-menu font-heading">
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Work Preferences</a></li>
+                <li><a href="#">My Boosted Shots</a></li>
+                <li><a href="#">My Collections</a></li>
+                <li><a href="#">Account Settings</a></li>
+                <li><a href="#">Go Pro</a></li>
+                <li><a href="#">Sign Out</a></li>
+              </ul>
+            </div>
+            <div class="mobile-social-icon mb-50">
+              <h6 class="mb-25">Follow Us</h6>
+              <a href="#"
+                ><img
+                  src="assets/imgs/theme/icons/icon-facebook.svg"
+                  alt="logomaker"
+              /></a>
+              <a href="#"
+                ><img
+                  src="assets/imgs/theme/icons/icon-twitter.svg"
+                  alt="logomaker"
+              /></a>
+              <a href="#"
+                ><img
+                  src="assets/imgs/theme/icons/icon-instagram.svg"
+                  alt="logomaker"
+              /></a>
+              <a href="#"
+                ><img
+                  src="assets/imgs/theme/icons/icon-pinterest.svg"
+                  alt="logomaker"
+              /></a>
+              <a href="#"
+                ><img
+                  src="assets/imgs/theme/icons/icon-youtube.svg"
+                  alt="logomaker"
+              /></a>
+            </div>
+            <div class="site-copyright">
+              Copyright ©2025 <a href="#"><strong>zinitechnologies</strong></a
+              >. <br />All Rights Reserved
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End header-->
+    <!-- Content -->
+    <main class="main bg-purple">
+      <div class="stars">
+        <div class="central-body">
+          <h1 class="text-center text-white display-1">404</h1>
+          <h5 class="text-white">Look like you're lost</h5>
+          <p class="text-white">the page you are looking for not avaible!</p>
+          <a href="#" class="btn-go-home">GO BACK HOME</a>
+        </div>
+        <div class="objects">
+          <img
+            class="object_rocket"
+            src="http://salehriaz.com/404Page/img/rocket.svg"
+            width="40px"
+          />
+          <div class="earth-moon">
+            <img
+              class="object_earth"
+              src="http://salehriaz.com/404Page/img/earth.svg"
+              width="100px"
+            />
+            <img
+              class="object_moon"
+              src="http://salehriaz.com/404Page/img/moon.svg"
+              width="80px"
+            />
+          </div>
+          <div class="box_astronaut">
+            <img
+              class="object_astronaut"
+              src="http://salehriaz.com/404Page/img/astronaut.svg"
+              width="140px"
+            />
+          </div>
+        </div>
+        <div class="glowing_stars">
+          <div class="star"></div>
+          <div class="star"></div>
+          <div class="star"></div>
+          <div class="star"></div>
+          <div class="star"></div>
+        </div>
+      </div>
+    </main>
+    <!-- End Content -->
+    <!-- Footer -->
+    <footer class="footer mt-50">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <a href="index.html"
+              ><img
+                alt="logomaker"
+                src="assets/imgs/theme/logo-maker-logo0-removebg.png"
+            /></a>
+            <div class="mt-20 mb-20">
+              We are a SaaS company that offers graphic design maker tools for
+              startups, small business owners, website designers, and online
+              entrepreneurs. We make branding accessible and affordable. Try our
+              tools today!
+            </div>
+          </div>
+          <div class="col-md-2 col-xs-6">
+            <h6>Company</h6>
+            <ul class="menu-footer mt-40">
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Our Team</a></li>
+              <li><a href="#">Products</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2 col-xs-6">
+            <h6>Product</h6>
+            <ul class="menu-footer mt-40">
+              <li><a href="#">Feature</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">Credit</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2 col-xs-6">
+            <h6>Download</h6>
+            <ul class="menu-footer mt-40">
+              <li><a href="#">iOS</a></li>
+              <li><a href="#">Android</a></li>
+              <li><a href="#">Microsoft</a></li>
+              <li><a href="#">Desktop</a></li>
+            </ul>
+          </div>
+          <div class="col-md-2 col-xs-6">
+            <h6>Support</h6>
+            <ul class="menu-footer mt-40">
+              <li><a href="#">Privacy</a></li>
+              <li><a href="#">Help</a></li>
+              <li><a href="#">Terms</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom mt-50">
+          <div class="row">
+            <div class="col-md-6">
+              Copyright ©2025 <a href="#"><strong>zinitechnologies</strong></a
+              >. All Rights Reserved
+            </div>
+            <div class="col-md-6 text-md-end text-start">
+              <div class="footer-social">
+                <a href="#" class="icon-socials icon-facebook"></a>
+                <a href="#" class="icon-socials icon-twitter"></a>
+                <a href="#" class="icon-socials icon-instagram"></a>
+                <a href="#" class="icon-socials icon-linkedin"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer -->
+    <!-- Vendor JS-->
+    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/plugins/waypoints.js"></script>
+    <script src="assets/js/plugins/wow.js"></script>
+    <script src="assets/js/plugins/magnific-popup.js"></script>
+    <script src="assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="assets/js/plugins/select2.min.js"></script>
+    <script src="assets/js/plugins/isotope.js"></script>
+    <script src="assets/js/plugins/scrollup.js"></script>
+    <script src="assets/js/plugins/swiper-bundle.min.js"></script>
+    <!-- Template  JS -->
+    <script src="assets/js/main.js?v=1.0"></script>
+  </body>
+</html>

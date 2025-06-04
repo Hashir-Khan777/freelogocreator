@@ -27,6 +27,5 @@ New Issues
 Today meeting issues
 1) give shorten link in table
 2) notes on qr code modal on logo maker
-6) Link shortener in QR codes
-7) show size in brackets in logo maker page size selectbox
-8) tooltip on hover on qr code page 
+3) Link shortener in QR codes
+4) show size in brackets in logo maker page size selectbox
