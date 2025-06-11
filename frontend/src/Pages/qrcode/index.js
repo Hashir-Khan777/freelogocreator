@@ -126,7 +126,7 @@ const QRCode = () => {
                                         dispatch(
                                           toggleQRCodeModal({
                                             open: true,
-                                            data: { data: code?.image },
+                                            data: code,
                                           })
                                         )
                                       }

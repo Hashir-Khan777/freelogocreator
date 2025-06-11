@@ -33,6 +33,8 @@ const QRCodeModal = () => {
     document.body.removeChild(link);
   };
 
+  console.log("qrCodeModalData", qrCodeModalData);
+
   return (
     <Modal isOpen={isQRCodeModalOpen} onClose={onClose}>
       <ModalOverlay />
@@ -55,7 +57,7 @@ const QRCodeModal = () => {
                 `data:image/png;base64,${
                   qrCodeModalData?.data || qrCodeModalData?.image
                 }`,
-                "qrcode.png"
+                `${qrCodeModalData?.note}.png`
               );
             }}
           >

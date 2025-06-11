@@ -1,31 +1,15 @@
-1) account creation is required on save
-2) watermarks on full canvas on preview
-3) QR code generation and QR code tracking
-4) Dynamic QR codes
-
-References:
-https://online-barcode-generator.net/
-
-New Issues
-
-1) url redirection on QR Code (Done)
-2) QR code should ear as "My QR Codes" on logo maker (Done)
-3) QR code tracking on Admin dashboard (Remaining)
-4) QR codes showing while logged out (Done)
-5) Screenshot disable on canvas (We can't disable ss fully)
-6) Link shortener in QR codes (Link can't be shortened)
-7) QR code subscription (Don not have stripe)
-8) Id and notes on QR code page (Done)
-9) Page size on logo maker (Done)
-10) QR code limit field in packages (Remaining)
-11) Packages menu on top header (Done)
-12) Remove all address fields in contact us page (Done)
-13) Basic help in canvas (Done)
-14) Basic help in QR codes (Not necessary)
-
-
-Today meeting issues
-1) give shorten link in table
-2) notes on qr code modal on logo maker
-3) Link shortener in QR codes
-4) show size in brackets in logo maker page size selectbox
+Issues:
+1) logo maker sidebar
+2) check Google Fonts API
+3) change size orientation (done)
+4) smtp server in backend auth, qrcode maker, weekly stats
+5) qrcode maker on first in header (done)
+6) qrcode save with note like 'note.png' (done)
+7) user stats with timestamps
+8) search on admin panel
+9) qr code restoration functionality
+10) IP capturing of user
+11) limitations (needed stripe)
+12) OTP verification
+13) message on shrinking (done)
+14) create different table of scans

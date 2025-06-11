@@ -59,9 +59,12 @@ const gridSize = 40.72;
 const dpi = 300;
 
 const pageSizes = {
-  A4: { width: 8.27, height: 11.69 },
-  A5: { width: 5.83, height: 8.27 },
-  "Business Card": { width: 3.5, height: 2 },
+  "A4 (Portrait)": { width: 8.27, height: 11.69 },
+  "A4 (Landscape)": { width: 11.69, height: 8.27 },
+  "A5 (Portrait)": { width: 5.83, height: 8.27 },
+  "A5 (Landscape)": { width: 8.27, height: 5.83 },
+  "Business Card (Portrait)": { width: 3.5, height: 2 },
+  "Business Card (Landscape)": { width: 2, height: 3.5 },
 };
 
 const SVGCanvasEditor = () => {
@@ -75,9 +78,11 @@ const SVGCanvasEditor = () => {
   const [textAlignment, setTextAlignment] = useState("center");
   const [isBackDesigned, setIsBackDesigned] = useState(false);
   const [zoom, setZoom] = useState(0.5);
-  const [canvasWidth, setCanvasWidth] = useState(pageSizes["A4"].width * dpi);
+  const [canvasWidth, setCanvasWidth] = useState(
+    pageSizes["A4 (Portrait)"].width * dpi
+  );
   const [canvasHeight, setCanvasHeight] = useState(
-    pageSizes["A4"].height * dpi
+    pageSizes["A4 (Portrait)"].height * dpi
   );
 
   const canvasRef = useRef(null);
@@ -1097,7 +1102,6 @@ const SVGCanvasEditor = () => {
                         <select onChange={(e) => setCanvasSize(e.target.value)}>
                           {Object.keys(pageSizes).map((key, index) => (
                             <option key={index} value={key}>
-                              {console.log(key, pageSizes[key])}
                               {key} ({pageSizes[key]?.width}in X{" "}
                               {pageSizes[key]?.height}in)
                             </option>

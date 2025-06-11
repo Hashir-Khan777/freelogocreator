@@ -14,7 +14,7 @@ import {
   MenuList,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategories } from "../../store/actions/categories.action";
 import { Link, useNavigate } from "react-router-dom";
@@ -24,6 +24,8 @@ import Cookies from "universal-cookie";
 
 const Header = () => {
   const [search, setSearch] = useState("");
+  const [windowWidth, setWindowWidth] = useState(null);
+  const prevWidthRef = useRef(window.innerWidth);
 
   const dispatch = useDispatch();
   const { isOpen, onToggle } = useDisclosure();
@@ -46,8 +48,34 @@ const Header = () => {
     dispatch(getAllCategories());
   }, [dispatch]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const currentWidth = window.innerWidth;
+      const prevWidth = prevWidthRef.current;
+
+      if (currentWidth < prevWidth) {
+        setWindowWidth("shrink");
+      } else if (currentWidth > prevWidth) {
+        setWindowWidth("expand");
+      }
+
+      prevWidthRef.current = currentWidth;
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <header className="header sticky-bar">
+      {windowWidth === "shrink" && (
+        <div
+          className="mb-20 text-center"
+          style={{ fontSize: "20px", color: "#FFA500", fontWeight: "semibold" }}
+        >
+          <p>Warning! this canvas is designed only for PC and Laptops</p>
+        </div>
+      )}
       <div className="container">
         <div className="main-header">
           <div className="header-left">
@@ -63,10 +91,10 @@ const Header = () => {
               <nav className="nav-main-menu d-none d-xl-block">
                 <ul className="main-menu">
                   <li>
-                    <Link to="/logo">Logo Maker</Link>
+                    <Link to="/qrcode">QR Code Maker</Link>
                   </li>
                   <li>
-                    <Link to="/qrcode">QR Code Maker</Link>
+                    <Link to="/logo">Logo Maker</Link>
                   </li>
                   {/* <li>
                     <Link to="/website">Website Builder</Link>
