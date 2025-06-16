@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend;
@@ -11,9 +12,11 @@ using backend;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250612093829_AddIpField")]
+    partial class AddIpField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,35 +90,6 @@ namespace backend.Migrations
                     b.HasIndex("category_id");
 
                     b.ToTable("Graphics");
-                });
-
-            modelBuilder.Entity("backend.Models.LogoStats", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("created_at")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("graphicid")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("updated_at")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("userid")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("graphicid");
-
-                    b.HasIndex("userid");
-
-                    b.ToTable("LogoStats");
                 });
 
             modelBuilder.Entity("backend.Models.Logs", b =>
@@ -285,35 +259,6 @@ namespace backend.Migrations
                     b.ToTable("Queries");
                 });
 
-            modelBuilder.Entity("backend.Models.Scans", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("created_at")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("qrcodeid")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("updated_at")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("userid")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("qrcodeid");
-
-                    b.HasIndex("userid");
-
-                    b.ToTable("Scans");
-                });
-
             modelBuilder.Entity("backend.Models.Subscription", b =>
                 {
                     b.Property<int>("Id")
@@ -360,12 +305,6 @@ namespace backend.Migrations
                     b.Property<DateTime>("created_at")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("createdqrcodes")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("downloadedlogos")
-                        .HasColumnType("integer");
-
                     b.Property<string>("email")
                         .IsRequired()
                         .HasColumnType("text");
@@ -409,23 +348,6 @@ namespace backend.Migrations
                     b.Navigation("category");
                 });
 
-            modelBuilder.Entity("backend.Models.LogoStats", b =>
-                {
-                    b.HasOne("backend.Models.Graphics", "graphic")
-                        .WithMany("logostats")
-                        .HasForeignKey("graphicid")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("backend.Models.User", "user")
-                        .WithMany("logostats")
-                        .HasForeignKey("userid")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("graphic");
-
-                    b.Navigation("user");
-                });
-
             modelBuilder.Entity("backend.Models.QRCode", b =>
                 {
                     b.HasOne("backend.Models.User", "user")
@@ -442,23 +364,6 @@ namespace backend.Migrations
                     b.HasOne("backend.Models.User", "user")
                         .WithMany()
                         .HasForeignKey("userId");
-
-                    b.Navigation("user");
-                });
-
-            modelBuilder.Entity("backend.Models.Scans", b =>
-                {
-                    b.HasOne("backend.Models.QRCode", "qrcode")
-                        .WithMany("qrscans")
-                        .HasForeignKey("qrcodeid")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("backend.Models.User", "user")
-                        .WithMany("scans")
-                        .HasForeignKey("userid")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("qrcode");
 
                     b.Navigation("user");
                 });
@@ -483,23 +388,9 @@ namespace backend.Migrations
                     b.Navigation("graphics");
                 });
 
-            modelBuilder.Entity("backend.Models.Graphics", b =>
-                {
-                    b.Navigation("logostats");
-                });
-
-            modelBuilder.Entity("backend.Models.QRCode", b =>
-                {
-                    b.Navigation("qrscans");
-                });
-
             modelBuilder.Entity("backend.Models.User", b =>
                 {
-                    b.Navigation("logostats");
-
                     b.Navigation("qrCodes");
-
-                    b.Navigation("scans");
                 });
 #pragma warning restore 612, 618
         }

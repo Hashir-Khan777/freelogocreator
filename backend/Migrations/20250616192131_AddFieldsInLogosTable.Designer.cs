@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend;
@@ -11,9 +12,11 @@ using backend;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250616192131_AddFieldsInLogosTable")]
+    partial class AddFieldsInLogosTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,35 +90,6 @@ namespace backend.Migrations
                     b.HasIndex("category_id");
 
                     b.ToTable("Graphics");
-                });
-
-            modelBuilder.Entity("backend.Models.LogoStats", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("created_at")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("graphicid")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("updated_at")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("userid")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("graphicid");
-
-                    b.HasIndex("userid");
-
-                    b.ToTable("LogoStats");
                 });
 
             modelBuilder.Entity("backend.Models.Logs", b =>
@@ -409,23 +383,6 @@ namespace backend.Migrations
                     b.Navigation("category");
                 });
 
-            modelBuilder.Entity("backend.Models.LogoStats", b =>
-                {
-                    b.HasOne("backend.Models.Graphics", "graphic")
-                        .WithMany("logostats")
-                        .HasForeignKey("graphicid")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("backend.Models.User", "user")
-                        .WithMany("logostats")
-                        .HasForeignKey("userid")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("graphic");
-
-                    b.Navigation("user");
-                });
-
             modelBuilder.Entity("backend.Models.QRCode", b =>
                 {
                     b.HasOne("backend.Models.User", "user")
@@ -483,11 +440,6 @@ namespace backend.Migrations
                     b.Navigation("graphics");
                 });
 
-            modelBuilder.Entity("backend.Models.Graphics", b =>
-                {
-                    b.Navigation("logostats");
-                });
-
             modelBuilder.Entity("backend.Models.QRCode", b =>
                 {
                     b.Navigation("qrscans");
@@ -495,8 +447,6 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.User", b =>
                 {
-                    b.Navigation("logostats");
-
                     b.Navigation("qrCodes");
 
                     b.Navigation("scans");

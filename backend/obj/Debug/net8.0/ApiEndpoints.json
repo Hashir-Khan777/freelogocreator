@@ -318,6 +318,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "backend.Controllers.GraphicsController",
+    "Method": "AddStats",
+    "RelativePath": "api/graphics/stats",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "logostats",
+        "Type": "backend.Models.LogoStats",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "backend.Controllers.LogController",
     "Method": "Get",
     "RelativePath": "api/logs",
@@ -496,6 +512,38 @@
       {
         "Name": "data",
         "Type": "backend.Models.QRCode",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.QRCodeController",
+    "Method": "RestoreQRData",
+    "RelativePath": "api/qrcode/restore/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.QRCodeController",
+    "Method": "AddScan",
+    "RelativePath": "api/qrcode/scan",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scan",
+        "Type": "backend.Models.Scans",
         "IsRequired": true
       }
     ],

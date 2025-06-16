@@ -100,4 +100,31 @@ const getQrCodes = createAsyncThunk(
   }
 );
 
-export { getGraphics, addGraphics, editGraphics, deleteGraphics, getQrCodes };
+const restoreQrCode = createAsyncThunk(
+  "qrcode/restore",
+  async (obj, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}/qrcode/restore/${obj.id}`
+      );
+      toast.success("QR Code restored successfully");
+      return data;
+    } catch (err) {
+      toast.error(
+        err.response.data.message ? err.response.data.message : err.message
+      );
+      return rejectWithValue(
+        err.response.data.message ? err.response.data.message : err.message
+      );
+    }
+  }
+);
+
+export {
+  getGraphics,
+  addGraphics,
+  editGraphics,
+  deleteGraphics,
+  getQrCodes,
+  restoreQrCode,
+};

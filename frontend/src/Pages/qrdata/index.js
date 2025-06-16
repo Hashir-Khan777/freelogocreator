@@ -1,7 +1,11 @@
 import { Container, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getQRCodeById, updateQRCode } from "../../store/actions/qrcode.action";
+import {
+  addScan,
+  getQRCodeById,
+  updateQRCode,
+} from "../../store/actions/qrcode.action";
 import { useParams } from "react-router-dom";
 
 const QRData = () => {
@@ -16,6 +20,8 @@ const QRData = () => {
     window.location.href = url.href;
   };
 
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     dispatch(getQRCodeById({ id }));
   }, [dispatch]);
@@ -27,6 +33,11 @@ const QRData = () => {
           updateQRCode({
             data: { ...qrcode, scans: qrcode?.scans + 1 },
             message: false,
+          })
+        );
+        dispatch(
+          addScan({
+            data: { qrcodeid: qrcode?.id, userid: user?.id ?? null },
           })
         );
         sessionStorage.setItem("scanned", true);

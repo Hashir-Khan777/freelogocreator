@@ -172,3 +172,28 @@ export const signOut = createAsyncThunk(
     }
   }
 );
+
+export const updateUser = createAsyncThunk(
+  "auth/signout",
+  async (obj, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_BASE_API_URL}/auth/users`,
+        obj
+      );
+      return data;
+    } catch (err) {
+      dispatch(
+        showToast({
+          type: "error",
+          message: err.response.data.message
+            ? err.response.data.message
+            : err.message,
+        })
+      );
+      return rejectWithValue(
+        err.response.data.message ? err.response.data.message : err.message
+      );
+    }
+  }
+);

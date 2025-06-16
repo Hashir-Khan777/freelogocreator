@@ -65,6 +65,11 @@ namespace backend.Controllers
             db.QRCode.Add(data);
             db.SaveChanges();
 
+            var prevuser = db.Users.FirstOrDefault(x => x.Id == data.user_id);
+            prevuser.createdqrcodes = prevuser.createdqrcodes + 1;
+            db.Users.Update(prevuser);
+            db.SaveChanges();
+
             return Ok(new { message = "Qr code generated", data = data });
         }
 
@@ -82,6 +87,18 @@ namespace backend.Controllers
             List<Models.QRCode> qrcodes = db.QRCode.Where(x => x.user_id == id).ToList();
 
             return Ok(new { data = qrcodes });
+        }
+
+        [HttpGet("restore/{id}")]
+        public IActionResult RestoreQRData(int id)
+        {
+            Models.QRCode? qrcode = db.QRCode.FirstOrDefault(x => x.Id == id);
+            qrcode.deleted = false;
+
+            db.QRCode.Update(qrcode);
+            db.SaveChanges();
+
+            return Ok(new { data = qrcode });
         }
 
         [HttpGet("{id}")]
@@ -108,6 +125,17 @@ namespace backend.Controllers
             db.SaveChanges();
 
             return Ok(new { message = "QR code updated successfully", data = qrcode });
+        }
+
+        [HttpPost("scan")]
+        public IActionResult AddScan([FromBody] Scans scan)
+        {
+            scan.created_at = DateTime.UtcNow;
+            scan.updated_at = DateTime.UtcNow;
+            db.Scans.Update(scan);
+            db.SaveChanges();
+
+            return Ok(new { message = "scan added successfully", data = scan });
         }
 
         [HttpDelete("{id}")]

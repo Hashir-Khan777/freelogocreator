@@ -89,6 +89,20 @@ const Users = () => {
       },
     },
     {
+      Header: "QR Codes Created",
+      accessor: "createdqrcodes",
+      Cell: (row) => {
+        return <span>{row?.cell?.value}</span>;
+      },
+    },
+    {
+      Header: "Logos Downloaded",
+      accessor: "downloadedlogos",
+      Cell: (row) => {
+        return <span>{row?.cell?.value}</span>;
+      },
+    },
+    {
       Header: "action",
       accessor: "action",
       Cell: (row) => {

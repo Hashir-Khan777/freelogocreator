@@ -69,5 +69,17 @@ export default createSlice({
     builder.addCase(Logo.getQrCodes.rejected, (state) => {
       state.loading = false;
     });
+
+    builder.addCase(Logo.restoreQrCode.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(Logo.restoreQrCode.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      const qr = state.qrcodes.find((x) => x.id == payload.data.id);
+      qr.deleted = false;
+    });
+    builder.addCase(Logo.restoreQrCode.rejected, (state) => {
+      state.loading = false;
+    });
   },
 }).reducer;

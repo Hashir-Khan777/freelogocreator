@@ -68,6 +68,17 @@ namespace backend.Controllers
             return Ok(new { message = "Graphic updated successfully", data = graphics });
         }
 
+        [HttpPost("stats")]
+        public IActionResult AddStats([FromBody] LogoStats logostats)
+        {
+            logostats.created_at = DateTime.UtcNow;
+            logostats.updated_at = DateTime.UtcNow;
+            db.LogoStats.Update(logostats);
+            db.SaveChanges();
+
+            return Ok(new { message = "Graphic updated successfully", data = logostats });
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

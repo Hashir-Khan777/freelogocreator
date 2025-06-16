@@ -25,5 +25,7 @@
         public DateTime updated_at { get; set; }
 
         public User? user { get; set; }
+
+        public List<Scans>? qrscans { get; set; }
     }
 }

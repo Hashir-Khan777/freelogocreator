@@ -14,10 +14,20 @@
 
         public string role { get; set; } = string.Empty;
 
+        public string ipaddress { get; set; } = string.Empty;
+
+        public int createdqrcodes { get; set; } = 0;
+
+        public int downloadedlogos { get; set; } = 0;
+
         public DateTime created_at { get; set; }
 
         public DateTime updated_at { get; set; }
 
         public List<QRCode>? qrCodes { get; set; }
+
+        public List<Scans>? scans { get; set; }
+
+        public List<LogoStats>? logostats { get; set; }
     }
 }

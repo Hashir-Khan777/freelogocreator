@@ -14,7 +14,9 @@ import {
   Popover,
   PopoverArrow,
   PopoverBody,
+  PopoverCloseButton,
   PopoverContent,
+  PopoverHeader,
   PopoverTrigger,
   Select,
   Tooltip,
@@ -42,6 +44,8 @@ import {
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { IoHelpCircleSharp } from "react-icons/io5";
+import { updateUser } from "../../store/actions/auth.action";
+import { setStats } from "../../store/actions/graphics.action";
 
 const fontSizes = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72,
@@ -266,6 +270,10 @@ const SVGCanvasEditor = () => {
   };
 
   const saveImage = (type) => {
+    dispatch(
+      updateUser({ ...user, downloadedlogos: user?.downloadedlogos + 1 })
+    );
+    // dispatch(setStats({ userid: user?.id, graphicid: "downloadedlogo" }));
     if (canvas) {
       gridLinesRef.current.forEach((line) => (line.visible = false));
       canvas.discardActiveObject();
@@ -1064,15 +1072,26 @@ const SVGCanvasEditor = () => {
                     data-wow-delay=".0s"
                     style={{ position: "relative" }}
                   >
-                    <Icon
-                      as={IoHelpCircleSharp}
-                      fontSize="25px"
-                      cursor="pointer"
-                      position="absolute"
-                      right="1"
-                      top="1"
-                      color="grey"
-                    />
+                    <Box position="absolute" right="1" top="1">
+                      <Popover>
+                        <PopoverTrigger>
+                          <Icon
+                            as={IoHelpCircleSharp}
+                            fontSize="25px"
+                            cursor="pointer"
+                            color="grey"
+                          />
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <PopoverBody>
+                            You can easily customize every part of this logo –
+                            from colors and fonts to icons and text. Just click
+                            on the elements to edit. Make it truly yours in a
+                            few simple steps
+                          </PopoverBody>
+                        </PopoverContent>
+                      </Popover>
+                    </Box>
                     <div className="d-flex items-center justify-content-between w-full">
                       <div>
                         {colors.length > 0 ? (

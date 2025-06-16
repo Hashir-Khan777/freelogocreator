@@ -49,3 +49,28 @@ export const searchGraphics = createAsyncThunk(
     }
   }
 );
+
+export const setStats = createAsyncThunk(
+  "graphics/stats",
+  async (obj, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_API_URL}/graphics/state`,
+        obj
+      );
+      return data.data;
+    } catch (err) {
+      dispatch(
+        showToast({
+          type: "error",
+          message: err.response.data.message
+            ? err.response.data.message
+            : err.message,
+        })
+      );
+      return rejectWithValue(
+        err.response.data.message ? err.response.data.message : err.message
+      );
+    }
+  }
+);

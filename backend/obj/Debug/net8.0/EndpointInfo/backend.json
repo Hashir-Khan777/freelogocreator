@@ -478,6 +478,37 @@
         }
       }
     },
+    "/api/graphics/stats": {
+      "post": {
+        "tags": [
+          "Graphics"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoStats"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoStats"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoStats"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/graphics/search/{query}": {
       "post": {
         "tags": [
@@ -776,6 +807,29 @@
         }
       }
     },
+    "/api/qrcode/restore/{id}": {
+      "get": {
+        "tags": [
+          "QRCode"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/qrcode/{id}": {
       "get": {
         "tags": [
@@ -813,6 +867,37 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/qrcode/scan": {
+      "post": {
+        "tags": [
+          "QRCode"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Scans"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Scans"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Scans"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -1114,6 +1199,13 @@
           "category": {
             "$ref": "#/components/schemas/Categories"
           },
+          "logostats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LogoStats"
+            },
+            "nullable": true
+          },
           "created_at": {
             "type": "string",
             "format": "date-time"
@@ -1121,6 +1213,40 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LogoStats": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "graphicid": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "userid": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "graphic": {
+            "$ref": "#/components/schemas/Graphics"
           }
         },
         "additionalProperties": false
@@ -1225,6 +1351,13 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          },
+          "qrscans": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Scans"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1262,6 +1395,40 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Scans": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "qrcodeid": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "userid": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "qrcode": {
+            "$ref": "#/components/schemas/QRCode"
           }
         },
         "additionalProperties": false
@@ -1325,6 +1492,18 @@
             "type": "string",
             "nullable": true
           },
+          "ipaddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdqrcodes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "downloadedlogos": {
+            "type": "integer",
+            "format": "int32"
+          },
           "created_at": {
             "type": "string",
             "format": "date-time"
@@ -1337,6 +1516,20 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/QRCode"
+            },
+            "nullable": true
+          },
+          "scans": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Scans"
+            },
+            "nullable": true
+          },
+          "logostats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LogoStats"
             },
             "nullable": true
           }

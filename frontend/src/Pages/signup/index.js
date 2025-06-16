@@ -28,7 +28,11 @@ const SignUp = () => {
   const cookies = new Cookies();
 
   const signup = () => {
-    dispatch(register(form));
+    fetch("https://api.ipify.org?format=json")
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(register({ ...form, ipaddress: data.ip }));
+      });
   };
 
   const handleShowClick = () => setShowPassword(!showPassword);
