@@ -11,6 +11,7 @@ import Website from "./website";
 import Logo from "./logo";
 import QRCode from "./qrcode";
 import QRData from "./qrdata";
+import EmailVerification from "./emailverification";
 
 export {
   Login,
@@ -26,4 +27,5 @@ export {
   Logo,
   QRCode,
   QRData,
+  EmailVerification,
 };

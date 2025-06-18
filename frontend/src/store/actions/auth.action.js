@@ -52,20 +52,59 @@ export const register = createAsyncThunk(
         `${process.env.REACT_APP_BASE_API_URL}/auth/signup`,
         obj
       );
+      dispatch(
+        showToast({
+          type: "success",
+          message: "Code has been sent to your email",
+        })
+      );
+      localStorage.setItem("token", JSON.stringify(data.token));
+      return data;
+    } catch (err) {
+      dispatch(
+        showToast({
+          type: "error",
+          message: err.response.data.message
+            ? err.response.data.message
+            : err.message,
+        })
+      );
+      return rejectWithValue(
+        err.response.data.message ? err.response.data.message : err.message
+      );
+    }
+  }
+);
+
+export const emailverification = createAsyncThunk(
+  "auth/emailverification",
+  async (obj, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_API_URL}/auth/emailverification`,
+        obj,
+        {
+          headers: {
+            Authorization: `Bearer ${JSON.parse(
+              localStorage.getItem("token")
+            )}`,
+          },
+        }
+      );
       const expires = new Date(date.setDate(date.getDate() + 30));
       cookies.set("_user", data.token, {
         path: "/",
         secure: true,
         expires,
       });
+      localStorage.setItem("user", JSON.stringify(data.data));
       dispatch(
         showToast({
           type: "success",
-          message: data.message,
+          message: "Email verified successfully",
         })
       );
-      localStorage.setItem("user", JSON.stringify(data.data));
-      return data.data;
+      return data;
     } catch (err) {
       dispatch(
         showToast({
@@ -96,6 +135,12 @@ export const forgetPassword = createAsyncThunk(
         secure: true,
         expires,
       });
+      dispatch(
+        showToast({
+          type: "success",
+          message: "Link has been sent to your email",
+        })
+      );
       return data;
     } catch (err) {
       dispatch(

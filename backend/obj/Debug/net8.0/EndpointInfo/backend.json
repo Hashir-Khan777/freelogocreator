@@ -67,6 +67,31 @@
         }
       }
     },
+    "/api/auth/emailverification": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { }
+            },
+            "text/json": {
+              "schema": { }
+            },
+            "application/*+json": {
+              "schema": { }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/auth/forgetpassword": {
       "post": {
         "tags": [
@@ -1495,6 +1520,9 @@
           "ipaddress": {
             "type": "string",
             "nullable": true
+          },
+          "verified": {
+            "type": "boolean"
           },
           "createdqrcodes": {
             "type": "integer",

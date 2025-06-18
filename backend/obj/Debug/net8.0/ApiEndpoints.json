@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "backend.Controllers.AuthController",
+    "Method": "EmailVerification",
+    "RelativePath": "api/auth/emailverification",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "body",
+        "Type": "System.Object",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.AuthController",
     "Method": "ForgetPassword",
     "RelativePath": "api/auth/forgetpassword",
     "HttpMethod": "POST",
