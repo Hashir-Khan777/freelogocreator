@@ -2,7 +2,7 @@ Issues:
 1) logo maker sidebar
 2) check Google Fonts API
 3) change size orientation (done)
-4) smtp server in backend auth, qrcode maker, weekly stats
+4) smtp server in backend auth, qrcode maker, weekly stats (done)
 5) qrcode maker on first in header (done)
 6) qrcode save with note like 'note.png' (done)
 7) user stats with timestamps (done)
@@ -10,6 +10,6 @@ Issues:
 9) qr code restoration functionality (done)
 10) IP capturing of user (done)
 11) limitations (needed stripe)
-12) OTP verification
+12) OTP verification (done)
 13) message on shrinking (done)
 14) create different table of scans (done)

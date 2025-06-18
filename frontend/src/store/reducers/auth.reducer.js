@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  emailverification,
   forgetPassword,
   login,
   register,
@@ -34,10 +35,21 @@ export default createSlice({
       state.loading = true;
     });
     builder.addCase(register.fulfilled, (state, { payload }) => {
-      state.data = payload;
+      state.token = payload.token;
       state.loading = false;
     });
     builder.addCase(register.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(emailverification.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(emailverification.fulfilled, (state, { payload }) => {
+      state.data = payload.data;
+      state.loading = false;
+    });
+    builder.addCase(emailverification.rejected, (state) => {
       state.loading = false;
     });
 

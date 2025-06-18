@@ -16,6 +16,8 @@
 
         public string ipaddress { get; set; } = string.Empty;
 
+        public bool verified { get; set; } = false;
+
         public int createdqrcodes { get; set; } = 0;
 
         public int downloadedlogos { get; set; } = 0;

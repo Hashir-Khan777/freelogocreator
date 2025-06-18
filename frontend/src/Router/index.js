@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import {
   About,
   Contact,
+  EmailVerification,
   Filter,
   ForgetPassword,
   Home,
@@ -31,6 +32,11 @@ const AppRouter = () => {
         element={<ForgetPassword />}
       />
       <Route caseSensitive path="/resetpassword" element={<ResetPassword />} />
+      <Route
+        caseSensitive
+        path="/emailverification"
+        element={<EmailVerification />}
+      />
       <Route caseSensitive path="/edit" element={<SVGCanvasEditor />} />
       <Route caseSensitive path="/qrcode" element={<QRCode />} />
       <Route caseSensitive path="/qr/:id" element={<QRData />} />

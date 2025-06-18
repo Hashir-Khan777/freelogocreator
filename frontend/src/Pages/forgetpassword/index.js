@@ -29,11 +29,11 @@ const ForgetPassword = () => {
     dispatch(forgetPassword(form));
   };
 
-  useEffect(() => {
-    if (forgetpasswordsuccess) {
-      navigate("/resetpassword", { replace: true });
-    }
-  }, [forgetpasswordsuccess]);
+  // useEffect(() => {
+  //   if (forgetpasswordsuccess) {
+  //     navigate("/resetpassword", { replace: true });
+  //   }
+  // }, [forgetpasswordsuccess]);
 
   useEffect(() => {
     if (cookies.get("_user")) {
@@ -46,7 +46,7 @@ const ForgetPassword = () => {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      backgroundColor="gray.200"
+      pt="120px"
       justifyContent="center"
       alignItems="center"
     >

@@ -21,11 +21,10 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({});
 
-  const { data } = useSelector((x) => x.AuthReducer);
+  const { token } = useSelector((x) => x.AuthReducer);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cookies = new Cookies();
 
   const signup = () => {
     fetch("https://api.ipify.org?format=json")
@@ -38,10 +37,10 @@ const SignUp = () => {
   const handleShowClick = () => setShowPassword(!showPassword);
 
   useEffect(() => {
-    if (data != null) {
-      navigate("/", { replace: true });
+    if (token != null) {
+      navigate("/emailverification", { replace: true });
     }
-  }, [data]);
+  }, [token]);
 
   // useEffect(() => {
   //   if (cookies.get("_user")) {

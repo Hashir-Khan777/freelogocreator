@@ -73,20 +73,28 @@ const Login = () => {
           }
         />
       </div>
-      <div className="block-signin">
-        <button
-          onClick={userlogin}
-          className="btn btn-default btn-shadow float-right hover-up"
-        >
-          Sign in
-        </button>
-      </div>
-      <Box>
-        New to us?{" "}
-        <Box as={Link} color="teal.500" to="/signup">
-          Sign Up
+      <Flex justifyContent="space-between">
+        <Box>
+          New to us?{" "}
+          <Box as={Link} color="teal.500" to="/signup">
+            Sign Up
+          </Box>
         </Box>
-      </Box>
+        <Box as={Link} to="/forgetpassword">
+          Forgot Password?
+        </Box>
+      </Flex>
+      <Flex justifyContent="space-between" mt={4}>
+        <div />
+        <div className="block-signin">
+          <button
+            onClick={userlogin}
+            className="btn btn-default btn-shadow hover-up"
+          >
+            Sign in
+          </button>
+        </div>
+      </Flex>
     </main>
     // {/* <div className="container register">
     //   <div className="row">
