@@ -10,6 +10,7 @@
 */.env
 */.vs
 */bin
+*/obj
 
 # testing
 /coverage
