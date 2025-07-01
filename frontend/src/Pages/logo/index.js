@@ -22,7 +22,6 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { getAllCategories } from "../../store/actions/categories.action";
 
 let page = 1;
-// const tags = ["Fashion", "Technology", "Beauty"];
 const Logo = () => {
   const [inputValue, setInputValue] = useState("");
   const [category, setCategory] = useState("all");
@@ -121,6 +120,15 @@ const Logo = () => {
 
   const filter = () => {
     if (graphics?.length > 0) {
+      const uniqueTags = [];
+      graphics?.filter((x) =>
+        x.tags?.split(", ")?.forEach((tag) => {
+          if (tag && !uniqueTags.includes(tag) && uniqueTags.length < 10) {
+            uniqueTags.push(tag);
+          }
+        })
+      );
+      setTags(uniqueTags);
       if (searchParams.get("cat")) {
         if (searchParams.get("cat") === "all") {
           setFilteredGraphics(graphics);
@@ -132,15 +140,6 @@ const Logo = () => {
           );
         }
       } else {
-        const uniqueTags = [];
-        graphics?.filter((x) =>
-          x.tags?.split(", ")?.forEach((tag) => {
-            if (tag && !uniqueTags.includes(tag) && uniqueTags.length < 10) {
-              uniqueTags.push(tag);
-            }
-          })
-        );
-        setTags(uniqueTags);
         setFilteredGraphics(graphics);
       }
       if (selectedTags.length > 0) {
@@ -151,9 +150,6 @@ const Logo = () => {
             ?.includes(true)
         );
         setFilteredGraphics(filtered);
-        console.log("tags selected", selectedTags, filtered);
-      } else {
-        console.log("No tags selected");
       }
     }
   };
@@ -419,10 +415,7 @@ const Logo = () => {
                                       )
                                     );
                                   } else {
-                                    setSelectedtags([
-                                      ...selectedTags,
-                                      tag?.toLowerCase(),
-                                    ]);
+                                    setSelectedtags([...selectedTags, tag]);
                                   }
                                 }}
                               />{" "}
