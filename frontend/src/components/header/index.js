@@ -67,167 +67,251 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="header sticky-bar">
-      {windowWidth === "shrink" && (
-        <div
-          className="mb-20 text-center"
-          style={{ fontSize: "20px", color: "#FFA500", fontWeight: "semibold" }}
-        >
-          <p>Warning! this canvas is designed only for PC and Laptops</p>
-        </div>
-      )}
-      <div className="container">
-        <div className="main-header">
-          <div className="header-left">
-            <div className="header-logo">
-              <Link to="/" className="d-flex">
-                <img
-                  alt="logomaker"
-                  src="../../assets/imgs/theme/logo-maker-logo0-removebg.png"
-                />
-              </Link>
-            </div>
-            <div className="header-nav">
-              <nav className="nav-main-menu d-none d-xl-block">
-                <ul className="main-menu">
-                  <li>
-                    <Link to="/qrcode">QR Code Maker</Link>
-                  </li>
-                  <li>
-                    <Link to="/logo">Logo Maker</Link>
-                  </li>
-                  {/* <li>
-                    <Link to="/website">Website Builder</Link>
-                  </li> */}
-                  <li>
-                    <Link to="/about">About Us</Link>
-                  </li>
-                  <li>
-                    <Link to="/#packages">Packages</Link>
-                  </li>
-                  <li>
-                    <Link to="/contact">Contact Us</Link>
-                  </li>
-                </ul>
-              </nav>
-              {/* <div className="burger-icon burger-icon-white">
-                <span className="burger-icon-top" />
-                <span className="burger-icon-mid" />
-                <span className="burger-icon-bottom" />
-              </div> */}
-            </div>
-          </div>
-          <div className="header-right">
-            {data != null ? (
-              <Menu>
-                <MenuButton>
-                  <Avatar name={data.name} />
-                </MenuButton>
-                <MenuList>
-                  <MenuItem>
-                    <div
-                      className="block-signin"
-                      onClick={() => dispatch(signOut())}
-                    >
-                      {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
-                      <button className="btn btn-default btn-shadow ml-40 hover-up">
-                        Sign Out
-                      </button>
-                    </div>
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            ) : (
-              <div className="block-signin">
-                {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
-                <Link
-                  to="/login"
-                  className="btn btn-default btn-shadow ml-40 hover-up"
-                >
-                  Sign in
+    <div>
+      <header className="header sticky-bar">
+        <div className="container">
+          <div className="main-header">
+            <div className="header-left">
+              <div className="header-logo">
+                <Link to="/" className="d-flex">
+                  <img
+                    alt="logomaker"
+                    src="assets/imgs/theme/logo-maker-logo0-removebg.png"
+                  />
                 </Link>
               </div>
-            )}
+              <div className="header-nav">
+                <nav className="nav-main-menu d-none d-xl-block">
+                  <ul className="main-menu">
+                    <li>
+                      <Link className="active" to="qrcode">
+                        QR Code Maker
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="active" to="/logo">
+                        Logo Maker
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="active" to="/about">
+                        About Us
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="active" to="#packages">
+                        Packages
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="active" to="/contact">
+                        Contact Us
+                      </Link>
+                    </li>
+                  </ul>
+                </nav>
+                <div
+                  className={`d-block d-xl-none burger-icon burger-icon-white ${
+                    isOpen && "burger-close"
+                  }`}
+                  onClick={onToggle}
+                >
+                  <span className="burger-icon-top" />
+                  <span className="burger-icon-mid" />
+                  <span className="burger-icon-bottom" />
+                </div>
+              </div>
+            </div>
+            <div className="d-none d-xl-block">
+              {data != null ? (
+                <Menu>
+                  <MenuButton>
+                    <Avatar name={data.name} />
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem>
+                      <div
+                        className="block-signin"
+                        onClick={() => dispatch(signOut())}
+                      >
+                        <button className="btn btn-default btn-shadow ml-40 hover-up">
+                          Sign Out
+                        </button>
+                      </div>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              ) : (
+                <div className="block-signin">
+                  <Link
+                    to="/login"
+                    className="btn btn-default btn-shadow ml-40 hover-up"
+                  >
+                    Sign in
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+      <div
+        className={`mobile-header-active ${
+          isOpen && "sidebar-visible"
+        } mobile-header-wrapper-style`}
+      >
+        <div
+          className="mobile-header-wrapper-inner"
+          style={{ overflow: "hidden" }}
+        >
+          <div className="mobile-header-top">
+            <div className="user-account">
+              <Avatar name={data?.name} mr="5px" />
+              <div className="content">
+                <h6 className="user-name">
+                  Hi, <span className="text-brand">{data?.name}</span>
+                </h6>
+              </div>
+            </div>
+            <div
+              className={`burger-icon burger-icon-white ${
+                isOpen && "burger-close"
+              }`}
+              onClick={onToggle}
+            >
+              <span className="burger-icon-top" />
+              <span className="burger-icon-mid" />
+              <span className="burger-icon-bottom" />
+            </div>
+          </div>
+          <div className="mobile-header-content-area">
+            <div className="perfect-scroll">
+              <div className="mobile-menu-wrap mobile-header-border">
+                {/* mobile menu start */}
+                <nav>
+                  <ul className="mobile-menu font-heading">
+                    <li>
+                      <Link className="active" to="qrcode">
+                        QR Code Maker
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="active" to="/logo">
+                        Logo Maker
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="active" to="/about">
+                        About Us
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="active" to="#packages">
+                        Packages
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="active" to="/contact">
+                        Contact Us
+                      </Link>
+                    </li>
+                  </ul>
+                  <button className="btn btn-default btn-shadow hover-up">
+                    Sign Out
+                  </button>
+                </nav>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </header>
-    // <Box>
-    //   <Container maxWidth="1216px" py="20px">
-    //     <Flex gap={10}>
-    //       <InputGroup>
-    //         <InputLeftAddon
-    //           cursor="pointer"
-    //           backgroundColor="white"
-    //           padding={0}
-    //         >
-    //           <Menu onClose={onToggle} isOpen={isOpen}>
-    //             <MenuButton as={Button} onClick={onToggle}>
-    //               All Categories
+    </div>
+
+    // <header className="header sticky-bar">
+    //   {windowWidth === "shrink" && (
+    //     <div
+    //       className="mb-20 text-center"
+    //       style={{ fontSize: "20px", color: "#FFA500", fontWeight: "semibold" }}
+    //     >
+    //       <p>Warning! this canvas is designed only for PC and Laptops</p>
+    //     </div>
+    //   )}
+    //   <div className="container">
+    //     <div className="main-header">
+    //       <div className="header-left">
+    //         <div className="header-logo">
+    //           <Link to="/" className="d-flex">
+    //             <img
+    //               alt="logomaker"
+    //               src="../../assets/imgs/theme/logo-maker-logo0-removebg.png"
+    //             />
+    //           </Link>
+    //         </div>
+    //         <div className="header-nav">
+    //           <nav className="nav-main-menu d-none d-xl-block">
+    //             <ul className="main-menu">
+    //               <li>
+    //                 <Link to="/qrcode">QR Code Maker</Link>
+    //               </li>
+    //               <li>
+    //                 <Link to="/logo">Logo Maker</Link>
+    //               </li>
+    //               {/* <li>
+    //                 <Link to="/website">Website Builder</Link>
+    //               </li> */}
+    //               <li>
+    //                 <Link to="/about">About Us</Link>
+    //               </li>
+    //               <li>
+    //                 <Link to="/#packages">Packages</Link>
+    //               </li>
+    //               <li>
+    //                 <Link to="/contact">Contact Us</Link>
+    //               </li>
+    //             </ul>
+    //           </nav>
+    //           <div className="burger-icon burger-icon-white">
+    //             <span className="burger-icon-top" />
+    //             <span className="burger-icon-mid" />
+    //             <span className="burger-icon-bottom" />
+    //           </div>
+    //         </div>
+    //       </div>
+    //       <div className="header-right">
+    //         {data != null ? (
+    //           <Menu>
+    //             <MenuButton>
+    //               <Avatar name={data.name} />
     //             </MenuButton>
-    //             <MenuList zIndex={999}>
-    //               {categories?.map((category, index) => (
-    //                 <MenuItem
-    //                   to={`/filter/${category?.name}`}
-    //                   as={Link}
-    //                   key={index}
+    //             <MenuList>
+    //               <MenuItem>
+    //                 <div
+    //                   className="block-signin"
+    //                   onClick={() => dispatch(signOut())}
     //                 >
-    //                   {category.name}
-    //                 </MenuItem>
-    //               ))}
+    //                   {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
+    //                   <button className="btn btn-default btn-shadow ml-40 hover-up">
+    //                     Sign Out
+    //                   </button>
+    //                 </div>
+    //               </MenuItem>
     //             </MenuList>
     //           </Menu>
-    //         </InputLeftAddon>
-    //         <Input
-    //           borderRadius={0}
-    //           placeholder="I am looking for..."
-    //           type="text"
-    //           autoComplete="false"
-    //           name="search"
-    //           id="search"
-    //           value={search}
-    //           onChange={(e) => setSearch(e.target.value)}
-    //         />
-    //         <InputRightAddon cursor="pointer" p={0}>
-    //           <Button
-    //             colorScheme="blue"
-    //             variant="solid"
-    //             color="white"
-    //             borderRadius={0}
-    //             onClick={() => {
-    //               dispatch(searchGraphics({ query: search }));
-    //             }}
-    //           >
-    //             Search
-    //           </Button>
-    //         </InputRightAddon>
-    //       </InputGroup>
-    //       <Box position="relative" cursor="pointer">
-    //         <Input
-    //           type="file"
-    //           position="absolute"
-    //           cursor="pointer"
-    //           top={0}
-    //           left={0}
-    //           opacity={0}
-    //           width="100%"
-    //           height="100%"
-    //           accept="image/svg+xml"
-    //           onChange={uploadSvg}
-    //           zIndex={999}
-    //         />
-    //         <Button
-    //           colorScheme="blue"
-    //           variant="solid"
-    //           color="white"
-    //           borderRadius={0}
-    //         >
-    //           Upload SVG logo
-    //         </Button>
-    //       </Box>
-    //     </Flex>
-    //   </Container>
-    // </Box>
+    //         ) : (
+    //           <div className="block-signin">
+    //             {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
+    //             <Link
+    //               to="/login"
+    //               className="btn btn-default btn-shadow ml-40 hover-up"
+    //             >
+    //               Sign in
+    //             </Link>
+    //           </div>
+    //         )}
+    //       </div>
+    //     </div>
+    //   </div>
+    // </header>
   );
 };
 

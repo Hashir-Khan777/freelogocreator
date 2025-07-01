@@ -22,12 +22,13 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { getAllCategories } from "../../store/actions/categories.action";
 
 let page = 1;
-const tags = ["Fashion", "Technology", "Beauty"];
+// const tags = ["Fashion", "Technology", "Beauty"];
 const Logo = () => {
   const [inputValue, setInputValue] = useState("");
   const [category, setCategory] = useState("all");
   const [filteredGraphics, setFilteredGraphics] = useState([]);
   const [selectedTags, setSelectedtags] = useState([]);
+  const [tags, setTags] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -131,16 +132,28 @@ const Logo = () => {
           );
         }
       } else {
+        const uniqueTags = [];
+        graphics?.filter((x) =>
+          x.tags?.split(", ")?.forEach((tag) => {
+            if (tag && !uniqueTags.includes(tag)) {
+              uniqueTags.push(tag);
+            }
+          })
+        );
+        setTags(uniqueTags);
         setFilteredGraphics(graphics);
       }
       if (selectedTags.length > 0) {
-        setFilteredGraphics(
-          graphics?.filter((x) =>
-            selectedTags
-              ?.map((e) => x?.tags?.split(", ")?.includes(e))
-              ?.includes(true)
-          )
+        navigate("/logo");
+        const filtered = graphics?.filter((x) =>
+          selectedTags
+            ?.map((e) => x?.tags?.split(", ")?.includes(e))
+            ?.includes(true)
         );
+        setFilteredGraphics(filtered);
+        console.log("tags selected", selectedTags, filtered);
+      } else {
+        console.log("No tags selected");
       }
     }
   };
@@ -374,9 +387,11 @@ const Logo = () => {
                       <select
                         className="form-control form-icons select-active"
                         value={searchParams.get("cat")}
-                        onChange={(e) =>
-                          setSearchParams({ cat: e.target.value })
-                        }
+                        onChange={(e) => {
+                          navigate("/logo");
+                          setSelectedtags([]);
+                          setSearchParams({ cat: e.target.value });
+                        }}
                       >
                         <option value="all">All</option>
                         {categories?.map((cat) => (
@@ -395,13 +410,21 @@ const Logo = () => {
                             <label className="cb-container">
                               <input
                                 type="checkbox"
-                                defaultChecked={selectedTags.includes(tag)}
-                                onClick={() =>
-                                  setSelectedtags([
-                                    ...selectedTags,
-                                    tag?.toLowerCase(),
-                                  ])
-                                }
+                                checked={selectedTags.includes(tag)}
+                                onClick={() => {
+                                  if (selectedTags.includes(tag)) {
+                                    setSelectedtags(
+                                      selectedTags.filter(
+                                        (t) => t !== tag?.toLowerCase()
+                                      )
+                                    );
+                                  } else {
+                                    setSelectedtags([
+                                      ...selectedTags,
+                                      tag?.toLowerCase(),
+                                    ]);
+                                  }
+                                }}
                               />{" "}
                               <span className="text-small">{tag}</span>
                               <span className="checkmark" />
