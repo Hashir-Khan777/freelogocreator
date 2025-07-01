@@ -410,9 +410,7 @@ const Logo = () => {
                                 onClick={() => {
                                   if (selectedTags.includes(tag)) {
                                     setSelectedtags(
-                                      selectedTags.filter(
-                                        (t) => t !== tag?.toLowerCase()
-                                      )
+                                      selectedTags.filter((t) => t !== tag)
                                     );
                                   } else {
                                     setSelectedtags([...selectedTags, tag]);
