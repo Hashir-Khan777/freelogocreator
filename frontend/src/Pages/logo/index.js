@@ -135,7 +135,7 @@ const Logo = () => {
         const uniqueTags = [];
         graphics?.filter((x) =>
           x.tags?.split(", ")?.forEach((tag) => {
-            if (tag && !uniqueTags.includes(tag)) {
+            if (tag && !uniqueTags.includes(tag) && uniqueTags.length < 10) {
               uniqueTags.push(tag);
             }
           })
