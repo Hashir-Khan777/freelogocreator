@@ -10,7 +10,7 @@ import {
 
 const initialState = {
   loading: false,
-  data: JSON.parse(localStorage.getItem("user")),
+  data: JSON.parse(localStorage.getItem("user")) ?? {},
   user: null,
   forgetpasswordsuccess: false,
   resetpasswordsuccess: false,

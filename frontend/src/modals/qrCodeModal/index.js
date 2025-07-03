@@ -7,10 +7,31 @@ import {
   ModalCloseButton,
   Button,
   Image,
+  Box,
+  Text,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleQRCodeModal } from "../../store/reducers/modals.reducer";
+import {
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+
+const data = [
+  { name: "Jan", scans: 400 },
+  { name: "Feb", scans: 300 },
+  { name: "Mar", scans: 200 },
+  { name: "Apr", scans: 278 },
+  { name: "May", scans: 189 },
+  { name: "Jun", scans: 239 },
+];
 
 const QRCodeModal = () => {
   const { isQRCodeModalOpen, qrCodeModalData } = useSelector(
@@ -42,11 +63,7 @@ const QRCodeModal = () => {
         <ModalHeader>Download QR Code</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Image
-            src={`data:image/png;base64,${
-              qrCodeModalData?.data || qrCodeModalData?.image
-            }`}
-          />
+          <Image src={`data:image/png;base64,${qrCodeModalData?.image}`} />
           <Button
             mt={4}
             float="right"
@@ -54,15 +71,33 @@ const QRCodeModal = () => {
             onClick={() => {
               onClose();
               downloadBase64File(
-                `data:image/png;base64,${
-                  qrCodeModalData?.data || qrCodeModalData?.image
-                }`,
+                `data:image/png;base64,${qrCodeModalData?.image}`,
                 `${qrCodeModalData?.note}.png`
               );
             }}
           >
             Download
           </Button>
+          {/* <Box my={10}>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart
+                data={data}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="scans"
+                  stroke="#8884d8"
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </Box> */}
         </ModalBody>
       </ModalContent>
     </Modal>

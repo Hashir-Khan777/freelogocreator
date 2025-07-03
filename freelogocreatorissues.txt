@@ -1,5 +1,5 @@
 Issues:
-1) logo maker sidebar
+1) logo maker sidebar (done)
 2) check Google Fonts API
 3) change size orientation (done)
 4) smtp server in backend auth, qrcode maker, weekly stats (done)
