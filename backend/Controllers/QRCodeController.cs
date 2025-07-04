@@ -61,6 +61,7 @@ namespace backend.Controllers
             }
 
             data.image = Convert.ToBase64String(qrCodeBytes);
+            data.deleted = false;
 
             db.QRCode.Add(data);
             db.SaveChanges();
