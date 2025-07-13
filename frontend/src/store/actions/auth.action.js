@@ -14,12 +14,6 @@ export const login = createAsyncThunk(
         `${process.env.REACT_APP_BASE_API_URL}/auth/login`,
         obj
       );
-      const expires = new Date(date.setDate(date.getDate() + 30));
-      cookies.set("_user", data.token, {
-        path: "/",
-        secure: true,
-        expires,
-      });
       dispatch(
         showToast({
           type: "success",
@@ -91,13 +85,8 @@ export const emailverification = createAsyncThunk(
           },
         }
       );
-      const expires = new Date(date.setDate(date.getDate() + 30));
-      cookies.set("_user", data.token, {
-        path: "/",
-        secure: true,
-        expires,
-      });
       localStorage.setItem("user", JSON.stringify(data.data));
+      localStorage.removeItem("token");
       dispatch(
         showToast({
           type: "success",
@@ -172,6 +161,7 @@ export const resetPassword = createAsyncThunk(
           message: data.message,
         })
       );
+      cookies.remove("_email");
       return data;
     } catch (err) {
       dispatch(
@@ -219,7 +209,7 @@ export const signOut = createAsyncThunk(
 );
 
 export const updateUser = createAsyncThunk(
-  "auth/signout",
+  "auth/update/user",
   async (obj, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axios.put(

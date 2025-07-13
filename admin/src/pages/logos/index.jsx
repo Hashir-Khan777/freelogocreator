@@ -47,6 +47,7 @@ const Logos = () => {
   const [show, setShow] = useState(false);
   const [deleteShow, setDeleteShow] = useState(false);
   const [deleteData, setDeleteData] = useState(null);
+  const [tags, setTags] = useState([]);
   const [edit, setEdit] = useState(false);
   const [side, setSide] = useState(0);
   const [form, setForm] = useState({
@@ -260,6 +261,17 @@ const Logos = () => {
 
   useEffect(() => {
     setData(graphics);
+    if (graphics?.length > 0) {
+      const uniqueTags = [];
+      graphics?.filter((x) =>
+        x.tags?.split(", ")?.forEach((tag) => {
+          if (tag && !uniqueTags.includes(tag) && uniqueTags.length < 10) {
+            uniqueTags.push({ label: tag, value: tag });
+          }
+        })
+      );
+      setTags(uniqueTags);
+    }
   }, [graphics]);
 
   return (
@@ -474,9 +486,13 @@ const Logos = () => {
                 <Creatable
                   isMulti
                   name="colors"
-                  defaultValue={form?.tags
-                    ?.split(", ")
-                    ?.map((e) => ({ label: e, value: e }))}
+                  defaultValue={
+                    form?.tags &&
+                    form?.tags
+                      ?.split(", ")
+                      ?.map((e) => ({ label: e, value: e }))
+                  }
+                  options={tags}
                   className="basic-multi-select"
                   classNamePrefix="select"
                   onChange={(e) =>

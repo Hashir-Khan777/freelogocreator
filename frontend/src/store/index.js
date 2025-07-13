@@ -6,6 +6,7 @@ import ModalsReducer from "./reducers/modals.reducer";
 import CategoriesReducer from "./reducers/categories.reducer";
 import PackageReducer from "./reducers/package.reducer";
 import QrcodeReducer from "./reducers/qrcode.reducer";
+import SubscriptionReducer from "./reducers/subscription.reducer";
 
 const reducers = combineReducers({
   ToastReducer,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   CategoriesReducer,
   PackageReducer,
   QrcodeReducer,
+  SubscriptionReducer,
 });
 
 export default configureStore({

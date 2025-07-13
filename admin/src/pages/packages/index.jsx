@@ -43,8 +43,9 @@ const Packages = () => {
   const [deleteData, setDeleteData] = useState(null);
   const [form, setForm] = useState({
     name: "",
-    logolimit: "",
-    amount: "",
+    logolimit: 0,
+    qrlimit: 0,
+    amount: 0,
   });
 
   const isEmpty = (value) => {
@@ -74,8 +75,15 @@ const Packages = () => {
       },
     },
     {
-      Header: "Logolimit",
+      Header: "Logo limit",
       accessor: "logolimit",
+      Cell: (row) => {
+        return <span>{row?.cell?.value}</span>;
+      },
+    },
+    {
+      Header: "QR Code Limit",
+      accessor: "qrlimit",
       Cell: (row) => {
         return <span>{row?.cell?.value}</span>;
       },
@@ -84,7 +92,7 @@ const Packages = () => {
       Header: "amount",
       accessor: "amount",
       Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
+        return <span>${row?.cell?.value}</span>;
       },
     },
     {
@@ -346,7 +354,7 @@ const Packages = () => {
             </div>
           </Card>
           <Modal
-            title={`${edit ? "Update" : "Add"} Logo`}
+            title={`${edit ? "Update" : "Add"} Package`}
             centered
             activeModal={show}
             onClose={() => {
@@ -380,6 +388,17 @@ const Packages = () => {
                   id="h_Fullname2"
                   type="text"
                   placeholder="Enter Logo Limit"
+                />
+                <Textinput
+                  label="QR code Limit *"
+                  value={form.qrlimit}
+                  defaultValue={form.qrlimit}
+                  onChange={(e) =>
+                    setForm({ ...form, qrlimit: e.target.value })
+                  }
+                  id="h_Fullname2"
+                  type="text"
+                  placeholder="Enter QR Code Limit"
                 />
                 <Textinput
                   label="Amount *"

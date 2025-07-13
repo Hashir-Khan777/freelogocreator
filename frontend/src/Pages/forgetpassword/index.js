@@ -19,27 +19,26 @@ import { forgetPassword } from "../../store/actions/auth.action";
 const ForgetPassword = () => {
   const [form, setForm] = useState({});
 
-  const { forgetpasswordsuccess } = useSelector((x) => x.AuthReducer);
+  const { forgetpasswordsuccess, data } = useSelector((x) => x.AuthReducer);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cookies = new Cookies();
 
   const submit = () => {
     dispatch(forgetPassword(form));
   };
 
-  // useEffect(() => {
-  //   if (forgetpasswordsuccess) {
-  //     navigate("/resetpassword", { replace: true });
-  //   }
-  // }, [forgetpasswordsuccess]);
+  useEffect(() => {
+    if (forgetpasswordsuccess) {
+      navigate("/resetpassword", { replace: true });
+    }
+  }, [forgetpasswordsuccess]);
 
   useEffect(() => {
-    if (cookies.get("_user")) {
+    if (data?.id) {
       navigate("/", { replace: true });
     }
-  }, []);
+  }, [data]);
 
   return (
     <Flex

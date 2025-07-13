@@ -8,7 +8,9 @@
 
         public string name { get; set; } = string.Empty;
 
-        public string logolimit { get; set; } = string.Empty;
+        public int logolimit { get; set; }
+
+        public int qrlimit { get; set; }
 
         public DateTime created_at { get; set; }
 

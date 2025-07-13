@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 
+Stripe.StripeConfiguration.ApiKey = "sk_test_51Rh1rsCdOrhxgM5YveduIeEN6Axg6mBDou98fkZFL9gAwHmC3geEXdhzYbWAzZNZVQapkRLQNE8F7ltZA6G7pF7o00ZycHQ7Kj";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

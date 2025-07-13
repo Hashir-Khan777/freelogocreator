@@ -21,6 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { searchGraphics } from "../../store/actions/graphics.action";
 import { signOut } from "../../store/actions/auth.action";
 import Cookies from "universal-cookie";
+import { getSubscription } from "../../store/actions/subscription.action";
 
 const Header = () => {
   const [search, setSearch] = useState("");
@@ -46,6 +47,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(getAllCategories());
+    dispatch(getSubscription());
   }, [dispatch]);
 
   useEffect(() => {
@@ -123,7 +125,7 @@ const Header = () => {
               </div>
             </div>
             <div className="d-none d-xl-block">
-              {data != null ? (
+              {data?.id ? (
                 <Menu>
                   <MenuButton>
                     <Avatar name={data.name} />
@@ -165,14 +167,16 @@ const Header = () => {
           style={{ overflow: "hidden" }}
         >
           <div className="mobile-header-top">
-            <div className="user-account">
-              <Avatar name={data?.name} mr="5px" />
-              <div className="content">
-                <h6 className="user-name">
-                  Hi, <span className="text-brand">{data?.name}</span>
-                </h6>
+            {data?.id ? (
+              <div className="user-account">
+                <Avatar name={data?.name} mr="5px" />
+                <div className="content">
+                  <h6 className="user-name">
+                    Hi, <span className="text-brand">{data?.name}</span>
+                  </h6>
+                </div>
               </div>
-            </div>
+            ) : null}
             <div
               className={`burger-icon burger-icon-white ${
                 isOpen && "burger-close"
@@ -216,9 +220,21 @@ const Header = () => {
                       </Link>
                     </li>
                   </ul>
-                  <button className="btn btn-default btn-shadow hover-up">
-                    Sign Out
-                  </button>
+                  {data?.id ? (
+                    <button
+                      className="btn btn-default btn-shadow hover-up"
+                      onClick={() => dispatch(signOut())}
+                    >
+                      Sign Out
+                    </button>
+                  ) : (
+                    <Link
+                      to="/login"
+                      className="btn btn-default btn-shadow ml-40 hover-up"
+                    >
+                      Sign in
+                    </Link>
+                  )}
                 </nav>
               </div>
             </div>

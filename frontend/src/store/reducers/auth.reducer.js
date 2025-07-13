@@ -6,11 +6,12 @@ import {
   register,
   resetPassword,
   signOut,
+  updateUser,
 } from "../actions/auth.action";
 
 const initialState = {
   loading: false,
-  data: JSON.parse(localStorage.getItem("user")) ?? {},
+  data: JSON.parse(localStorage.getItem("user")) ?? null,
   user: null,
   forgetpasswordsuccess: false,
   resetpasswordsuccess: false,
@@ -50,6 +51,18 @@ export default createSlice({
       state.loading = false;
     });
     builder.addCase(emailverification.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(updateUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateUser.fulfilled, (state, { payload }) => {
+      state.data = payload.data;
+      localStorage.setItem("user", JSON.stringify(payload.data));
+      state.loading = false;
+    });
+    builder.addCase(updateUser.rejected, (state) => {
       state.loading = false;
     });
 

@@ -3,19 +3,27 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGraphics } from "../../store/actions/graphics.action";
 import { toggleGeneratePostModal } from "../../store/reducers/modals.reducer";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { getPackages } from "../../store/actions/package.action";
 import { subscribe } from "./../../store/actions/newsletter.action";
+import {
+  subscribePackage,
+  updateSubcription,
+} from "../../store/actions/subscription.action";
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const [email, setEmail] = useState("");
 
   const { packages } = useSelector((state) => state.PackageReducer);
+  const { data } = useSelector((state) => state.AuthReducer);
+  const { subscription } = useSelector((x) => x.SubscriptionReducer);
+
+  const [searchParams] = useSearchParams();
 
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -32,6 +40,17 @@ const Home = () => {
   useEffect(() => {
     dispatch(getPackages());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (searchParams.get("payment") === "success") {
+      dispatch(
+        updateSubcription({
+          package_id: searchParams.get("package"),
+          user_id: data?.id,
+        })
+      );
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (hash) {
@@ -1727,14 +1746,11 @@ const Home = () => {
                 >
                   <div
                     className={`box-pricing-item ${
-                      index === 2 ? "most-popular" : null
+                      index === 2 ? "most-popular" : "normal"
                     }`}
                   >
                     <div className="box-info-price">
                       <span className="text-price for-month display-month">
-                        ${pack.amount}
-                      </span>
-                      <span className="text-price for-year">
                         ${pack.amount}
                       </span>
                       <span className="text-month">/month</span>
@@ -1743,14 +1759,38 @@ const Home = () => {
                       <h4 className="mb-15">{pack.name}</h4>
                     </div>
                     <ul className="list-package-feature">
-                      <li>{pack.logolimit} Logos</li>
+                      <li>
+                        {pack.logolimit === 0 ? "Unlimited" : pack.logolimit}{" "}
+                        Logos
+                      </li>
+                      <li>
+                        {pack.qrlimit === 0 ? "Unlimited" : pack.qrlimit} QR
+                        Codes
+                      </li>
                       <li>Own analytics platform</li>
                       <li>Chat support</li>
-                      <li>Optimize hashtags</li>
-                      <li>Unlimited users</li>
                     </ul>
                     <div>
-                      <button className="btn btn-border">Choose plan</button>
+                      {subscription?.package?.id === pack.id ? (
+                        <button className="btn btn-default">Subscribed</button>
+                      ) : (
+                        <button
+                          className="btn btn-border"
+                          onClick={() => {
+                            if (pack.amount > 0) {
+                              dispatch(
+                                subscribePackage({
+                                  amount: pack?.amount * 100,
+                                  name: `${pack?.name} Package`,
+                                  package: pack?.id,
+                                })
+                              );
+                            }
+                          }}
+                        >
+                          Choose plan
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

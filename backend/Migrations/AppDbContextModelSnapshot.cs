@@ -179,13 +179,15 @@ namespace backend.Migrations
                     b.Property<DateTime>("created_at")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("logolimit")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("logolimit")
+                        .HasColumnType("integer");
 
                     b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("qrlimit")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("updated_at")
                         .HasColumnType("timestamp with time zone");

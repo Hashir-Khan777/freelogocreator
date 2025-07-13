@@ -826,8 +826,8 @@ h6 {
   font-size: 16px;
   transition-duration: 0.2s;
 }
-.btn-border:hover {
-  color: #ffffff;
+.normal .btn-border:hover {
+  color: #ffffff !important;
   background-color: #9777fa;
   transition-duration: 0.2s;
   transform: translateY(-3px);

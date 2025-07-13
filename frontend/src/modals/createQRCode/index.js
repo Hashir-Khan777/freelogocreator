@@ -17,6 +17,8 @@ import {
 } from "../../store/actions/qrcode.action";
 import { toggleCreateQRCodeModal } from "../../store/reducers/modals.reducer";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { updateUser } from "../../store/actions/auth.action";
 
 const CreateQRCode = () => {
   const [inputValue, setInputValue] = useState("");
@@ -28,8 +30,10 @@ const CreateQRCode = () => {
     (store) => store.ModalsReducer
   );
   const { data } = useSelector((x) => x.AuthReducer);
+  const { subscription } = useSelector((x) => x.SubscriptionReducer);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onClose = useCallback(
     () => dispatch(toggleCreateQRCodeModal({ open: false })),
@@ -52,18 +56,28 @@ const CreateQRCode = () => {
         })
       );
     } else {
-      if (inputValue) {
-        dispatch(
-          generateQRCode({
-            text: inputValue,
-            color: color,
-            logo: image,
-            note: note,
-            user_id: data.id,
-          })
-        );
-        setInputValue("");
-        setNote("");
+      if (
+        subscription?.package?.qrlimit > 0 &&
+        data?.createdqrcodes < subscription?.package?.qrlimit
+      ) {
+        if (inputValue) {
+          dispatch(
+            generateQRCode({
+              text: inputValue,
+              color: color,
+              logo: image,
+              note: note,
+              user_id: data.id,
+            })
+          );
+          setInputValue("");
+          setNote("");
+          dispatch(
+            updateUser({ ...data, createdqrcodes: data?.createdqrcodes + 1 })
+          );
+        }
+      } else {
+        navigate("/#packages");
       }
     }
   };

@@ -20,6 +20,7 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { getAllCategories } from "../../store/actions/categories.action";
+import { updateUser } from "../../store/actions/auth.action";
 
 let page = 1;
 const Logo = () => {
@@ -39,71 +40,112 @@ const Logo = () => {
 
   const { graphics } = useSelector((x) => x.GraphicsReducer);
   const { categories } = useSelector((x) => x.CategoriesReducer);
+  const { subscription } = useSelector((x) => x.SubscriptionReducer);
+  const { data } = useSelector((x) => x.AuthReducer);
 
   const savePngImage = () => {
-    if (user?.email) {
-      if (imageRef.current) {
-        toPng(imageRef.current, { quality: 1, pixelRatio: 6 })
-          .then((dataUrl) => {
-            const link = document.createElement("a");
-            link.download = `logo.png`;
-            link.href = dataUrl;
-            link.click();
-          })
-          .catch((error) => {
-            dispatch(
-              showToast({
-                type: "error",
-                message: error,
-              })
-            );
-          });
+    if (
+      subscription?.package?.logolimit > 0 &&
+      data?.downloadedlogos < subscription?.package?.logolimit
+    ) {
+      if (user?.email) {
+        if (imageRef.current) {
+          toPng(imageRef.current, { quality: 1, pixelRatio: 6 })
+            .then((dataUrl) => {
+              dispatch(
+                updateUser({
+                  ...user,
+                  downloadedlogos: user?.downloadedlogos + 1,
+                })
+              );
+              const link = document.createElement("a");
+              link.download = `logo.png`;
+              link.href = dataUrl;
+              link.click();
+            })
+            .catch((error) => {
+              dispatch(
+                showToast({
+                  type: "error",
+                  message: error,
+                })
+              );
+            });
+        }
+      } else {
+        navigate("/login");
       }
     } else {
-      navigate("/login");
+      navigate("/#packages");
     }
   };
 
   const saveJpegImage = () => {
-    if (user?.email) {
-      if (imageRef.current) {
-        toJpeg(imageRef.current, { quality: 1, pixelRatio: 6 })
-          .then((dataUrl) => {
-            const link = document.createElement("a");
-            link.download = `logo.jpeg`;
-            link.href = dataUrl;
-            link.click();
-          })
-          .catch((error) => {
-            dispatch(
-              showToast({
-                type: "error",
-                message: error,
-              })
-            );
-          });
+    if (
+      subscription?.package?.logolimit > 0 &&
+      data?.downloadedlogos < subscription?.package?.logolimit
+    ) {
+      if (user?.email) {
+        if (imageRef.current) {
+          toJpeg(imageRef.current, { quality: 1, pixelRatio: 6 })
+            .then((dataUrl) => {
+              dispatch(
+                updateUser({
+                  ...user,
+                  downloadedlogos: user?.downloadedlogos + 1,
+                })
+              );
+              const link = document.createElement("a");
+              link.download = `logo.jpeg`;
+              link.href = dataUrl;
+              link.click();
+            })
+            .catch((error) => {
+              dispatch(
+                showToast({
+                  type: "error",
+                  message: error,
+                })
+              );
+            });
+        }
+      } else {
+        navigate("/login");
       }
     } else {
-      navigate("/login");
+      navigate("/#packages");
     }
   };
 
   const savePdfImage = async () => {
-    if (user?.email) {
-      if (imageRef.current) {
-        const element = imageRef.current;
-        const canvas = await html2canvas(element);
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
+    if (
+      subscription?.package?.logolimit > 0 &&
+      data?.downloadedlogos < subscription?.package?.logolimit
+    ) {
+      if (user?.email) {
+        if (imageRef.current) {
+          const element = imageRef.current;
+          const canvas = await html2canvas(element);
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jsPDF("p", "mm", "a4");
 
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save("logo.pdf");
+          pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+          pdf.save("logo.pdf");
+          dispatch(
+            updateUser({
+              ...user,
+              downloadedlogos: user?.downloadedlogos + 1,
+            })
+          );
+        }
+      } else {
+        navigate("/login");
       }
     } else {
-      navigate("/login");
+      navigate("/#packages");
     }
   };
 

@@ -13,3 +13,19 @@ Issues:
 12) OTP verification (done)
 13) message on shrinking (done)
 14) create different table of scans (done)
+
+
+
+
+
+
+new issues:
+1) if logo is not in localstorage redirect to home page
+2) logos section in home page in responsiveness
+3) add message on topbar
+4) uncommit banner on qr code page
+5) integrate stripe
+
+stripe info
+email: ammad@zinitechnologies.com
+password: bWdGSy6!6BK4AZe

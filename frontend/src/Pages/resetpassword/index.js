@@ -23,7 +23,7 @@ const ResetPassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [form, setForm] = useState({});
 
-  const { resetpasswordsuccess } = useSelector((x) => x.AuthReducer);
+  const { resetpasswordsuccess, data } = useSelector((x) => x.AuthReducer);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,10 +53,10 @@ const ResetPassword = () => {
   }, [resetpasswordsuccess]);
 
   useEffect(() => {
-    if (cookies.get("_user")) {
+    if (data?.id) {
       navigate("/", { replace: true });
     }
-  }, []);
+  }, [data]);
 
   return (
     <Flex

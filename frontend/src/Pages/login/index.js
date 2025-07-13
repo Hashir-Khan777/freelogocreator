@@ -26,7 +26,6 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cookies = new Cookies();
 
   const userlogin = () => {
     dispatch(login(form));
@@ -35,16 +34,10 @@ const Login = () => {
   const handleShowClick = () => setShowPassword(!showPassword);
 
   useEffect(() => {
-    if (data != null) {
+    if (data?.id != null) {
       navigate("/", { replace: true });
     }
   }, [data]);
-
-  useEffect(() => {
-    if (cookies.get("_user")) {
-      navigate("/", { replace: true });
-    }
-  }, []);
 
   return (
     <main className="container-sm main mt-50">

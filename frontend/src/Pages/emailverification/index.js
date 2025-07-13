@@ -28,7 +28,7 @@ const EmailVerification = () => {
     if (data?.id) {
       navigate("/", { replace: true });
     }
-  }, []);
+  }, [data]);
 
   return (
     <main className="container-sm main mt-50">

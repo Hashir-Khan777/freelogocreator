@@ -106,6 +106,8 @@ const SVGCanvasEditor = () => {
     replaceModalData,
     shieldModalData,
   } = useSelector((store) => store.ModalsReducer);
+  const { subscription } = useSelector((x) => x.SubscriptionReducer);
+  const { data } = useSelector((x) => x.AuthReducer);
 
   const drawGrid = (canvas) => {
     const width = canvas.width;
@@ -270,27 +272,33 @@ const SVGCanvasEditor = () => {
   };
 
   const saveImage = (type) => {
-    dispatch(
-      updateUser({ ...user, downloadedlogos: user?.downloadedlogos + 1 })
-    );
-    // dispatch(setStats({ userid: user?.id, graphicid: "downloadedlogo" }));
-    if (canvas) {
-      gridLinesRef.current.forEach((line) => (line.visible = false));
-      canvas.discardActiveObject();
-      canvas.renderAll();
-      canvas.setZoom(1);
-      const dataURL = canvas.toDataURL({
-        format: type,
-        quality: 1,
-      });
-      canvas.setZoom(zoom);
+    if (
+      subscription?.package?.logolimit > 0 &&
+      data?.downloadedlogos < subscription?.package?.logolimit
+    ) {
+      if (canvas) {
+        gridLinesRef.current.forEach((line) => (line.visible = false));
+        canvas.discardActiveObject();
+        canvas.renderAll();
+        canvas.setZoom(1);
+        const dataURL = canvas.toDataURL({
+          format: type,
+          quality: 1,
+        });
+        canvas.setZoom(zoom);
 
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = `logo.${type}`;
-      link.click();
+        dispatch(
+          updateUser({ ...user, downloadedlogos: user?.downloadedlogos + 1 })
+        );
+        const link = document.createElement("a");
+        link.href = dataURL;
+        link.download = `logo.${type}`;
+        link.click();
+      }
+      drawGrid(canvas);
+    } else {
+      navigate("/#packages");
     }
-    drawGrid(canvas);
   };
 
   const setCanvasZoom = (canvaszoom) => {
