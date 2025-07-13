@@ -47,8 +47,13 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(getAllCategories());
-    dispatch(getSubscription());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (data?.id) {
+      dispatch(getSubscription());
+    }
+  }, [dispatch, data]);
 
   useEffect(() => {
     const handleResize = () => {
