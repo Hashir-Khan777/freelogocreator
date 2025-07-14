@@ -1791,6 +1791,7 @@ const Home = () => {
                             if (pack.amount > 0) {
                               dispatch(
                                 subscribePackage({
+                                  user_id: data?.id,
                                   amount: pack?.amount * 100,
                                   name: `${pack?.name} Package`,
                                   package: pack?.id,
