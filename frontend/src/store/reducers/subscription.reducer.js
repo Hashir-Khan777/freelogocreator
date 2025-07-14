@@ -1,9 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getSubscription } from "../actions/subscription.action";
+import {
+  getSubscription,
+  updateSubcription,
+} from "../actions/subscription.action";
 
 const initialState = {
   loading: false,
   subscription: null,
+  subscribed: false,
 };
 
 export default createSlice({
@@ -19,6 +23,9 @@ export default createSlice({
     });
     builder.addCase(getSubscription.rejected, (state) => {
       state.loading = false;
+    });
+    builder.addCase(updateSubcription.fulfilled, (state) => {
+      state.subscribed = true;
     });
   },
 }).reducer;

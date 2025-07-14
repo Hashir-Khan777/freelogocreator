@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import { getPackages } from "../../store/actions/package.action";
 import { subscribe } from "./../../store/actions/newsletter.action";
 import {
+  getSubscription,
   subscribePackage,
   updateSubcription,
 } from "../../store/actions/subscription.action";
@@ -21,7 +22,9 @@ const Home = () => {
 
   const { packages } = useSelector((state) => state.PackageReducer);
   const { data } = useSelector((state) => state.AuthReducer);
-  const { subscription } = useSelector((x) => x.SubscriptionReducer);
+  const { subscription, subscribed } = useSelector(
+    (x) => x.SubscriptionReducer
+  );
 
   const [searchParams] = useSearchParams();
 
@@ -51,6 +54,13 @@ const Home = () => {
       );
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    if (subscribed) {
+      dispatch(getSubscription());
+      setSearchParams({});
+    }
+  }, [subscribed]);
 
   useEffect(() => {
     if (hash) {
