@@ -1798,7 +1798,14 @@ const Home = () => {
                                 })
                               );
                             } else {
-                              dispatch(subscribeFreePackage());
+                              dispatch(
+                                subscribeFreePackage({
+                                  user_id: data?.id,
+                                  amount: pack?.amount * 100,
+                                  name: `${pack?.name} Package`,
+                                  package: pack?.id,
+                                })
+                              );
                             }
                           }}
                         >
