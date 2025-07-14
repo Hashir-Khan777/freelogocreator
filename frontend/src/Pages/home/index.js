@@ -26,7 +26,7 @@ const Home = () => {
     (x) => x.SubscriptionReducer
   );
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const prevRef = useRef(null);
   const nextRef = useRef(null);
