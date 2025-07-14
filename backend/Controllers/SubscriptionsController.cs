@@ -107,6 +107,7 @@ namespace backend.Controllers
 
         public class SubscriptionRequest
         {
+            public int user_id { get; set; }
             public string name { get; set; } = string.Empty;
             public long amount { get; set; }
             public int package { get; set; }
@@ -115,6 +116,24 @@ namespace backend.Controllers
         [HttpPost("subscribe")]
         public IActionResult CreateCheckoutSession(SubscriptionRequest obj)
         {
+            User? user = db.Users.FirstOrDefault(x => x.Id == obj.user_id);
+
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            if (user.sessionId != null)
+            {
+                var sessionService = new SessionService();
+                var usersession = sessionService.Get(user.sessionId);
+
+                var subscriptionId = usersession.SubscriptionId;
+
+                var subscriptionService = new SubscriptionService();
+                subscriptionService.Cancel(subscriptionId, null);
+            }
+
             var priceOptions = new PriceCreateOptions
             {
                 UnitAmount = obj.amount,
@@ -152,7 +171,37 @@ namespace backend.Controllers
             var service = new SessionService();
             Session session = service.Create(options);
 
+            user.sessionId = session.Id;
+            db.SaveChanges();
+
             return Ok(new { url = session.Url });
+        }
+
+        [HttpPost("subscribe/free")]
+        public IActionResult SubscribeFree(SubscriptionRequest obj)
+        {
+            User? user = db.Users.FirstOrDefault(x => x.Id == obj.user_id);
+
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            if (user.sessionId != null)
+            {
+                var sessionService = new SessionService();
+                var usersession = sessionService.Get(user.sessionId);
+
+                var subscriptionId = usersession.SubscriptionId;
+
+                var subscriptionService = new SubscriptionService();
+                subscriptionService.Cancel(subscriptionId, null);
+
+                user.sessionId = null;
+                db.SaveChanges();
+            }
+
+            return Ok(new { url = $"http://ec2-3-88-133-167.compute-1.amazonaws.com?payment=success&package={1}" });
         }
     }
 }

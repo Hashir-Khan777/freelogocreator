@@ -54,6 +54,32 @@ export const subscribePackage = createAsyncThunk(
   }
 );
 
+export const subscribeFreePackage = createAsyncThunk(
+  "subscription/subscribe/free",
+  async (obj, { rejectWithValue, dispatch }) => {
+    try {
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BASE_API_URL}/subscriptions/subscribe/free`,
+        obj
+      );
+      window.location.href = data.url;
+      return data;
+    } catch (err) {
+      dispatch(
+        showToast({
+          type: "error",
+          message: err.response.data.message
+            ? err.response.data.message
+            : err.message,
+        })
+      );
+      return rejectWithValue(
+        err.response.data.message ? err.response.data.message : err.message
+      );
+    }
+  }
+);
+
 export const updateSubcription = createAsyncThunk(
   "subscription/update",
   async (obj, { rejectWithValue, dispatch }) => {

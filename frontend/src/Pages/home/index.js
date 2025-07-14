@@ -12,6 +12,7 @@ import { getPackages } from "../../store/actions/package.action";
 import { subscribe } from "./../../store/actions/newsletter.action";
 import {
   getSubscription,
+  subscribeFreePackage,
   subscribePackage,
   updateSubcription,
 } from "../../store/actions/subscription.action";
@@ -1795,6 +1796,8 @@ const Home = () => {
                                   package: pack?.id,
                                 })
                               );
+                            } else {
+                              dispatch(subscribeFreePackage());
                             }
                           }}
                         >
