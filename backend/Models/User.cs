@@ -1,4 +1,6 @@
-﻿namespace backend.Models
+﻿using System.Text.Json.Serialization;
+
+namespace backend.Models
 {
     public class User
     {
@@ -28,6 +30,7 @@
 
         public DateTime updated_at { get; set; }
 
+        [JsonIgnore]
         public List<QRCode>? qrCodes { get; set; }
 
         public List<Scans>? scans { get; set; }
