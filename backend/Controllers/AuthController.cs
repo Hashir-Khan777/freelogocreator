@@ -231,6 +231,9 @@ namespace backend.Controllers
                     string hashedPassword = passwordHasher.HashPassword(null, user.password);
 
                     prevuser.password = hashedPassword;
+                } else
+                {
+                    prevuser.password = prevuser.password;
                 }
                 db.Users.Update(prevuser);
                 db.SaveChanges();

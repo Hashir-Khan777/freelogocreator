@@ -28,11 +28,11 @@ const ForgetPassword = () => {
     dispatch(forgetPassword(form));
   };
 
-  useEffect(() => {
-    if (forgetpasswordsuccess) {
-      navigate("/resetpassword", { replace: true });
-    }
-  }, [forgetpasswordsuccess]);
+  // useEffect(() => {
+  //   if (forgetpasswordsuccess) {
+  //     navigate("/resetpassword", { replace: true });
+  //   }
+  // }, [forgetpasswordsuccess]);
 
   useEffect(() => {
     if (data?.id) {
