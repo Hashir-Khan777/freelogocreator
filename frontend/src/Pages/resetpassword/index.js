@@ -27,7 +27,6 @@ const ResetPassword = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cookies = new Cookies();
 
   const handleShowClick = () => setShowPassword(!showPassword);
   const handleConfirmShowClick = () =>
@@ -35,7 +34,9 @@ const ResetPassword = () => {
 
   const submit = () => {
     if (form.password === form.confirmpassword) {
-      dispatch(resetPassword({ ...form, email: cookies.get("_email") }));
+      dispatch(
+        resetPassword({ ...form, email: localStorage.getItem("email") })
+      );
     } else {
       dispatch(
         showToast({

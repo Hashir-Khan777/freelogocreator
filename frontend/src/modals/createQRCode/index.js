@@ -69,7 +69,11 @@ const CreateQRCode = () => {
         setInputValue("");
         setNote("");
         dispatch(
-          updateUser({ ...data, createdqrcodes: data?.createdqrcodes + 1 })
+          updateUser({
+            ...data,
+            password: null,
+            createdqrcodes: data?.createdqrcodes + 1,
+          })
         );
       } else {
         if (
@@ -89,7 +93,11 @@ const CreateQRCode = () => {
             setInputValue("");
             setNote("");
             dispatch(
-              updateUser({ ...data, createdqrcodes: data?.createdqrcodes + 1 })
+              updateUser({
+                ...data,
+                password: null,
+                createdqrcodes: data?.createdqrcodes + 1,
+              })
             );
           }
         } else {

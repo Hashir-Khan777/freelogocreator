@@ -52,6 +52,7 @@ const Logo = () => {
               dispatch(
                 updateUser({
                   ...user,
+                  password: null,
                   downloadedlogos: user?.downloadedlogos + 1,
                 })
               );
@@ -84,6 +85,7 @@ const Logo = () => {
                 dispatch(
                   updateUser({
                     ...user,
+                    password: null,
                     downloadedlogos: user?.downloadedlogos + 1,
                   })
                 );
@@ -119,6 +121,7 @@ const Logo = () => {
               dispatch(
                 updateUser({
                   ...user,
+                  password: null,
                   downloadedlogos: user?.downloadedlogos + 1,
                 })
               );
@@ -151,6 +154,7 @@ const Logo = () => {
                 dispatch(
                   updateUser({
                     ...user,
+                    password: null,
                     downloadedlogos: user?.downloadedlogos + 1,
                   })
                 );
@@ -197,6 +201,7 @@ const Logo = () => {
           dispatch(
             updateUser({
               ...user,
+              password: null,
               downloadedlogos: user?.downloadedlogos + 1,
             })
           );

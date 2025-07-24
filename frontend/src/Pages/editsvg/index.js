@@ -291,7 +291,11 @@ const SVGCanvasEditor = () => {
         canvas.setZoom(zoom);
 
         dispatch(
-          updateUser({ ...user, downloadedlogos: user?.downloadedlogos + 1 })
+          updateUser({
+            ...user,
+            password: null,
+            downloadedlogos: user?.downloadedlogos + 1,
+          })
         );
         const link = document.createElement("a");
         link.href = dataURL;
@@ -316,7 +320,11 @@ const SVGCanvasEditor = () => {
           canvas.setZoom(zoom);
 
           dispatch(
-            updateUser({ ...user, downloadedlogos: user?.downloadedlogos + 1 })
+            updateUser({
+              ...user,
+              password: null,
+              downloadedlogos: user?.downloadedlogos + 1,
+            })
           );
           const link = document.createElement("a");
           link.href = dataURL;

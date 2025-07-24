@@ -118,12 +118,7 @@ export const forgetPassword = createAsyncThunk(
         `${process.env.REACT_APP_BASE_API_URL}/auth/forgetpassword`,
         obj
       );
-      const expires = new Date(date.setHours(date.getHours() + 1));
-      cookies.set("_email", data.data, {
-        path: "/",
-        secure: true,
-        expires,
-      });
+      localStorage.setItem("email", data.data);
       dispatch(
         showToast({
           type: "success",
@@ -161,7 +156,7 @@ export const resetPassword = createAsyncThunk(
           message: data.message,
         })
       );
-      cookies.remove("_email");
+      localStorage.removeItem("email");
       return data;
     } catch (err) {
       dispatch(

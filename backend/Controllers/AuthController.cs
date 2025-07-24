@@ -213,8 +213,37 @@ namespace backend.Controllers
             }
         }
 
+        public class AuthUser
+        {
+            public int Id { get; set; }
+
+            public string name { get; set; } = string.Empty;
+
+            public string email { get; set; } = string.Empty;
+
+            public string? password { get; set; } = string.Empty;
+
+            public string image { get; set; } = string.Empty;
+
+            public string role { get; set; } = string.Empty;
+
+            public string ipaddress { get; set; } = string.Empty;
+
+            public bool verified { get; set; } = false;
+
+            public int createdqrcodes { get; set; } = 0;
+
+            public int downloadedlogos { get; set; } = 0;
+
+            public string? sessionId { get; set; } = null;
+
+            public DateTime created_at { get; set; }
+
+            public DateTime updated_at { get; set; }
+        }
+
         [HttpPut("users")]
-        public IActionResult UpdateUser([FromBody] User user)
+        public IActionResult UpdateUser([FromBody] AuthUser user)
         {
             try
             {
