@@ -56,28 +56,45 @@ const CreateQRCode = () => {
         })
       );
     } else {
-      if (
-        subscription?.package?.qrlimit > 0 &&
-        data?.createdqrcodes < subscription?.package?.qrlimit
-      ) {
-        if (inputValue) {
-          dispatch(
-            generateQRCode({
-              text: inputValue,
-              color: color,
-              logo: image,
-              note: note,
-              user_id: data.id,
-            })
-          );
-          setInputValue("");
-          setNote("");
-          dispatch(
-            updateUser({ ...data, createdqrcodes: data?.createdqrcodes + 1 })
-          );
-        }
+      if (subscription?.package?.qrlimit === 0) {
+        dispatch(
+          generateQRCode({
+            text: inputValue,
+            color: color,
+            logo: image,
+            note: note,
+            user_id: data.id,
+          })
+        );
+        setInputValue("");
+        setNote("");
+        dispatch(
+          updateUser({ ...data, createdqrcodes: data?.createdqrcodes + 1 })
+        );
       } else {
-        navigate("/#packages");
+        if (
+          subscription?.package?.qrlimit > 0 &&
+          data?.createdqrcodes < subscription?.package?.qrlimit
+        ) {
+          if (inputValue) {
+            dispatch(
+              generateQRCode({
+                text: inputValue,
+                color: color,
+                logo: image,
+                note: note,
+                user_id: data.id,
+              })
+            );
+            setInputValue("");
+            setNote("");
+            dispatch(
+              updateUser({ ...data, createdqrcodes: data?.createdqrcodes + 1 })
+            );
+          }
+        } else {
+          navigate("/#packages");
+        }
       }
     }
   };

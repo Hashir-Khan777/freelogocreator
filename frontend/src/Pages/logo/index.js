@@ -44,10 +44,7 @@ const Logo = () => {
   const { data } = useSelector((x) => x.AuthReducer);
 
   const savePngImage = () => {
-    if (
-      subscription?.package?.logolimit > 0 &&
-      data?.downloadedlogos < subscription?.package?.logolimit
-    ) {
+    if (subscription?.package?.logolimit === 0) {
       if (user?.email) {
         if (imageRef.current) {
           toPng(imageRef.current, { quality: 1, pixelRatio: 6 })
@@ -76,15 +73,45 @@ const Logo = () => {
         navigate("/login");
       }
     } else {
-      navigate("/#packages");
+      if (
+        subscription?.package?.logolimit > 0 &&
+        data?.downloadedlogos < subscription?.package?.logolimit
+      ) {
+        if (user?.email) {
+          if (imageRef.current) {
+            toPng(imageRef.current, { quality: 1, pixelRatio: 6 })
+              .then((dataUrl) => {
+                dispatch(
+                  updateUser({
+                    ...user,
+                    downloadedlogos: user?.downloadedlogos + 1,
+                  })
+                );
+                const link = document.createElement("a");
+                link.download = `logo.png`;
+                link.href = dataUrl;
+                link.click();
+              })
+              .catch((error) => {
+                dispatch(
+                  showToast({
+                    type: "error",
+                    message: error,
+                  })
+                );
+              });
+          }
+        } else {
+          navigate("/login");
+        }
+      } else {
+        navigate("/#packages");
+      }
     }
   };
 
   const saveJpegImage = () => {
-    if (
-      subscription?.package?.logolimit > 0 &&
-      data?.downloadedlogos < subscription?.package?.logolimit
-    ) {
+    if (subscription?.package?.logolimit === 0) {
       if (user?.email) {
         if (imageRef.current) {
           toJpeg(imageRef.current, { quality: 1, pixelRatio: 6 })
@@ -113,7 +140,40 @@ const Logo = () => {
         navigate("/login");
       }
     } else {
-      navigate("/#packages");
+      if (
+        subscription?.package?.logolimit > 0 &&
+        data?.downloadedlogos < subscription?.package?.logolimit
+      ) {
+        if (user?.email) {
+          if (imageRef.current) {
+            toJpeg(imageRef.current, { quality: 1, pixelRatio: 6 })
+              .then((dataUrl) => {
+                dispatch(
+                  updateUser({
+                    ...user,
+                    downloadedlogos: user?.downloadedlogos + 1,
+                  })
+                );
+                const link = document.createElement("a");
+                link.download = `logo.jpeg`;
+                link.href = dataUrl;
+                link.click();
+              })
+              .catch((error) => {
+                dispatch(
+                  showToast({
+                    type: "error",
+                    message: error,
+                  })
+                );
+              });
+          }
+        } else {
+          navigate("/login");
+        }
+      } else {
+        navigate("/#packages");
+      }
     }
   };
 

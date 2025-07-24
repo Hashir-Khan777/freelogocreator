@@ -44,7 +44,7 @@ const AddQRCode = () => {
         <ModalBody>
           <div className="row">
             {qrcodes
-              ?.filter((x) => !x.deleted)
+              ?.filter((x) => !x?.deleted)
               ?.map((code) => (
                 <Box
                   as="div"

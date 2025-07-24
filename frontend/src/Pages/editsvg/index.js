@@ -278,10 +278,7 @@ const SVGCanvasEditor = () => {
   };
 
   const saveImage = (type) => {
-    if (
-      subscription?.package?.logolimit > 0 &&
-      data?.downloadedlogos < subscription?.package?.logolimit
-    ) {
+    if (subscription?.package?.logolimit === 0) {
       if (canvas) {
         gridLinesRef.current.forEach((line) => (line.visible = false));
         canvas.discardActiveObject();
@@ -303,7 +300,33 @@ const SVGCanvasEditor = () => {
       }
       drawGrid(canvas);
     } else {
-      navigate("/#packages");
+      if (
+        subscription?.package?.logolimit > 0 &&
+        data?.downloadedlogos < subscription?.package?.logolimit
+      ) {
+        if (canvas) {
+          gridLinesRef.current.forEach((line) => (line.visible = false));
+          canvas.discardActiveObject();
+          canvas.renderAll();
+          canvas.setZoom(1);
+          const dataURL = canvas.toDataURL({
+            format: type,
+            quality: 1,
+          });
+          canvas.setZoom(zoom);
+
+          dispatch(
+            updateUser({ ...user, downloadedlogos: user?.downloadedlogos + 1 })
+          );
+          const link = document.createElement("a");
+          link.href = dataURL;
+          link.download = `logo.${type}`;
+          link.click();
+        }
+        drawGrid(canvas);
+      } else {
+        navigate("/#packages");
+      }
     }
   };
 
