@@ -836,6 +836,10 @@ h6 {
   transform: translateY(-3px);
 }
 
+.swiper-slide {
+  width: max-content !important;
+}
+
 .btn-dots {
   border: 0px;
   background-image: url(../imgs/theme/icons/dots.svg);
@@ -2222,7 +2226,7 @@ label {
 }
 
 .content-job-inner {
-  padding: 40px;
+  padding: 40px 0;
 }
 
 .box-image-job {

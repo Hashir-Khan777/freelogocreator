@@ -93,7 +93,7 @@ const QRCode = () => {
                     <div className="job-list-list mb-15">
                       <div className="list-recent-jobs">
                         {qrcodes
-                          ?.filter((x) => !x.deleted)
+                          ?.filter((x) => !x?.deleted)
                           ?.map((code) => (
                             <div className="card-job hover-up wow animate__animated animate__fadeIn">
                               <div className="card-job-top">

@@ -319,7 +319,7 @@ const Logo = () => {
                             />
                           </Box>
                           <div className="row position-absolute top-50 translate-middle-y z-3 end-0">
-                            <a className="p-0 pr-10" href="#">
+                            <a className="p-0 pr-10 mb-2" href="#">
                               <span className="text-end">
                                 <img
                                   alt="logomaker"

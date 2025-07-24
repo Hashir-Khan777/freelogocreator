@@ -78,6 +78,12 @@ const SVGCanvasEditor = () => {
   const [fontFamily, setFontFamily] = useState("Arial");
   const [colors, setColors] = useState([]);
   const [bgColor, setBgColor] = useState("#ffffff");
+  const [svgString, setSvgString] = useState(localStorage.getItem("svg"));
+  const [windowWidth, setWindowWidth] = useState(null);
+  const prevWidthRef = useRef(window.innerWidth);
+  const [backSvgString, setBackSvgString] = useState(
+    localStorage.getItem("backsvg")
+  );
   const [opacity, setOpacity] = useState(1);
   const [textAlignment, setTextAlignment] = useState("center");
   const [isBackDesigned, setIsBackDesigned] = useState(false);
@@ -91,8 +97,8 @@ const SVGCanvasEditor = () => {
 
   const canvasRef = useRef(null);
   const navigate = useNavigate();
-  const svgString = localStorage.getItem("svg");
-  const backSvgString = localStorage.getItem("backsvg");
+  // const svgString = localStorage.getItem("svg");
+  // const backSvgString = localStorage.getItem("backsvg");
   const user = JSON.parse(localStorage.getItem("user"));
   const gridLinesRef = useRef([]);
   const dispatch = useDispatch();
@@ -779,8 +785,12 @@ const SVGCanvasEditor = () => {
   };
 
   useEffect(() => {
-    canvasInitialization(svgString);
-  }, []);
+    if (svgString) {
+      canvasInitialization(svgString);
+    } else {
+      navigate("/");
+    }
+  }, [svgString]);
 
   useEffect(() => {
     if (shapesModalData) {
@@ -882,9 +892,39 @@ const SVGCanvasEditor = () => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const currentWidth = window.innerWidth;
+      const prevWidth = prevWidthRef.current;
+
+      if (currentWidth < prevWidth) {
+        setWindowWidth("shrink");
+      } else if (currentWidth > prevWidth) {
+        setWindowWidth("expand");
+      }
+
+      prevWidthRef.current = currentWidth;
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <main class="main">
       <div class="mb-70 mb-lg-50 mb-md-40 mb-sm-30"></div>
+      {windowWidth === "shrink" && (
+        <div
+          className="mb-20 text-center"
+          style={{
+            fontSize: "20px",
+            color: "#FFA500",
+            fontWeight: "semibold",
+          }}
+        >
+          <p>Warning! this canvas is designed only for PC and Laptops</p>
+        </div>
+      )}
       <div class="post-loop-grid">
         <div class="container-fluid">
           <div class="row">

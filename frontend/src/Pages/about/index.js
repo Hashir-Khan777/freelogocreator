@@ -1375,7 +1375,7 @@ const About = () => {
           </div>
         </div>
       </section>
-      <section className="section-box mt-50">
+      {/* <section className="section-box mt-50">
         <div className="container">
           <div className="row align-items-end">
             <div className="col-lg-7 col-md-7">
@@ -1657,7 +1657,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="section-box mt-50 mb-60">
         <div className="container">
           <div className="box-newsletter">

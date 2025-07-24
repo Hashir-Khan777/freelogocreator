@@ -193,8 +193,8 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "39px 0px 36px 0px",
-                    height: "109px",
+                    padding: "40px",
+                    height: "110px",
                     display: "inline-block",
                     width: "100%",
                     textAlign: "center",
@@ -214,8 +214,8 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "39px 0px 36px 0px",
-                    height: "109px",
+                    padding: "40px",
+                    height: "110px",
                     display: "inline-block",
                     width: "100%",
                     textAlign: "center",
@@ -235,8 +235,8 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "39px 0px 36px 0px",
-                    height: "109px",
+                    padding: "40px",
+                    height: "110px",
                     display: "inline-block",
                     width: "100%",
                     textAlign: "center",
@@ -256,8 +256,8 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "39px 0px 36px 0px",
-                    height: "109px",
+                    padding: "40px",
+                    height: "110px",
                     display: "inline-block",
                     width: "100%",
                     textAlign: "center",
@@ -277,8 +277,8 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "39px 0px 36px 0px",
-                    height: "109px",
+                    padding: "40px",
+                    height: "110px",
                     display: "inline-block",
                     width: "100%",
                     textAlign: "center",
@@ -298,8 +298,8 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "39px 0px 36px 0px",
-                    height: "109px",
+                    padding: "40px",
+                    height: "110px",
                     display: "inline-block",
                     width: "100%",
                     textAlign: "center",

@@ -25,8 +25,6 @@ import { getSubscription } from "../../store/actions/subscription.action";
 
 const Header = () => {
   const [search, setSearch] = useState("");
-  const [windowWidth, setWindowWidth] = useState(null);
-  const prevWidthRef = useRef(window.innerWidth);
 
   const dispatch = useDispatch();
   const { isOpen, onToggle } = useDisclosure();
@@ -54,24 +52,6 @@ const Header = () => {
       dispatch(getSubscription());
     }
   }, [dispatch, data]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const currentWidth = window.innerWidth;
-      const prevWidth = prevWidthRef.current;
-
-      if (currentWidth < prevWidth) {
-        setWindowWidth("shrink");
-      } else if (currentWidth > prevWidth) {
-        setWindowWidth("expand");
-      }
-
-      prevWidthRef.current = currentWidth;
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <div>
