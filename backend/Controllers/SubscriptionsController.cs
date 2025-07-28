@@ -120,7 +120,7 @@ namespace backend.Controllers
 
             if (user == null)
             {
-                return NotFound(new { message = "User not found" });
+                return NotFound(new { message = "Login your account" });
             }
 
             if (user.sessionId != null)
@@ -128,10 +128,14 @@ namespace backend.Controllers
                 var sessionService = new SessionService();
                 var usersession = sessionService.Get(user.sessionId);
 
+
                 var subscriptionId = usersession.SubscriptionId;
 
-                var subscriptionService = new SubscriptionService();
-                subscriptionService.Cancel(subscriptionId, null);
+                if (subscriptionId != null)
+                {
+                    var subscriptionService = new SubscriptionService();
+                    subscriptionService.Cancel(subscriptionId, null);
+                }
             }
 
             var priceOptions = new PriceCreateOptions
@@ -184,7 +188,7 @@ namespace backend.Controllers
 
             if (user == null)
             {
-                return NotFound(new { message = "User not found" });
+                return NotFound(new { message = "Login your account" });
             }
 
             if (user.sessionId != null)
@@ -194,8 +198,11 @@ namespace backend.Controllers
 
                 var subscriptionId = usersession.SubscriptionId;
 
-                var subscriptionService = new SubscriptionService();
-                subscriptionService.Cancel(subscriptionId, null);
+                if (subscriptionId != null)
+                {
+                    var subscriptionService = new SubscriptionService();
+                    subscriptionService.Cancel(subscriptionId, null);
+                }
 
                 user.sessionId = null;
                 db.SaveChanges();

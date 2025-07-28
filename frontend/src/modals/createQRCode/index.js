@@ -101,6 +101,7 @@ const CreateQRCode = () => {
             );
           }
         } else {
+          onClose();
           navigate("/#packages");
         }
       }

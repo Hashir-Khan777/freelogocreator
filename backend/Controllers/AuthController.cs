@@ -82,7 +82,7 @@ namespace backend.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] User user)
         {
-            User? existing_user = db.Users.Where(x => x.email == user.email).FirstOrDefault();
+            User? existing_user = db.Users.Where(x => x.email == user.email && x.verified).FirstOrDefault();
             
             if (existing_user != null)
             {

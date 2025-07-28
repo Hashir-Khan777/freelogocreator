@@ -86,7 +86,7 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link className="active" to="#packages">
+                      <Link className="active" to="/#packages">
                         Packages
                       </Link>
                     </li>
@@ -195,7 +195,7 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link className="active" to="#packages">
+                      <Link className="active" to="/#packages">
                         Packages
                       </Link>
                     </li>
