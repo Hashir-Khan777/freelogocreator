@@ -829,15 +829,11 @@ h6 {
   font-size: 16px;
   transition-duration: 0.2s;
 }
-.normal .btn-border:hover {
-  color: #ffffff !important;
+.btn-border:hover {
+  color: #ffffff;
   background-color: #9777fa;
   transition-duration: 0.2s;
   transform: translateY(-3px);
-}
-
-.swiper-slide {
-  width: max-content !important;
 }
 
 .btn-dots {
@@ -1207,7 +1203,7 @@ label {
 .box-swiper .swiper-button-next,
 .box-swiper .swiper-button-prev {
   width: 40px;
-  margin-top: calc(0px - (var(--swiper-navigation-size) / 2)) !important;
+  margin-top: -55px;
 }
 .box-swiper .swiper-button-next {
   left: auto;
@@ -2226,7 +2222,7 @@ label {
 }
 
 .content-job-inner {
-  padding: 40px 0;
+  padding: 40px;
 }
 
 .box-image-job {
@@ -7418,4 +7414,86 @@ label {
 
 .header-logo img {
   width: 75px;
+}
+.header {
+  box-shadow: 0px 0px 10px 2px #eee;
+  padding: 10px 0;
+}
+.footer {
+  box-shadow: 0px 0px 10px 2px #eee;
+}
+.card-job {
+  width: 100%;
+  float: left;
+}
+.list-recent-jobs .card-job .card-job-top--image {
+  width: 85px;
+  height: 85px;
+  margin-right: 10px;
+}
+
+.list-recent-jobs .card-job .card-job-top--info {
+  padding-left: 105px;
+}
+.box-head-single {
+  background: url(../imgs/theme/bg-newsletter-top.svg) no-repeat 0px 0px;
+  background-size: auto;
+  background-size: auto;
+  background-size: cover;
+}
+
+.topbar {
+  background-color: rgb(242, 238, 254);
+}
+.header.main-headersuit {
+  top: 45px !important;
+}
+.bookmark {
+  background-image: url(../../assets/imgs/theme/icons/icon-email.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 18px;
+  display: inline;
+  padding: 10px;
+  margin-right: 8px;
+}
+.headset-color {
+  background-image: url(../../assets/imgs/theme/icons/icon-headphone.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  width: 18px;
+  display: inline;
+  padding: 10px;
+  margin-right: 8px;
+}
+.main-topbar {
+  text-align: center;
+}
+.header {
+  box-shadow: 0px 5px 10px 2px #eee;
+}
+.cmr-lg-20 {
+  margin-right: 20px;
+}
+/*add this in main for logo grid customize btn*/
+.btn-grey-small {
+  padding: 16px 10px;
+  width: 100%;
+}
+@media only screen and (min-width: 240px) and (max-width: 420px) {
+  .bookmark,
+  .headset-color {
+    margin-right: 4px;
+  }
+  .cmr-lg-20 {
+    margin-right: 2px;
+  }
+  .card-grid {
+    padding: 20px;
+  }
+  .card-grid .card-heading {
+    min-height: 20px;
+  }
 }

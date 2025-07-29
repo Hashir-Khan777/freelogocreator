@@ -55,7 +55,21 @@ const Header = () => {
 
   return (
     <div>
-      <header className="header sticky-bar">
+      <div className="header topbar sticky-bar">
+        <div className="container">
+          <div className="main-topbar">
+            <a className="cmr-lg-20" href="mailto:support@logomaker.com">
+              <i className="bookmark"></i>
+              <strong>support@logomaker.com</strong>
+            </a>
+            <a href="tel:8137734865">
+              <i className="headset-color"></i>
+              <strong>(813) 773 - 4865</strong>
+            </a>
+          </div>
+        </div>
+      </div>
+      <header className="header main-headersuit sticky-bar">
         <div className="container">
           <div className="main-header">
             <div className="header-left">
@@ -290,7 +304,7 @@ const Header = () => {
     //                   className="block-signin"
     //                   onClick={() => dispatch(signOut())}
     //                 >
-    //                   {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
+    //                   {/*<a href="#" className="text-link-bd-btom hover-up">Apply Now</a>*/}
     //                   <button className="btn btn-default btn-shadow ml-40 hover-up">
     //                     Sign Out
     //                   </button>
@@ -300,7 +314,7 @@ const Header = () => {
     //           </Menu>
     //         ) : (
     //           <div className="block-signin">
-    //             {/*<a href="#" class="text-link-bd-btom hover-up">Apply Now</a>*/}
+    //             {/*<a href="#" className="text-link-bd-btom hover-up">Apply Now</a>*/}
     //             <Link
     //               to="/login"
     //               className="btn btn-default btn-shadow ml-40 hover-up"

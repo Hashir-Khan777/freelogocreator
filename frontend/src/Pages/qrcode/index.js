@@ -60,6 +60,35 @@ const QRCode = () => {
 
   return (
     <main className="main">
+      <section className="section-box-2" style={{ marginTop: 50 }}>
+        <div className="box-head-single none-bg">
+          <div className="container text-center">
+            <h4>
+              Your all-in-one <mark className="pl-5 pr-5">QR Code</mark>{" "}
+              marketing platform!
+            </h4>
+            <div className="row mt-15 mb-40">
+              <div className="col-lg-12 col-md-12 mb-30">
+                <span className="text-white text-center">
+                  Now you can fully customize your QR Codes with your brand
+                  colors and company logo, get scan statistics, and even edit
+                  the content after print.
+                </span>
+              </div>
+              <div className="col-lg-12 col-md-12 mb-30">
+                <button className="btn btn-default font-heading icon-send-letter me-3">
+                  SignUp
+                </button>
+                <button className="btn btn-default font-heading icon-send-letter">
+                  Learn More
+                </button>
+              </div>
+              <img src="assets/imgs/interface-illustration-signup-pro.png" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="section-box mt-30 mb-30">
         <main className="main">
           <section className="section-box">
