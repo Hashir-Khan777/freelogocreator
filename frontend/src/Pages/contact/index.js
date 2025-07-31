@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendQuery } from "../../store/actions/query.action";
+import { subscribe } from "../../store/actions/newsletter.action";
+import { showToast } from "../../store/reducers/toast.reducer";
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -9,6 +11,7 @@ const Contact = () => {
     number: "",
     message: "",
   });
+  const [email, setEmail] = useState("");
 
   const dispatch = useDispatch();
 
@@ -223,13 +226,33 @@ const Contact = () => {
                                 form.number &&
                                 form.message
                               ) {
-                                dispatch(sendQuery(form));
-                                setForm({
-                                  name: "",
-                                  email: "",
-                                  number: "",
-                                  message: "",
-                                });
+                                if (
+                                  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+                                    form.email
+                                  )
+                                ) {
+                                  dispatch(sendQuery(form));
+                                  setForm({
+                                    name: "",
+                                    email: "",
+                                    number: "",
+                                    message: "",
+                                  });
+                                } else {
+                                  dispatch(
+                                    showToast({
+                                      type: "error",
+                                      message: "Invalid Email",
+                                    })
+                                  );
+                                }
+                              } else {
+                                dispatch(
+                                  showToast({
+                                    type: "error",
+                                    message: "All fields are required",
+                                  })
+                                );
                               }
                             }}
                           >
@@ -250,14 +273,35 @@ const Contact = () => {
         <div className="container">
           <div className="box-newsletter">
             <h5 className="text-md-newsletter">Subscribe to get</h5>
-            <h6 className="text-lg-newsletter">the latest jobs</h6>
+            <h6 className="text-lg-newsletter">the latest Design's Update</h6>
             <div className="box-form-newsletter mt-30">
-              <form className="form-newsletter">
+              <form
+                className="form-newsletter"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (
+                    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+                      email
+                    )
+                  ) {
+                    dispatch(subscribe({ email }));
+                    setEmail("");
+                  } else {
+                    dispatch(
+                      showToast({
+                        type: "error",
+                        message: "Invalid Email",
+                      })
+                    );
+                  }
+                }}
+              >
                 <input
                   type="text"
+                  value={email}
                   className="input-newsletter"
-                  defaultValue=""
                   placeholder="contact.logomaker@gmail.com"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <button className="btn btn-default font-heading icon-send-letter">
                   Subscribe

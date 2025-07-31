@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { forgetPassword } from "../../store/actions/auth.action";
+import { showToast } from "../../store/reducers/toast.reducer";
 
 const ForgetPassword = () => {
   const [form, setForm] = useState({});
@@ -25,7 +26,16 @@ const ForgetPassword = () => {
   const navigate = useNavigate();
 
   const submit = () => {
-    dispatch(forgetPassword(form));
+    if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(form.email)) {
+      dispatch(forgetPassword(form));
+    } else {
+      dispatch(
+        showToast({
+          type: "error",
+          message: "Invalid Email",
+        })
+      );
+    }
   };
 
   // useEffect(() => {

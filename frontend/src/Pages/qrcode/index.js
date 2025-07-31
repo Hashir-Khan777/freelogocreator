@@ -31,10 +31,13 @@ import { FaRegEye } from "react-icons/fa6";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { subscribe } from "./../../store/actions/newsletter.action";
+import { showToast } from "../../store/reducers/toast.reducer";
 
 const QRCode = () => {
   const [deleteShow, setDeleteShow] = useState(false);
   const [id, setId] = useState(null);
+  const [email, setEmail] = useState("");
 
   const { qrcodes } = useSelector((state) => state.QrcodeReducer);
   const { data } = useSelector((x) => x.AuthReducer);
@@ -361,15 +364,38 @@ const QRCode = () => {
           <section className="section-box mt-50 mb-60">
             <div className="container">
               <div className="box-newsletter">
-                <h5 className="text-md-newsletter">Sign up to get</h5>
-                <h6 className="text-lg-newsletter">the latest jobs</h6>
+                <h5 className="text-md-newsletter">Subscribe to get</h5>
+                <h6 className="text-lg-newsletter">
+                  the latest Design's Update
+                </h6>
                 <div className="box-form-newsletter mt-30">
-                  <form className="form-newsletter">
+                  <form
+                    className="form-newsletter"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      if (
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+                          email
+                        )
+                      ) {
+                        dispatch(subscribe({ email }));
+                        setEmail("");
+                      } else {
+                        dispatch(
+                          showToast({
+                            type: "error",
+                            message: "Invalid Email",
+                          })
+                        );
+                      }
+                    }}
+                  >
                     <input
                       type="text"
+                      value={email}
                       className="input-newsletter"
-                      defaultValue=""
                       placeholder="contact.logomaker@gmail.com"
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <button className="btn btn-default font-heading icon-send-letter">
                       Subscribe

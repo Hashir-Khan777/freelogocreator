@@ -16,6 +16,7 @@ import {
   subscribePackage,
   updateSubcription,
 } from "../../store/actions/subscription.action";
+import { showToast } from "../../store/reducers/toast.reducer";
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
@@ -1963,8 +1964,21 @@ const Home = () => {
                 className="form-newsletter"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  dispatch(subscribe({ email }));
-                  setEmail("");
+                  if (
+                    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+                      email
+                    )
+                  ) {
+                    dispatch(subscribe({ email }));
+                    setEmail("");
+                  } else {
+                    dispatch(
+                      showToast({
+                        type: "error",
+                        message: "Invalid Email",
+                      })
+                    );
+                  }
                 }}
               >
                 <input

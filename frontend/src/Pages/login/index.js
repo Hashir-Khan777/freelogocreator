@@ -17,6 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../store/actions/auth.action";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "universal-cookie";
+import { showToast } from "../../store/reducers/toast.reducer";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +29,16 @@ const Login = () => {
   const navigate = useNavigate();
 
   const userlogin = () => {
-    dispatch(login(form));
+    if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(form.email)) {
+      dispatch(login(form));
+    } else {
+      dispatch(
+        showToast({
+          type: "error",
+          message: "Invalid Email",
+        })
+      );
+    }
   };
 
   const handleShowClick = () => setShowPassword(!showPassword);

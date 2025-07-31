@@ -80,7 +80,6 @@ const SVGCanvasEditor = () => {
   const [bgColor, setBgColor] = useState("#ffffff");
   const [svgString, setSvgString] = useState(localStorage.getItem("svg"));
   const [windowWidth, setWindowWidth] = useState(null);
-  const prevWidthRef = useRef(window.innerWidth);
   const [backSvgString, setBackSvgString] = useState(
     localStorage.getItem("backsvg")
   );
@@ -925,16 +924,13 @@ const SVGCanvasEditor = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      const currentWidth = window.innerWidth;
-      const prevWidth = prevWidthRef.current;
+      const width = window.matchMedia("(max-width: 1300px)");
 
-      if (currentWidth < prevWidth) {
+      if (width.matches) {
         setWindowWidth("shrink");
-      } else if (currentWidth > prevWidth) {
+      } else {
         setWindowWidth("expand");
       }
-
-      prevWidthRef.current = currentWidth;
     };
 
     window.addEventListener("resize", handleResize);

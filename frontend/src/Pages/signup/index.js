@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../store/actions/auth.action";
 import Cookies from "universal-cookie";
+import { showToast } from "../../store/reducers/toast.reducer";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +31,18 @@ const SignUp = () => {
     fetch("https://api.ipify.org?format=json")
       .then((res) => res.json())
       .then((data) => {
-        dispatch(register({ ...form, ipaddress: data.ip }));
+        if (
+          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(form.email)
+        ) {
+          dispatch(register({ ...form, ipaddress: data.ip }));
+        } else {
+          dispatch(
+            showToast({
+              type: "error",
+              message: "Invalid Email",
+            })
+          );
+        }
       });
   };
 
