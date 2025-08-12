@@ -1819,6 +1819,10 @@ const Home = () => {
                         {pack.qrlimit === 0 ? "Unlimited" : pack.qrlimit} QR
                         Codes
                       </li>
+                      <li>
+                        {pack.scanlimit === 0 ? "Unlimited" : pack.scanlimit} QR
+                        Code Scans
+                      </li>
                       <li>Own analytics platform</li>
                       <li>Chat support</li>
                     </ul>
