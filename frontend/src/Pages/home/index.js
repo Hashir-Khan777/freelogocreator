@@ -1,4 +1,4 @@
-import { Box, Container, SimpleGrid } from "@chakra-ui/react";
+import { Box, Container, SimpleGrid, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllGraphics } from "../../store/actions/graphics.action";
@@ -669,6 +669,46 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <section className="section-box">
+        <div className="container pt-50">
+          <div className="row">
+            <div className="col-lg-2" />
+            <div className="col-lg-8 text-center">
+              <h1 className="section-title-large mb-30 wow animate__animated animate__fadeInUp">
+                You Can Create and Scan Your own QR Codes
+              </h1>
+              <h5 className="mb-30 text-muted wow animate__animated animate__fadeInUp">
+                Now You Can Create and Scan Your own QR Codes Here, We Offer the
+                best prectice QR Caodes generations.
+              </h5>
+            </div>
+            <div
+              className="col-lg-12 text-lg-center wow animate__animated animate__fadeInUp"
+              data-wow-delay=".2s"
+            >
+              <Link
+                to="/qrcode"
+                className="mt-sm-15 mt-lg-30 btn btn-border icon-chevron-right"
+              >
+                Browse all
+              </Link>
+            </div>
+          </div>
+          <div className="box-banner-services mt-40">
+            <div className="box-banner-services--inner wow animate__animated animate__fadeInUp">
+              <video autoPlay="" muted="" controls="">
+                <source
+                  src="assets/imgs/Purple-blue-with-logo .mp4"
+                  type="video/mp4"
+                />
+                <source src="movie.ogg" type="video/ogg" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div className="section-box">
         <div className="container">
           <ul className="list-partners">
@@ -1763,7 +1803,7 @@ const Home = () => {
                   >
                     <div className="box-info-price">
                       <span className="text-price for-month display-month">
-                        ${pack.amount}
+                        {console.log(pack.amount)}${pack.amount}
                       </span>
                       <span className="text-month">/month</span>
                     </div>
@@ -1817,6 +1857,9 @@ const Home = () => {
                   </div>
                 </div>
               ))}
+              <Text textAlign="center" mb="20px" fontSize="lg" fontWeight={500}>
+                Contact Us for unlimited package
+              </Text>
               {/* <div
                 className="col-lg-3 col-md-6 wow animate__animated animate__fadeInUp"
                 data-wow-delay=".1s"

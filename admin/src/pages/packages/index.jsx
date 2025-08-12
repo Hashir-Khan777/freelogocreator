@@ -45,6 +45,7 @@ const Packages = () => {
     name: "",
     logolimit: 0,
     qrlimit: 0,
+    scanlimit: 0,
     amount: 0,
   });
 
@@ -84,6 +85,13 @@ const Packages = () => {
     {
       Header: "QR Code Limit",
       accessor: "qrlimit",
+      Cell: (row) => {
+        return <span>{row?.cell?.value}</span>;
+      },
+    },
+    {
+      Header: "QR Code Scan Limit",
+      accessor: "scanlimit",
       Cell: (row) => {
         return <span>{row?.cell?.value}</span>;
       },
@@ -362,8 +370,10 @@ const Packages = () => {
               setEdit(false);
               setForm({
                 name: "",
-                logolimit: "",
-                amount: "",
+                logolimit: 0,
+                qrlimit: 0,
+                scanlimit: 0,
+                amount: 0,
               });
             }}
           >
@@ -401,6 +411,17 @@ const Packages = () => {
                   placeholder="Enter QR Code Limit"
                 />
                 <Textinput
+                  label="QR code Scan Limit *"
+                  value={form.scanlimit}
+                  defaultValue={form.scanlimit}
+                  onChange={(e) =>
+                    setForm({ ...form, scanlimit: e.target.value })
+                  }
+                  id="h_Fullname2"
+                  type="text"
+                  placeholder="Enter QR Code Scan Limit"
+                />
+                <Textinput
                   label="Amount *"
                   value={form.amount}
                   defaultValue={form.amount}
@@ -426,8 +447,10 @@ const Packages = () => {
                       }
                       setForm({
                         name: "",
-                        logolimit: "",
-                        amount: "",
+                        logolimit: 0,
+                        qrlimit: 0,
+                        scanlimit: 0,
+                        amount: 0,
                       });
                     }}
                   />

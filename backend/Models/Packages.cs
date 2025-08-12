@@ -4,11 +4,13 @@
     {
         public int Id { get; set; }
 
-        public int amount { get; set; }
+        public double amount { get; set; }
 
         public string name { get; set; } = string.Empty;
 
         public int logolimit { get; set; }
+
+        public int scanlimit { get; set; }
 
         public int qrlimit { get; set; }
 

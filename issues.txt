@@ -1,6 +1,12 @@
-1) searching and filtering individual applying
-2) edit logo page functionality and UI issues
-3) random categories in browse by category
-4) add random categories in about us page
-5) add an editor for blogs in admin page and UI in user site
-6) show info message on add logo
+1) add scan limit in qrcode (done)
+2) decimal point in packages amount (done)
+3) add a text line under packages "contact us" (done)
+4) "new to us" in login to "create a new account" (done)
+5) disable ss (not possible)
+6) remove unnecessary ui (done)
+7) remove phone number (done)
+8) predictive searching
+9) add a create account button on header (done)
+10) email user after generating qr code and logo
+11) update link in emails (after live)
+12) change modal size in add qr code (done)

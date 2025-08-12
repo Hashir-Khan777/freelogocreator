@@ -126,6 +126,13 @@ video {
   vertical-align: baseline;
 }
 
+video {
+  display: block;
+  margin: 0 auto; /* Centers horizontally */
+  width: 100%;
+  height: auto;
+}
+
 main {
   display: block;
   clear: both;

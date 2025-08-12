@@ -78,7 +78,7 @@ const Login = () => {
       </div>
       <Flex justifyContent="space-between">
         <Box>
-          New to us?{" "}
+          Create a new account?{" "}
           <Box as={Link} color="teal.500" to="/signup">
             Sign Up
           </Box>

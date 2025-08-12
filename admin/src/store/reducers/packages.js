@@ -41,6 +41,8 @@ export default createSlice({
       obj.name = payload.data.name;
       obj.amount = payload.data.amount;
       obj.logolimit = payload.data.logolimit;
+      obj.qrlimit = payload.data.qrlimit;
+      obj.scanlimit = payload.data.scanlimit;
     });
     builder.addCase(Package.editPackages.rejected, (state) => {
       state.loading = false;

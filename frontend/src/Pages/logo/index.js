@@ -463,7 +463,7 @@ const Logo = () => {
               </div>
             </div>
             <div className="col-lg-3 col-md-12 col-sm-12 col-12">
-              <div className="sidebar-with-bg">
+              {/* <div className="sidebar-with-bg">
                 <h5 className="font-semibold mb-10">GStayet Updated</h5>
                 <p className="text-body-999">
                   Enter you email address and get notification.
@@ -483,7 +483,7 @@ const Logo = () => {
                     </div>
                   </form>
                 </div>
-              </div>
+              </div> */}
               <div className="sidebar-shadow none-shadow mb-30">
                 <div className="sidebar-filters">
                   <div className="filter-block mb-30">
@@ -552,7 +552,7 @@ const Logo = () => {
                   </div>
                 </div>
               </div>
-              <div className="sidebar-with-bg background-primary bg-sidebar pb-80">
+              {/* <div className="sidebar-with-bg background-primary bg-sidebar pb-80">
                 <h5 className="medium-heading text-white mb-20 mt-20">
                   Recruiting?
                 </h5>
@@ -565,7 +565,7 @@ const Logo = () => {
                 >
                   Get in Touch
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
