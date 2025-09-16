@@ -25,7 +25,3 @@ new issues:
 3) add message on topbar
 4) uncommit banner on qr code page
 5) integrate stripe
-
-stripe info
-email: ammad@zinitechnologies.com
-password: bWdGSy6!6BK4AZe

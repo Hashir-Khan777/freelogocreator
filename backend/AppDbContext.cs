@@ -19,6 +19,8 @@ namespace backend
         public DbSet<Scans> Scans { get; set; }
         public DbSet<LogoStats> LogoStats { get; set; }
 
+        public DbSet<SavedLogos> SavedLogos { get; set; }
+
         private void AuditChanges()
         {
 
@@ -63,6 +65,12 @@ namespace backend
                 .HasOne(g => g.category)
                 .WithMany(c => c.graphics)
                 .HasForeignKey(g => g.category_id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<SavedLogos>()
+                .HasOne(g => g.user)
+                .WithMany(c => c.savedLogos)
+                .HasForeignKey(g => g.user_id)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<QRCode>()

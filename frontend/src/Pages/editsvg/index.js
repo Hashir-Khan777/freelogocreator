@@ -45,7 +45,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { IoHelpCircleSharp } from "react-icons/io5";
 import { updateUser } from "../../store/actions/auth.action";
-import { setStats } from "../../store/actions/graphics.action";
+import { saveLogo, setStats } from "../../store/actions/graphics.action";
 
 const fontSizes = [
   8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72,
@@ -335,6 +335,7 @@ const SVGCanvasEditor = () => {
         navigate("/#packages");
       }
     }
+    dispatch(saveLogo({ user_id: data?.id, logo: canvas.toSVG() }));
   };
 
   const setCanvasZoom = (canvaszoom) => {

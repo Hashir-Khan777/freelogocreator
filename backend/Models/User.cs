@@ -36,5 +36,7 @@ namespace backend.Models
         public List<Scans>? scans { get; set; }
 
         public List<LogoStats>? logostats { get; set; }
+
+        public List<SavedLogos>? savedLogos { get; set; }
     }
 }

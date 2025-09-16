@@ -13,6 +13,7 @@ import {
   Button,
   Flex,
   Input,
+  Text,
 } from "@chakra-ui/react";
 import { toJpeg, toPng } from "html-to-image";
 import { showToast } from "../../store/reducers/toast.reducer";
@@ -31,6 +32,8 @@ const Logo = () => {
   const [selectedTags, setSelectedtags] = useState([]);
   const [tags, setTags] = useState([]);
   const [email, setEmail] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggest, setSuggest] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -231,13 +234,15 @@ const Logo = () => {
     if (graphics?.length > 0) {
       const uniqueTags = [];
       graphics?.filter((x) =>
-        x.tags?.split(", ")?.forEach((tag) => {
+        x?.tags?.split(", ")?.forEach((tag) => {
           if (tag && !uniqueTags.includes(tag) && uniqueTags.length < 10) {
             uniqueTags.push(tag);
           }
         })
       );
-      setTags(uniqueTags);
+      if (uniqueTags.length > 0) {
+        setTags(uniqueTags);
+      }
       if (searchParams.get("cat")) {
         if (searchParams.get("cat") === "all") {
           setFilteredGraphics(graphics);
@@ -283,6 +288,12 @@ const Logo = () => {
     filter();
   }, [graphics]);
 
+  useEffect(() => {
+    if (tags.length > 0 && categories?.length > 0) {
+      setSuggestions([...tags, ...categories?.map((cat) => cat.name)]);
+    }
+  }, [tags, categories]);
+
   return (
     <main className="main">
       <section className="section-box bg-banner-about banner-home-3 pt-100">
@@ -294,30 +305,59 @@ const Logo = () => {
                   <h2 className="heading-banner text-center wow animate__animated animate__fadeInUp">
                     There Are +2000
                     <br />
-                    Log's Here For you!
+                    Logo's Here For you!
                   </h2>
                   <div className="form-find mw-720 mt-80">
-                    <form className="wow animate__animated animate__fadeInUp">
+                    <form className="wow animate__animated animate__fadeInUp mb-10">
                       <input
                         type="text"
                         value={inputValue}
                         className="form-input input-keysearch mr-10"
                         placeholder="Logo Maker's Site"
-                        onChange={(e) => setInputValue(e.target.value)}
+                        onChange={(e) => {
+                          setInputValue(e.target.value);
+                          setSuggest(true);
+                        }}
                       />
-                      <Link to={`/logo?query=${inputValue}`}>
+                      <Link
+                        to={`/logo?query=${inputValue}`}
+                        onClick={() => setSuggest(false)}
+                      >
                         <button className="btn btn-default btn-find wow animate__animated animate__fadeInUp">
                           Find now
                         </button>
                       </Link>
                     </form>
+                    <Box height="100%" maxHeight="300px" overflow="auto">
+                      {suggestions.length > 0 && inputValue && suggest
+                        ? suggestions
+                            ?.filter((x) =>
+                              x
+                                .toLowerCase()
+                                .includes(inputValue?.toLowerCase())
+                            )
+                            ?.map((text, index) => (
+                              <Text
+                                key={index}
+                                onClick={() => setInputValue(text)}
+                                fontSize={16}
+                                padding="10px"
+                                cursor="pointer"
+                                _hover={{ bg: "gray.100" }}
+                                borderRadius="5px"
+                              >
+                                {text}
+                              </Text>
+                            ))
+                        : null}
+                    </Box>
                   </div>
-                  <div className="list-tags-banner mt-60 text-center wow animate__animated animate__fadeInUp">
+                  {/* <div className="list-tags-banner mt-60 text-center wow animate__animated animate__fadeInUp">
                     <strong>Popular Searches:</strong>
                     <a href="#">Designer</a>, <a href="#">Developer</a>,{" "}
                     <a href="#">Web</a>, <a href="#">Engineer</a>,{" "}
                     <a href="#">Senior</a>,
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

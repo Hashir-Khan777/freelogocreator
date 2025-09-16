@@ -10,3 +10,20 @@
 10) email user after generating qr code and logo
 11) update link in emails (after live)
 12) change modal size in add qr code (done)
+
+email access:
+url: https://web.joker.email/
+email: support@smartqrcodeandlogo.com
+pass: a4d@%1218%9#
+smtp: smtp.joker.email
+
+live url: http://www.smartqrcodeandlogo.com/
+
+aws access:
+url: https://891612582807.signin.aws.amazon.com/console
+hashir@zinitechnologies.com
+aad@485%%#@
+
+stripe info
+email: ammad@zinitechnologies.com
+password: bWdGSy6!6BK4AZe

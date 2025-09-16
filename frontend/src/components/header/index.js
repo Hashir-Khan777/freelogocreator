@@ -147,7 +147,7 @@ const Header = () => {
                     Sign in
                   </Link>
                   <Link
-                    to="/login"
+                    to="/signup"
                     className="btn btn-default btn-shadow ml-40 hover-up"
                   >
                     Sign up
@@ -237,7 +237,7 @@ const Header = () => {
                         Sign in
                       </Link>
                       <Link
-                        to="/login"
+                        to="/signup"
                         className="btn btn-default btn-shadow ml-40 hover-up"
                       >
                         Sign up
