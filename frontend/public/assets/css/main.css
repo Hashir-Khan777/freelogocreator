@@ -2940,7 +2940,8 @@ label {
 .mobile-header-wrapper-style {
   position: fixed;
   top: 0;
-  width: 380px;
+  width: 100%;
+  max-width: 380px;
   min-height: 100vh;
   bottom: 0;
   right: 0;
@@ -7199,7 +7200,7 @@ label {
   .mobile-header-wrapper-style
     .mobile-header-wrapper-inner
     .mobile-header-content-area {
-    padding: 30px;
+    padding: 10px;
   }
   .nav.nav-right {
     margin-top: 30px;
@@ -7503,4 +7504,12 @@ label {
   .card-grid .card-heading {
     min-height: 20px;
   }
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999999;
+  animation: wipeDown 0.5s linear;
 }

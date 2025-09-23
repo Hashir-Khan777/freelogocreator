@@ -61,8 +61,8 @@ const SignUp = () => {
   // }, []);
 
   return (
-    <main className="container-sm main mt-50">
-      <h5 className="heading-36 mb-30 mt-10 wow animate__animated animate__fadeInUp">
+    <main className="container-sm main">
+      <h5 className="heading-36 mb-30 mt-100 wow animate__animated animate__fadeInUp">
         Register
       </h5>
       <div className="form-group">

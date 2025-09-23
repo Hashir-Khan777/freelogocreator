@@ -44,6 +44,20 @@ const Header = () => {
   };
 
   useEffect(() => {
+    window.addEventListener("scroll", () => {
+      var navbar = document.querySelector(".second_navbar");
+      var sticky = 15;
+      if (navbar && window.pageYOffset > sticky) {
+        navbar.classList.add("sticky");
+        navbar.classList.remove("main-headersuit");
+      } else {
+        navbar && navbar.classList.remove("sticky");
+        navbar.classList.add("main-headersuit");
+      }
+    });
+  });
+
+  useEffect(() => {
     dispatch(getAllCategories());
   }, [dispatch]);
 
@@ -54,7 +68,7 @@ const Header = () => {
   }, [dispatch, data]);
 
   return (
-    <div>
+    <>
       <div className="header topbar sticky-bar">
         <div className="container">
           <div className="main-topbar">
@@ -65,7 +79,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <header className="header main-headersuit sticky-bar">
+      <header className="second_navbar header main-headersuit sticky-bar">
         <div className="container">
           <div className="main-header">
             <div className="header-left">
@@ -192,7 +206,6 @@ const Header = () => {
           <div className="mobile-header-content-area">
             <div className="perfect-scroll">
               <div className="mobile-menu-wrap mobile-header-border">
-                {/* mobile menu start */}
                 <nav>
                   <ul className="mobile-menu font-heading">
                     <li>
@@ -232,13 +245,15 @@ const Header = () => {
                     <>
                       <Link
                         to="/login"
-                        className="btn btn-default btn-shadow ml-40 hover-up"
+                        className="btn btn-default btn-shadow hover-up"
+                        style={{ width: "100%", marginBottom: "10px" }}
                       >
                         Sign in
                       </Link>
                       <Link
                         to="/signup"
-                        className="btn btn-default btn-shadow ml-40 hover-up"
+                        className="btn btn-default btn-shadow hover-up"
+                        style={{ width: "100%" }}
                       >
                         Sign up
                       </Link>
@@ -250,93 +265,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </div>
-
-    // <header className="header sticky-bar">
-    //   {windowWidth === "shrink" && (
-    //     <div
-    //       className="mb-20 text-center"
-    //       style={{ fontSize: "20px", color: "#FFA500", fontWeight: "semibold" }}
-    //     >
-    //       <p>Warning! this canvas is designed only for PC and Laptops</p>
-    //     </div>
-    //   )}
-    //   <div className="container">
-    //     <div className="main-header">
-    //       <div className="header-left">
-    //         <div className="header-logo">
-    //           <Link to="/" className="d-flex">
-    //             <img
-    //               alt="logomaker"
-    //               src="../../assets/imgs/theme/logo-maker-logo0-removebg.png"
-    //             />
-    //           </Link>
-    //         </div>
-    //         <div className="header-nav">
-    //           <nav className="nav-main-menu d-none d-xl-block">
-    //             <ul className="main-menu">
-    //               <li>
-    //                 <Link to="/qrcode">QR Code Maker</Link>
-    //               </li>
-    //               <li>
-    //                 <Link to="/logo">Logo Maker</Link>
-    //               </li>
-    //               {/* <li>
-    //                 <Link to="/website">Website Builder</Link>
-    //               </li> */}
-    //               <li>
-    //                 <Link to="/about">About Us</Link>
-    //               </li>
-    //               <li>
-    //                 <Link to="/#packages">Packages</Link>
-    //               </li>
-    //               <li>
-    //                 <Link to="/contact">Contact Us</Link>
-    //               </li>
-    //             </ul>
-    //           </nav>
-    //           <div className="burger-icon burger-icon-white">
-    //             <span className="burger-icon-top" />
-    //             <span className="burger-icon-mid" />
-    //             <span className="burger-icon-bottom" />
-    //           </div>
-    //         </div>
-    //       </div>
-    //       <div className="header-right">
-    //         {data != null ? (
-    //           <Menu>
-    //             <MenuButton>
-    //               <Avatar name={data.name} />
-    //             </MenuButton>
-    //             <MenuList>
-    //               <MenuItem>
-    //                 <div
-    //                   className="block-signin"
-    //                   onClick={() => dispatch(signOut())}
-    //                 >
-    //                   {/*<a href="#" className="text-link-bd-btom hover-up">Apply Now</a>*/}
-    //                   <button className="btn btn-default btn-shadow ml-40 hover-up">
-    //                     Sign Out
-    //                   </button>
-    //                 </div>
-    //               </MenuItem>
-    //             </MenuList>
-    //           </Menu>
-    //         ) : (
-    //           <div className="block-signin">
-    //             {/*<a href="#" className="text-link-bd-btom hover-up">Apply Now</a>*/}
-    //             <Link
-    //               to="/login"
-    //               className="btn btn-default btn-shadow ml-40 hover-up"
-    //             >
-    //               Sign in
-    //             </Link>
-    //           </div>
-    //         )}
-    //       </div>
-    //     </div>
-    //   </div>
-    // </header>
+    </>
   );
 };
 

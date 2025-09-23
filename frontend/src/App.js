@@ -40,11 +40,9 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <Flex flexDirection="column" height="100vh">
-        <Header />
-        <AppRouter />
-        <Footer />
-      </Flex>
+      <Header />
+      <AppRouter />
+      <Footer />
       <GeneratePostModal />
       <AddShapesIconsModal />
       <ReplaceSymbolModal />

@@ -181,7 +181,17 @@ const Home = () => {
             <div className="swiper-button-next" ref={nextRef} />
             <Swiper
               modules={[Navigation]}
-              slidesPerView="5"
+              breakpoints={{
+                992: {
+                  slidesPerView: 5,
+                },
+                768: {
+                  slidesPerView: 2,
+                },
+                320: {
+                  slidesPerView: 1,
+                },
+              }}
               spaceBetween={20}
               navigation={{
                 prevEl: prevRef.current,
@@ -194,17 +204,17 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "40px",
-                    height: "110px",
-                    display: "inline-block",
+                    height: "100px",
                     width: "100%",
-                    textAlign: "center",
+                    minWidth: "100px",
                     borderRadius: "12px",
+                    display: "grid",
+                    placeItems: "center",
                   }}
                 >
                   <div>
                     <img
-                      style={{ margin: "0 auto" }}
+                      style={{ margin: "0 auto", width: "100px" }}
                       alt="logomaker"
                       src="/assets/imgs/slider/logo/google.svg"
                     />
@@ -215,12 +225,12 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "40px",
-                    height: "110px",
-                    display: "inline-block",
+                    height: "100px",
                     width: "100%",
-                    textAlign: "center",
+                    minWidth: "100px",
                     borderRadius: "12px",
+                    display: "grid",
+                    placeItems: "center",
                   }}
                 >
                   <div>
@@ -236,12 +246,12 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "40px",
-                    height: "110px",
-                    display: "inline-block",
+                    height: "100px",
                     width: "100%",
-                    textAlign: "center",
+                    minWidth: "100px",
                     borderRadius: "12px",
+                    display: "grid",
+                    placeItems: "center",
                   }}
                 >
                   <div>
@@ -257,12 +267,12 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "40px",
-                    height: "110px",
-                    display: "inline-block",
+                    height: "100px",
                     width: "100%",
-                    textAlign: "center",
+                    minWidth: "100px",
                     borderRadius: "12px",
+                    display: "grid",
+                    placeItems: "center",
                   }}
                 >
                   <div>
@@ -278,12 +288,12 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "40px",
-                    height: "110px",
-                    display: "inline-block",
+                    height: "100px",
                     width: "100%",
-                    textAlign: "center",
+                    minWidth: "100px",
                     borderRadius: "12px",
+                    display: "grid",
+                    placeItems: "center",
                   }}
                 >
                   <div>
@@ -299,12 +309,12 @@ const Home = () => {
                 <div
                   style={{
                     border: "1px solid rgba(6, 18, 36, 0.1)",
-                    padding: "40px",
-                    height: "110px",
-                    display: "inline-block",
+                    height: "100px",
                     width: "100%",
-                    textAlign: "center",
+                    minWidth: "100px",
                     borderRadius: "12px",
+                    display: "grid",
+                    placeItems: "center",
                   }}
                 >
                   <div>
@@ -882,14 +892,24 @@ const Home = () => {
               <div className="swiper-container swiper-group-3">
                 <Swiper
                   loop
-                  slidesPerView="3"
+                  breakpoints={{
+                    992: {
+                      slidesPerView: 3,
+                    },
+                    768: {
+                      slidesPerView: 2,
+                    },
+                    320: {
+                      slidesPerView: 1,
+                    },
+                  }}
                   spaceBetween={20}
                   style={{ padding: "15px 0" }}
                 >
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -987,7 +1007,7 @@ const Home = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -1080,7 +1100,7 @@ const Home = () => {
                   </SwiperSlide>
                   <SwiperSlide className="swiper-slide">
                     <div
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                       className="card-grid-3 hover-up"
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
@@ -1179,7 +1199,7 @@ const Home = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -1277,7 +1297,7 @@ const Home = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -1370,7 +1390,7 @@ const Home = () => {
                   </SwiperSlide>
                   <SwiperSlide className="swiper-slide">
                     <div
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                       className="card-grid-3 hover-up"
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
@@ -1469,7 +1489,7 @@ const Home = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -1567,7 +1587,7 @@ const Home = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -1660,7 +1680,7 @@ const Home = () => {
                   </SwiperSlide>
                   <SwiperSlide className="swiper-slide">
                     <div
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                       className="card-grid-3 hover-up"
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
