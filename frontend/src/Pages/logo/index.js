@@ -20,7 +20,10 @@ import { showToast } from "../../store/reducers/toast.reducer";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { getAllCategories } from "../../store/actions/categories.action";
+import {
+  getAllCategories,
+  getGraphicsByCategoryById,
+} from "../../store/actions/categories.action";
 import { updateUser } from "../../store/actions/auth.action";
 import { subscribe } from "../../store/actions/newsletter.action";
 
@@ -47,6 +50,7 @@ const Logo = () => {
   const { categories } = useSelector((x) => x.CategoriesReducer);
   const { subscription } = useSelector((x) => x.SubscriptionReducer);
   const { data } = useSelector((x) => x.AuthReducer);
+  const Category = useSelector((x) => x.CategoriesReducer);
 
   const savePngImage = () => {
     if (subscription?.package?.logolimit === 0) {
@@ -243,17 +247,7 @@ const Logo = () => {
       if (uniqueTags.length > 0) {
         setTags(uniqueTags);
       }
-      if (searchParams.get("cat")) {
-        if (searchParams.get("cat") === "all") {
-          setFilteredGraphics(graphics);
-        } else {
-          setFilteredGraphics(
-            graphics?.filter(
-              (x) => x.category_id == Number(searchParams.get("cat"))
-            )
-          );
-        }
-      } else {
+      if (!searchParams.get("cat")) {
         setFilteredGraphics(graphics);
       }
       if (selectedTags.length > 0) {
@@ -293,6 +287,28 @@ const Logo = () => {
       setSuggestions([...tags, ...categories?.map((cat) => cat.name)]);
     }
   }, [tags, categories]);
+
+  useEffect(() => {
+    if (searchParams.get("cat")) {
+      if (searchParams.get("cat") === "all") {
+        setFilteredGraphics(graphics);
+      } else {
+        dispatch(
+          getGraphicsByCategoryById({ id: Number(searchParams.get("cat")) })
+        );
+      }
+    } else {
+      setFilteredGraphics(graphics);
+    }
+  }, [searchParams.get("cat")]);
+
+  useEffect(() => {
+    if (Category?.graphics) {
+      setFilteredGraphics(Category?.graphics);
+    } else {
+      setFilteredGraphics(graphics);
+    }
+  }, [Category?.graphics]);
 
   return (
     <main className="main">
