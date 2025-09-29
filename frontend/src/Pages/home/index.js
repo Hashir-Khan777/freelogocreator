@@ -706,14 +706,13 @@ const Home = () => {
           </div>
           <div className="box-banner-services mt-40">
             <div className="box-banner-services--inner wow animate__animated animate__fadeInUp">
-              <video autoPlay="" muted="" controls="">
-                <source
-                  src="assets/imgs/Purple-blue-with-logo .mp4"
-                  type="video/mp4"
-                />
-                <source src="movie.ogg" type="video/ogg" />
-                Your browser does not support the video tag.
-              </video>
+              <video
+                src="/assets/qrvideo.mp4"
+                loop
+                autoPlay
+                controls
+                style={{ borderRadius: 20 }}
+              />
             </div>
           </div>
         </div>
