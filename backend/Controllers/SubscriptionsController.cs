@@ -168,8 +168,8 @@ namespace backend.Controllers
                 },
             },
                 Mode = "subscription",
-                SuccessUrl = $"http://ec2-3-88-133-167.compute-1.amazonaws.com?payment=success&package={obj.package}",
-                CancelUrl = "http://ec2-3-88-133-167.compute-1.amazonaws.com?payment=error",
+                SuccessUrl = $"https://www.smartqrcodeandlogo.com?payment=success&package={obj.package}",
+                CancelUrl = "https://www.smartqrcodeandlogo.com?payment=error",
             };
 
             var service = new SessionService();
@@ -208,7 +208,7 @@ namespace backend.Controllers
                 db.SaveChanges();
             }
 
-            return Ok(new { url = $"http://ec2-3-88-133-167.compute-1.amazonaws.com?payment=success&package={1}" });
+            return Ok(new { url = $"https://www.smartqrcodeandlogo.com?payment=success&package={1}" });
         }
     }
 }

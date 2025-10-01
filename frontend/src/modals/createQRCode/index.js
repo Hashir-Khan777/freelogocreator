@@ -25,6 +25,7 @@ const CreateQRCode = () => {
   const [color, setColor] = useState("#000000");
   const [image, setImage] = useState("");
   const [note, setNote] = useState("");
+  const [windowHeight, setWindowHeight] = useState(0);
 
   const { isCraeteQRCodeModalOpen, createQRCodeModalData } = useSelector(
     (store) => store.ModalsReducer
@@ -116,10 +117,16 @@ const CreateQRCode = () => {
     }
   }, [createQRCodeModalData]);
 
+  useEffect(() => {
+    if (window && window.innerHeight) {
+      setWindowHeight(window.innerHeight);
+    }
+  }, [window]);
+
   return (
     <Modal isOpen={isCraeteQRCodeModalOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mt={windowHeight / 2 - 200}>
         <ModalHeader>
           {createQRCodeModalData ? "Update" : "Generate"} QR Code
         </ModalHeader>

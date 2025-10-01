@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleAddQRCodeModal } from "../../store/reducers/modals.reducer";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllQRCodes } from "../../store/actions/qrcode.action";
 
@@ -20,6 +20,7 @@ const AddQRCode = () => {
   const { isAddQRCodeModalOpen } = useSelector((store) => store.ModalsReducer);
   const { qrcodes } = useSelector((state) => state.QrcodeReducer);
   const { data } = useSelector((x) => x.AuthReducer);
+  const [windowHeight, setWindowHeight] = useState(0);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,10 +36,16 @@ const AddQRCode = () => {
     }
   }, [dispatch, data]);
 
+  useEffect(() => {
+    if (window && window.innerHeight) {
+      setWindowHeight(window.innerHeight);
+    }
+  }, [window]);
+
   return (
     <Modal isOpen={isAddQRCodeModalOpen} onClose={onClose} size="lg">
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mt={windowHeight / 2 - 200}>
         <ModalHeader>Add QR Codes</ModalHeader>
         <ModalCloseButton />
         <ModalBody>

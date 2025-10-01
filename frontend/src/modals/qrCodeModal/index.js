@@ -10,7 +10,7 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleQRCodeModal } from "../../store/reducers/modals.reducer";
 import {
@@ -37,6 +37,7 @@ const QRCodeModal = () => {
   const { isQRCodeModalOpen, qrCodeModalData } = useSelector(
     (store) => store.ModalsReducer
   );
+  const [windowHeight, setWindowHeight] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -54,12 +55,18 @@ const QRCodeModal = () => {
     document.body.removeChild(link);
   };
 
+  useEffect(() => {
+    if (window && window.innerHeight) {
+      setWindowHeight(window.innerHeight);
+    }
+  }, [window]);
+
   console.log("qrCodeModalData", qrCodeModalData);
 
   return (
     <Modal isOpen={isQRCodeModalOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent mt={windowHeight / 2 - 200}>
         <ModalHeader>Download QR Code</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
