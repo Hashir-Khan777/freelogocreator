@@ -38,6 +38,7 @@ const QRCode = () => {
   const [deleteShow, setDeleteShow] = useState(false);
   const [id, setId] = useState(null);
   const [email, setEmail] = useState("");
+  const [windowHeight, setWindowHeight] = useState(0);
 
   const { qrcodes } = useSelector((state) => state.QrcodeReducer);
   const { data } = useSelector((x) => x.AuthReducer);
@@ -60,6 +61,12 @@ const QRCode = () => {
       navigate("/login");
     }
   }, [dispatch, data]);
+
+  useEffect(() => {
+    if (window && window.innerHeight) {
+      setWindowHeight(window.innerHeight);
+    }
+  }, [window]);
 
   return (
     <main className="main">
@@ -412,7 +419,7 @@ const QRCode = () => {
       </section>
       <Modal isOpen={deleteShow} onClose={() => setDeleteShow(false)}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent mt={windowHeight / 2 - 200}>
           <ModalBody>
             <Center flexDirection="column">
               <Icon as={AiOutlineCloseCircle} fontSize={80} color="red.300" />

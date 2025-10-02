@@ -21,8 +21,6 @@ const QRData = () => {
     window.location.href = url.href;
   };
 
-  console.log(qrcode?.qrscans <= subscription?.package?.scanlimit, "qrcode");
-
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -53,6 +51,8 @@ const QRData = () => {
       }
     }
   }, [dispatch, qrcode]);
+
+  console.log(qrcode?.scans, subscription?.package?.scanlimit, "qrcode");
 
   return (
     <main className="main">
@@ -164,7 +164,7 @@ const QRData = () => {
                 </main>
               )}
             </>
-          ) : qrcode?.qrscans < subscription?.package?.scanlimit ? (
+          ) : qrcode?.scans < subscription?.package?.scanlimit ? (
             <>
               {qrcode ? (
                 !qrcode?.deleted ? (
