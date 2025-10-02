@@ -335,7 +335,8 @@ const SVGCanvasEditor = () => {
         navigate("/#packages");
       }
     }
-    dispatch(saveLogo({ user_id: data?.id, logo: canvas.toSVG() }));
+    const svgString = canvas.toSVG();
+    dispatch(saveLogo({ user_id: data?.id, logo: svgString }));
   };
 
   const setCanvasZoom = (canvaszoom) => {

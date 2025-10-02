@@ -14,7 +14,7 @@ namespace backend.Services
             _smtpSettings = smtpOptions.Value;
         }
 
-        public async Task SendEmailAsync(string toEmail, string subject, string htmlBody)
+        public async Task SendEmailAsync(string toEmail, string subject, string htmlBody, Attachment? attachement = null)
         {
             using var client = new SmtpClient(_smtpSettings.Host, _smtpSettings.Port)
             {
@@ -31,6 +31,11 @@ namespace backend.Services
             };
 
             mailMessage.To.Add(toEmail);
+
+            if (attachement is not null)
+            {
+                mailMessage.Attachments.Add(attachement);
+            }
 
             await client.SendMailAsync(mailMessage);
         }
