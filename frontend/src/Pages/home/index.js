@@ -5,7 +5,7 @@ import { getAllGraphics } from "../../store/actions/graphics.action";
 import { toggleGeneratePostModal } from "../../store/reducers/modals.reducer";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import { getPackages } from "../../store/actions/package.action";
@@ -207,7 +207,7 @@ const Home = () => {
           <div className="box-swiper">
             <div className="swiper-button-next" ref={nextRef} />
             <Swiper
-              modules={[Navigation]}
+              modules={[Navigation, Autoplay]}
               breakpoints={{
                 992: {
                   slidesPerView: 5,
@@ -224,6 +224,7 @@ const Home = () => {
                 prevEl: prevRef.current,
                 nextEl: nextRef.current,
               }}
+              autoplay
               loop
               style={{ padding: "15px 0" }}
             >
@@ -954,6 +955,8 @@ const Home = () => {
             <div className="box-swiper">
               <div className="swiper-container swiper-group-3">
                 <Swiper
+                  modules={[Autoplay]}
+                  autoplay
                   loop
                   breakpoints={{
                     992: {

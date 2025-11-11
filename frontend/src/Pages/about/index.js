@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { subscribe } from "../../store/actions/newsletter.action";
 import { showToast } from "../../store/reducers/toast.reducer";
 import { Helmet } from "react-helmet-async";
+import { Autoplay } from "swiper/modules";
 
 const About = () => {
   const [email, setEmail] = useState("");
@@ -545,15 +546,27 @@ const About = () => {
             <div className="box-swiper">
               <div className="swiper-container swiper-group-3">
                 <Swiper
+                  modules={[Autoplay]}
+                  autoplay
                   loop
-                  slidesPerView="3"
+                  breakpoints={{
+                    992: {
+                      slidesPerView: 3,
+                    },
+                    768: {
+                      slidesPerView: 2,
+                    },
+                    320: {
+                      slidesPerView: 1,
+                    },
+                  }}
                   spaceBetween={20}
                   style={{ padding: "15px 0" }}
                 >
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -651,7 +664,7 @@ const About = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -744,7 +757,7 @@ const About = () => {
                   </SwiperSlide>
                   <SwiperSlide className="swiper-slide">
                     <div
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                       className="card-grid-3 hover-up"
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
@@ -843,7 +856,7 @@ const About = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -941,7 +954,7 @@ const About = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -1034,7 +1047,7 @@ const About = () => {
                   </SwiperSlide>
                   <SwiperSlide className="swiper-slide">
                     <div
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                       className="card-grid-3 hover-up"
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
@@ -1133,7 +1146,7 @@ const About = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -1231,7 +1244,7 @@ const About = () => {
                   <SwiperSlide className="swiper-slide">
                     <div
                       className="card-grid-3 hover-up"
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
                         <div>
@@ -1324,7 +1337,7 @@ const About = () => {
                   </SwiperSlide>
                   <SwiperSlide className="swiper-slide">
                     <div
-                      style={{ width: "420px", height: "393px" }}
+                      // style={{ width: "420px", height: "393px" }}
                       className="card-grid-3 hover-up"
                     >
                       <div className="text-center card-grid-3-image card-grid-3-image-circle">
