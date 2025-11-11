@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { subscribe } from "../../store/actions/newsletter.action";
 import { showToast } from "../../store/reducers/toast.reducer";
+import { Helmet } from "react-helmet-async";
 
 const About = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,15 @@ const About = () => {
 
   return (
     <main className="main">
+      <Helmet>
+        <title>
+          About Smart QR Code & Logo | Creative Digital Branding Solutions
+        </title>
+        <meta
+          name="description"
+          content="Smart QR Code & Logo helps startups and small businesses create professional QR codes, logos, and business cards with ease. Fast, affordable, and 100% customizable."
+        />
+      </Helmet>
       <section className="section-box bg-banner-about">
         <div className="banner-hero banner-about pt-20">
           <div className="banner-inner">
@@ -19,12 +29,21 @@ const About = () => {
               <div className="col-lg-7">
                 <div className="block-banner">
                   <h1 className="heading-banner heading-lg">
-                    Meet the Logo Design Team{" "}
+                    Turning Simple Ideas Into Smart Digital Identities
                   </h1>
                   <div className="banner-description box-mw-70 mt-30">
-                    Every mind is a playing field, and no one understand this
-                    concept better than us. Through years of experience with
-                    clients.
+                    Welcome to Smart QR Code & Logo, your trusted partner for
+                    digital branding and design.
+                  </div>
+                  <div className="banner-description box-mw-70 mt-10">
+                    We make it effortless for businesses to build their visual
+                    identity through custom QR codes, logo designs, and business
+                    card customization.
+                  </div>
+                  <div className="banner-description box-mw-70 mt-10">
+                    Our platform blends technology and creativity to deliver
+                    designs that are professional, functional, and instantly
+                    ready to use.
                   </div>
                   <div className="mt-60">
                     <div className="box-button-shadow mr-10">
@@ -192,14 +211,20 @@ const About = () => {
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
                 <div className="box-info-job pl-90 pt-30 pr-90">
                   <span className="text-blue wow animate__animated animate__fadeInUp">
-                    Our Vision
+                    Our Mission
                   </span>
                   <h5 className="heading-36 mb-30 mt-30 wow animate__animated animate__fadeInUp">
-                    Create free count and start Designing
+                    To make digital branding
                   </h5>
                   <p className="text-lg wow animate__animated animate__fadeInUp">
-                    Our vision is to provide high quality graphic design and
-                    make it affordable for all through our advance logo creator.
+                    To simplify branding for everyone — from entrepreneurs to
+                    professionals — with fast, easy, and reliable digital design
+                    tools.
+                  </p>
+                  <p className="text-lg wow animate__animated animate__fadeInUp">
+                    To be the most reliable online platform for smart branding
+                    solutions, empowering businesses globally with tools that
+                    make creativity simple.
                   </p>
                   <div className="mt-30 wow animate__animated animate__fadeInUp">
                     <Link to="/logo" className="btn btn-default">
@@ -220,16 +245,36 @@ const About = () => {
                 Our Work
               </span>
               <h3 className="mt-20 mb-30 wow animate__animated animate__fadeInUp">
-                Committed to top quality and results
+                What We Offer
               </h3>
               <p className="mb-20 wow animate__animated animate__fadeInUp">
-                From LogoDesign.net you can always expect top-notch graphic
-                quality, customized design solution, and instant delivery. Every
-                idea is unique, and we guarantee to treat you with
-                out-of-the-box concepts when you work with us using our: Free
-                Logo Maker Custom Design Solution Dedicated Graphic Designers
-                Responsive Customer Support We are ready to work on your ideas,
-                not matter how far-fetched they may seem.
+                At Smart QR Code & Logo, we bring creativity and technology
+                together to help businesses of all sizes build their visual
+                identity.
+              </p>
+              <ul>
+                <li className="wow animate__animated animate__fadeInUp">
+                  🎯 <span style={{ fontWeight: 500 }}>QR Code Generation</span>{" "}
+                  – Custom, mobile-friendly, and trackable QR codes designed for
+                  your brand.
+                </li>
+                <li className="mb-10 mt-10 wow animate__animated animate__fadeInUp">
+                  🖋️ <span style={{ fontWeight: 500 }}>Logo Customization</span>{" "}
+                  – Modern, sleek, and professional logos that reflect your
+                  business personality.
+                </li>
+                <li className="wow animate__animated animate__fadeInUp">
+                  💼{" "}
+                  <span style={{ fontWeight: 500 }}>
+                    Business Card Customization
+                  </span>{" "}
+                  – Beautifully designed business cards that leave a lasting
+                  impression.
+                </li>
+              </ul>
+              <p className="mt-20 wow animate__animated animate__fadeInUp">
+                Whether you’re launching a new business or refreshing your
+                brand, our tools make customization fast, easy, and affordable.
               </p>
             </div>
             <div className="col-lg-7 col-md-12 col-sm-12 col-12 pl-200 d-none d-lg-block">

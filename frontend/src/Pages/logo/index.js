@@ -26,6 +26,7 @@ import {
 } from "../../store/actions/categories.action";
 import { updateUser } from "../../store/actions/auth.action";
 import { subscribe } from "../../store/actions/newsletter.action";
+import { Helmet } from "react-helmet-async";
 
 let page = 1;
 const Logo = () => {
@@ -312,6 +313,13 @@ const Logo = () => {
 
   return (
     <main className="main">
+      <Helmet>
+        <title>Logo Customization | Create Your Business Logo Online</title>
+        <meta
+          name="description"
+          content="Design a custom logo that defines your brand. Smart QR Code & Logo offers fast, affordable logo customization with professional templates and full ownership."
+        />
+      </Helmet>
       <section className="section-box bg-banner-about banner-home-3 pt-100">
         <div className="banner-hero">
           <div className="banner-inner">
@@ -319,10 +327,13 @@ const Logo = () => {
               <div className="col-lg-12">
                 <div className="block-banner">
                   <h2 className="heading-banner text-center wow animate__animated animate__fadeInUp">
-                    There Are +2000
-                    <br />
-                    Logo's Here For you!
+                    Create a Logo That <br /> Speaks for Your Brand
                   </h2>
+                  <div className="banner-description mt-30 text-center wow animate__animated animate__fadeInUp">
+                    Your logo is your brand’s first impression. Our Logo Maker
+                    helps you customize creative, <br /> modern, and
+                    professional logos in just minutes.
+                  </div>
                   <div className="form-find mw-720 mt-80">
                     <form className="wow animate__animated animate__fadeInUp mb-10">
                       <input

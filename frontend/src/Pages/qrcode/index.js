@@ -33,6 +33,7 @@ import { MdDelete } from "react-icons/md";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { subscribe } from "./../../store/actions/newsletter.action";
 import { showToast } from "../../store/reducers/toast.reducer";
+import { Helmet } from "react-helmet-async";
 
 const QRCode = () => {
   const [deleteShow, setDeleteShow] = useState(false);
@@ -70,35 +71,39 @@ const QRCode = () => {
 
   return (
     <main className="main">
+      <Helmet>
+        <title>Custom QR Code Generator | Create Branded QR Codes Online</title>
+        <meta
+          name="description"
+          content="Generate custom QR codes that match your brand style. Add logos, colors, and patterns easily. Perfect for marketing, packaging, and digital campaigns."
+        />
+      </Helmet>
       <section className="section-box-2" style={{ marginTop: 50 }}>
         <div className="box-head-single none-bg">
           <div className="container text-center">
-            <h4>
-              Your all-in-one <mark className="pl-5 pr-5">QR Code</mark>{" "}
-              marketing platform!
-            </h4>
+            <h4>Create Custom QR Codes That Work & Wow</h4>
             <div className="row mt-15 mb-40">
               <div className="col-lg-12 col-md-12 mb-30">
                 <span className="text-white text-center">
-                  Now you can fully customize your QR Codes with your brand
-                  colors and company logo, get scan statistics, and even edit
-                  the content after print.
+                  Generate dynamic, trackable, and beautifully designed QR codes
+                  that connect your audience instantly. <br /> Whether it’s for
+                  business cards, menus, products, or marketing campaigns—our
+                  tool helps you design branded QR codes that stand out.
                 </span>
               </div>
-              <div className="col-lg-12 col-md-12 mb-30">
+              {/* <div className="col-lg-12 col-md-12 mb-30">
                 <button className="btn btn-default font-heading icon-send-letter me-3">
                   SignUp
                 </button>
                 <button className="btn btn-default font-heading icon-send-letter">
                   Learn More
                 </button>
-              </div>
+              </div> */}
               <img src="assets/imgs/interface-illustration-signup-pro.png" />
             </div>
           </div>
         </div>
       </section>
-
       <section className="section-box mt-30 mb-30">
         <main className="main">
           <section className="section-box">
@@ -203,7 +208,7 @@ const QRCode = () => {
                   </div>
                 </div>
                 <div className="col-lg-3 col-md-12 col-sm-12 col-12">
-                  <div className="sidebar-with-bg">
+                  {/* <div className="sidebar-with-bg">
                     <h5 className="font-semibold mb-10">Set job reminder</h5>
                     <p className="text-body-999">
                       Enter you email address and get job notification.
@@ -225,21 +230,15 @@ const QRCode = () => {
                         </div>
                       </form>
                     </div>
-                  </div>
-                  <div className="sidebar-with-bg background-primary bg-sidebar pb-80">
+                  </div> */}
+                  <div className="sidebar-with-bg background-primary bg-sidebar pb-100">
                     <h5 className="medium-heading text-white mb-20 mt-20">
-                      Recruiting?
+                      Smart QR Codes That Do More
                     </h5>
                     <p className="text-body-999 text-white mb-30">
-                      Advertise your jobs to millions of monthly users and
-                      search 16.8 million CVs in our database.
+                      Create your own custom QR codes with embedded logos,
+                      colors, and styles that match your brand.
                     </p>
-                    <a
-                      href="job-grid-2.html"
-                      className="btn btn-border icon-chevron-right btn-white-sm"
-                    >
-                      Create a QrCode
-                    </a>
                   </div>
                 </div>
               </div>

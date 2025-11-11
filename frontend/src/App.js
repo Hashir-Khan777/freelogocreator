@@ -13,6 +13,7 @@ import {
   ShieldModal,
 } from "./modals";
 import { Footer, Header } from "./components";
+import { HelmetProvider } from "react-helmet-async";
 
 const App = () => {
   const { type, message } = useSelector((store) => store.ToastReducer);
@@ -40,16 +41,18 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <Header />
-      <AppRouter />
-      <Footer />
-      <GeneratePostModal />
-      <AddShapesIconsModal />
-      <ReplaceSymbolModal />
-      <QRCodeModal />
-      <ShieldModal />
-      <CreateQRCode />
-      <AddQRCode />
+      <HelmetProvider>
+        <Header />
+        <AppRouter />
+        <Footer />
+        <GeneratePostModal />
+        <AddShapesIconsModal />
+        <ReplaceSymbolModal />
+        <QRCodeModal />
+        <ShieldModal />
+        <CreateQRCode />
+        <AddQRCode />
+      </HelmetProvider>
     </ChakraProvider>
   );
 };

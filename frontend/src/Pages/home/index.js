@@ -17,6 +17,7 @@ import {
   updateSubcription,
 } from "../../store/actions/subscription.action";
 import { showToast } from "../../store/reducers/toast.reducer";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
@@ -73,6 +74,15 @@ const Home = () => {
 
   return (
     <main className="main">
+      <Helmet>
+        <title>
+          Smart QR Code & Logo | Fast & Powerful QR Code Generator & Logo Maker
+        </title>
+        <meta
+          name="description"
+          content="Create stunning QR codes, custom logos, and business cards in minutes. Smart QR Code & Logo offers fast, easy, and affordable tools for branding and business identity design."
+        />
+      </Helmet>
       <section className="section-box">
         <div className="banner-hero hero-1">
           <div className="banner-inner">
@@ -83,14 +93,31 @@ const Home = () => {
                     Best Logo Maker Site
                   </span>
                   <h1 className="heading-banner wow animate__animated animate__fadeInUp">
-                    Fast &amp; Powerful Logo Maker for Business Logo Design
+                    Smart QR Code & Logo Fast & Powerful QR Code Generation &
+                    Logo Maker for Business Design
                   </h1>
                   <div
                     className="banner-description mt-30 wow animate__animated animate__fadeInUp"
                     data-wow-delay=".1s"
                   >
-                    1M+ happy customers have got their company logo designs from
-                    our AI logo creator. Now it’s your turn!{" "}
+                    <p>
+                      Design. Scan. Impress. Create professional QR Codes,
+                      Logos, and Business Cards — all in one place. Start
+                      customizing now and give your brand a digital identity
+                      that stands out!
+                    </p>
+                    <p className="mt-10 mb-10">
+                      Choose from 1000’s of logo designs. Browse 1000’s of
+                      personalized and AI generated logo designs online. Use
+                      filters and explore diverse logo ideas until you discover
+                      the ideal logo to fine-tune.
+                    </p>
+                    <p>
+                      Customize colors, fonts, layout, and more! Save your logo
+                      design as is or make edits using our online logo maker
+                      tool until it’s the perfect logo design for your business
+                      or event.
+                    </p>
                   </div>
                   <div
                     className="form-find mt-60 wow animate__animated animate__fadeInUp"
@@ -110,14 +137,14 @@ const Home = () => {
                       </Link>
                     </form>
                   </div>
-                  <div
+                  {/* <div
                     className="list-tags-banner mt-60 wow animate__animated animate__fadeInUp"
                     data-wow-delay=".3s"
                   >
                     <strong>Popular Searches:</strong>
                     <a href="#">Tech</a>, <a href="#">Social Icons</a>,{" "}
                     <a href="#">Web</a>, <a href="#">Engineer</a>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="col-lg-4 col-md-6">
@@ -357,25 +384,37 @@ const Home = () => {
                   {" "}
                   We help you to set your business{" "}
                 </h5>
-                <p className="text-md mb-10 wow animate__ animate__fadeInUp animated">
+                {/* <p className="text-md mb-10 wow animate__ animate__fadeInUp animated">
                   {" "}
                   with a beautiful logo design that you can be proud of. Whether
                   you opt for an online A.I. logo generator or custom logo
                   design service!
-                </p>
+                </p> */}
                 <h5 className="heading-md-regular mt-10 mb-10 wow animate__animated animate__fadeInUp">
-                  1. Start with Logo Maker Tool{" "}
+                  1. Smart QR Codes:
                 </h5>
                 <p className="text-md wow animate__animated animate__fadeInUp">
-                  Whether you’ll find just the design you need in our extensive
-                  library of logo templates.
+                  Generate dynamic, mobile-friendly QR codes that fit your brand
+                  identity.
                 </p>
                 <h5 className="heading-md-regular mt-10 mb-10 wow animate__animated animate__fadeInUp">
-                  2. Perfecting Your Logo Design
+                  2. Logo Customization:
                 </h5>
                 <p className="text-md wow animate__animated animate__fadeInUp">
-                  Now it’s time to customize your logo using our easy
-                  drag-and-drop design editor.
+                  Design or personalize logos that stand out in every niche.
+                </p>
+                <h5 className="heading-md-regular mt-10 mb-10 wow animate__animated animate__fadeInUp">
+                  3. Business Card Customization:
+                </h5>
+                <p className="text-md wow animate__animated animate__fadeInUp">
+                  Elevate your brand with digital and printable business cards.
+                </p>
+                <h5 className="heading-md-regular mt-10 mb-10 wow animate__animated animate__fadeInUp">
+                  4. All-in-One Branding Hub:
+                </h5>
+                <p className="text-md wow animate__animated animate__fadeInUp">
+                  Manage all your brand visuals in one place—fast, affordable,
+                  and professional.
                 </p>
                 <div className="mt-20 wow animate__animated animate__fadeInUp">
                   <Link
@@ -398,9 +437,9 @@ const Home = () => {
                 Browse by category
               </h2>
               <p className="text-md-lh28 color-black-5 wow animate__animated animate__fadeInUp">
-                Find the type of work you need, clearly defined and ready to
-                start. Work begins as soon as you purchase and provide
-                requirements.
+                With our Logo Maker, you can easily create or customize
+                professional-grade logos for any industry using our modern
+                templates and AI design tools.
               </p>
             </div>
             <div
@@ -583,13 +622,34 @@ const Home = () => {
             <div className="col-lg-6 col-sm-12">
               <div className="content-job-inner">
                 <h2 className="section-title heading-lg wow animate__animated animate__fadeInUp">
-                  Ready to Roll Out Your Awesome Brand Identity?{" "}
+                  Logo Customization Made Simple
                 </h2>
                 <div className="mt-40 pr-50 text-md-lh28 wow animate__animated animate__fadeInUp">
-                  Now, even your small business can have a rocking brand image
-                  when you use your new custom logo designer. With
-                  LogoDesign.net’s logo maker and brand design maker, you can
-                  literally build your brand in a few clicks!{" "}
+                  Your logo defines your identity — make it stand out. Our Logo
+                  Maker lets you customize your brand’s symbol effortlessly.
+                </div>
+                <h5 className="section-title mt-40 wow animate__animated animate__fadeInUp">
+                  What You’ll Get:
+                </h5>
+                <ul>
+                  <li className="text-md-lh28 mt-3 mb-3 wow animate__animated animate__fadeInUp">
+                    Editable and scalable logo templates
+                  </li>
+                  <li className="text-md-lh28 mt-3 mb-3 wow animate__animated animate__fadeInUp">
+                    AI-powered customization
+                  </li>
+                  <li className="text-md-lh28 mt-3 mb-3 wow animate__animated animate__fadeInUp">
+                    Professional fonts and icons
+                  </li>
+                  <li className="text-md-lh28 mt-3 mb-3 wow animate__animated animate__fadeInUp">
+                    Multiple file formats (SVG, PNG, JPG)
+                  </li>
+                  <li className="text-md-lh28 mt-3 mb-3 wow animate__animated animate__fadeInUp">
+                    100% unique design ownership
+                  </li>
+                </ul>
+                <div className="mt-40 pr-50 text-md-lh28 wow animate__animated animate__fadeInUp">
+                  Create your logo in minutes and download it instantly!
                 </div>
                 <div className="mt-40">
                   <div className="box-button-shadow wow animate__animated animate__fadeInUp">
@@ -685,11 +745,15 @@ const Home = () => {
             <div className="col-lg-2" />
             <div className="col-lg-8 text-center">
               <h1 className="section-title-large mb-30 wow animate__animated animate__fadeInUp">
-                You Can Create and Scan Your own QR Codes
+                Create Smart QR Codes in Seconds
               </h1>
+              <h5 className="text-muted wow animate__animated animate__fadeInUp">
+                Design branded QR codes that connect instantly with your
+                audience. Our QR Code Maker gives you complete control over
+                style, color, and design.
+              </h5>
               <h5 className="mb-30 text-muted wow animate__animated animate__fadeInUp">
-                Now You Can Create and Scan Your own QR Codes Here, We Offer the
-                best prectice QR Caodes generations.
+                Make your QR codes beautiful and brand-driven — not boring.
               </h5>
             </div>
             <div
@@ -717,7 +781,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
       <div className="section-box">
         <div className="container">
           <ul className="list-partners">
@@ -858,13 +921,14 @@ const Home = () => {
                     Find Awesome Designs
                   </span>
                   <h5 className="heading-36 mb-30 mt-30 wow animate__animated animate__fadeInUp">
-                    Brand Identity Designs{" "}
+                    Your Brand. Your Design. Your Way.
                   </h5>
                   <p className="text-lg wow animate__animated animate__fadeInUp">
-                    Now you can get a business card, letterhead and envelope
-                    designs on the go with our stationery design creator tools.
-                    If you are looking for a consistent branding across all your
-                    printed stationery and business card to match.
+                    From startups to small businesses, event planners, and
+                    marketers — everyone can build a brand identity in minutes.
+                  </p>
+                  <p className="text-lg wow animate__animated animate__fadeInUp">
+                    Design smarter. Print faster. Grow bigger.
                   </p>
                   <div className="box-button-shadow mt-30 wow animate__animated animate__fadeInUp">
                     <Link to="/logo" className="btn btn-default">
@@ -1786,13 +1850,13 @@ const Home = () => {
         <div className="container">
           <div className="mw-450 text-center">
             <h3 className="mb-30 wow animate__animated animate__fadeInUp">
-              Choose The Offer That Suits You
+              Choose the offer
             </h3>
           </div>
           <div className="mw-650 text-center wow animate__animated animate__fadeInUp">
             <p className="mb-35 text-md-lh24 color-black-5">
-              When it comes to choosing the right web hosting provider, we know
-              how easy it is to get overwhelmed with the number.
+              Choose the plan that fits your goals—affordable, flexible, and
+              full of features
             </p>
           </div>
           {/* <div className="text-center mt-20">
@@ -2066,24 +2130,6 @@ const Home = () => {
         </div>
       </section>
     </main>
-    // <Container flex={1} maxWidth="1216px" my="20px">
-    //   <SimpleGrid columns={{ base: 4, md: 4, lg: 5, xl: 6 }} spacing={5}>
-    //     {graphics?.map((graphic) => (
-    //       <Box
-    //         onClick={() => {
-    //           dispatch(
-    //             toggleGeneratePostModal({
-    //               open: true,
-    //               data: { logo: graphic.graphic },
-    //             })
-    //           );
-    //         }}
-    //         key={graphic.id}
-    //         dangerouslySetInnerHTML={{ __html: graphic.graphic }}
-    //       />
-    //     ))}
-    //   </SimpleGrid>
-    // </Container>
   );
 };
 

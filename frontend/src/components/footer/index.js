@@ -15,26 +15,28 @@ const Footer = () => {
               />
             </Link>
             <div className="mt-20 mb-20">
-              We are a SaaS company that offers graphic design maker tools for
-              startups, small business owners, website designers, and online
-              entrepreneurs. We make branding accessible and affordable. Try our
-              tools today!
+              We offers easy-to-use tools for custom QR code generation, logo
+              design customization and business card design helping small
+              businesses and startups build strong brand identities online.
             </div>
           </div>
           <div className="col-md-2 col-xs-6">
             <h6>Company</h6>
             <ul className="menu-footer mt-40">
               <li>
-                <a href="#">About us</a>
+                <Link to="/qrcode">QR Code Maker</Link>
               </li>
               <li>
-                <a href="#">Our Team</a>
+                <Link to="/logo">Logo Maker</Link>
               </li>
               <li>
-                <a href="#">Products</a>
+                <Link to="/about">About Us</Link>
               </li>
               <li>
-                <a href="#">Contact</a>
+                <Link to="/#packages">Packages</Link>
+              </li>
+              <li>
+                <a href="/contact">Contact Us</a>
               </li>
             </ul>
           </div>
@@ -101,10 +103,16 @@ const Footer = () => {
             </div>
             <div className="col-md-6 text-md-end text-start">
               <div className="footer-social">
-                <a href="#" className="icon-socials icon-facebook" />
-                <a href="#" className="icon-socials icon-twitter" />
-                <a href="#" className="icon-socials icon-instagram" />
-                <a href="#" className="icon-socials icon-linkedin" />
+                <a
+                  href="https://www.facebook.com/profile.php?id=61582071836197"
+                  target="_fb"
+                  className="icon-socials icon-facebook"
+                />
+                <a
+                  href="https://www.instagram.com/qrcode_generation_logomaker1/"
+                  target="_insta"
+                  className="icon-socials icon-instagram"
+                />
               </div>
             </div>
           </div>
