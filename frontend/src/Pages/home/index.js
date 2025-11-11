@@ -90,11 +90,11 @@ const Home = () => {
               <div className="col-lg-8">
                 <div className="block-banner">
                   <span className="text-small-primary text-small-primary--disk text-uppercase wow animate__animated animate__fadeInUp">
-                    Best Logo Maker Site
+                    Smart QR Code & Logo
                   </span>
                   <h1 className="heading-banner wow animate__animated animate__fadeInUp">
-                    Smart QR Code & Logo Fast & Powerful QR Code Generation &
-                    Logo Maker for Business Design
+                    Fast & Powerful QR Code Generation & Logo Maker for Business
+                    Design
                   </h1>
                   <div
                     className="banner-description mt-30 wow animate__animated animate__fadeInUp"
