@@ -96,7 +96,7 @@ const Home = () => {
                     Fast & Powerful QR Code Generation & Logo Maker for Business
                     Design
                   </h1>
-                  <div
+                  {/* <div
                     className="banner-description mt-30 wow animate__animated animate__fadeInUp"
                     data-wow-delay=".1s"
                   >
@@ -118,7 +118,7 @@ const Home = () => {
                       tool until it’s the perfect logo design for your business
                       or event.
                     </p>
-                  </div>
+                  </div> */}
                   <div
                     className="form-find mt-60 wow animate__animated animate__fadeInUp"
                     data-wow-delay=".2s"
@@ -419,7 +419,7 @@ const Home = () => {
                 </p>
                 <div className="mt-20 wow animate__animated animate__fadeInUp">
                   <Link
-                    to="/logo"
+                    to="/about"
                     className="mt-sm-15 mt-lg-30 btn btn-border icon-chevron-right"
                   >
                     Browse all
@@ -451,7 +451,7 @@ const Home = () => {
                 to="/logo"
                 className="mt-sm-15 mt-lg-30 btn btn-border icon-chevron-right"
               >
-                Browse all
+                View more
               </Link>
             </div>
           </div>
@@ -925,7 +925,7 @@ const Home = () => {
                     Your Brand. Your Design. Your Way.
                   </h5>
                   <p className="text-lg wow animate__animated animate__fadeInUp">
-                    From startups to small businesses, event planners, and
+                    From startups to small businesses, event planners and
                     marketers — everyone can build a brand identity in minutes.
                   </p>
                   <p className="text-lg wow animate__animated animate__fadeInUp">
@@ -1858,8 +1858,8 @@ const Home = () => {
           </div>
           <div className="mw-650 text-center wow animate__animated animate__fadeInUp">
             <p className="mb-35 text-md-lh24 color-black-5">
-              Choose the plan that fits your goals—affordable, flexible, and
-              full of features
+              Choose the plan that fits your goals—affordable, flexible and full
+              of features
             </p>
           </div>
           {/* <div className="text-center mt-20">

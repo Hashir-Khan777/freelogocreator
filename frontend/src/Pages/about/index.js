@@ -33,17 +33,17 @@ const About = () => {
                     Turning Simple Ideas Into Smart Digital Identities
                   </h1>
                   <div className="banner-description box-mw-70 mt-30">
-                    Welcome to Smart QR Code & Logo, your trusted partner for
+                    Welcome to Smart QR Code & Logo your trusted partner for
                     digital branding and design.
                   </div>
                   <div className="banner-description box-mw-70 mt-10">
                     We make it effortless for businesses to build their visual
-                    identity through custom QR codes, logo designs, and business
+                    identity through custom QR codes, logo designs and business
                     card customization.
                   </div>
                   <div className="banner-description box-mw-70 mt-10">
                     Our platform blends technology and creativity to deliver
-                    designs that are professional, functional, and instantly
+                    designs that are professional, functional and instantly
                     ready to use.
                   </div>
                   <div className="mt-60">
@@ -219,7 +219,7 @@ const About = () => {
                   </h5>
                   <p className="text-lg wow animate__animated animate__fadeInUp">
                     To simplify branding for everyone — from entrepreneurs to
-                    professionals — with fast, easy, and reliable digital design
+                    professionals — with fast, easy and reliable digital design
                     tools.
                   </p>
                   <p className="text-lg wow animate__animated animate__fadeInUp">
@@ -256,12 +256,12 @@ const About = () => {
               <ul>
                 <li className="wow animate__animated animate__fadeInUp">
                   🎯 <span style={{ fontWeight: 500 }}>QR Code Generation</span>{" "}
-                  – Custom, mobile-friendly, and trackable QR codes designed for
+                  – Custom, mobile-friendly and trackable QR codes designed for
                   your brand.
                 </li>
                 <li className="mb-10 mt-10 wow animate__animated animate__fadeInUp">
                   🖋️ <span style={{ fontWeight: 500 }}>Logo Customization</span>{" "}
-                  – Modern, sleek, and professional logos that reflect your
+                  – Modern, sleek and professional logos that reflect your
                   business personality.
                 </li>
                 <li className="wow animate__animated animate__fadeInUp">
@@ -275,7 +275,7 @@ const About = () => {
               </ul>
               <p className="mt-20 wow animate__animated animate__fadeInUp">
                 Whether you’re launching a new business or refreshing your
-                brand, our tools make customization fast, easy, and affordable.
+                brand, our tools make customization fast, easy and affordable.
               </p>
             </div>
             <div className="col-lg-7 col-md-12 col-sm-12 col-12 pl-200 d-none d-lg-block">

@@ -331,8 +331,8 @@ const Logo = () => {
                   </h2>
                   <div className="banner-description mt-30 text-center wow animate__animated animate__fadeInUp">
                     Your logo is your brand’s first impression. Our Logo Maker
-                    helps you customize creative, <br /> modern, and
-                    professional logos in just minutes.
+                    helps you customize creative, <br /> modern and professional
+                    logos in just minutes.
                   </div>
                   <div className="form-find mw-720 mt-80">
                     <form className="wow animate__animated animate__fadeInUp mb-10">
